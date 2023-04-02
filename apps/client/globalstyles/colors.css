@@ -1,0 +1,26 @@
+:root{
+  --background-linear: linear-gradient(180deg, #21222C 0%, #171820 100%);
+
+  --background-900: #1A1B22;
+  --background-800: #1D1E25;
+  --background-700: #3E3F4A;
+
+  --text-900: #EFEFEF;
+  --text-700: #D6D6D6;
+  --text-500: #B9BAC3;
+
+  --theme-700: #4D8CE1;
+  --theme-500: #4D99FF;
+  --theme-300: #7CB4FF;
+}
+
+body{
+  background: var(--background-linear);
+  min-height: 100vh;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  color: var(--text-900);
+}

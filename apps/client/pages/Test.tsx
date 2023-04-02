@@ -1,6 +1,6 @@
 import React from 'react'
 import { Test as TestButton } from '../components/Test'
-import type {IPlant} from '@sep4/types';
+import type { IPlant } from '@sep4/types';
 
 export const Test:React.FC = () => {
 
