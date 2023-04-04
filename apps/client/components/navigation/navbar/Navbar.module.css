@@ -1,0 +1,17 @@
+.navbarWrapper{
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 16px;
+  background: var(--background-900);
+  border-right: 1px solid var(--background-700);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  height: calc(100% - 32px);
+}
+
+.navbarInner{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
