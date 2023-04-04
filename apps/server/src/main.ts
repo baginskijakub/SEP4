@@ -1,9 +1,13 @@
 import express from 'express'
 import * as dotenv from 'dotenv'
+import cookieParser from 'cookie-parser'
 import userRouter from './controllers/userController'
 dotenv.config()
 
 const app = express()
+
+app.use(express.json())
+app.use(cookieParser())
 
 app.get('/api', (req, res) => {
   res.send({ message: 'Welcome to server!' })

@@ -11,6 +11,6 @@ generator client {
 }
 
 model User {
-    email    String @id @unique
+    username String @id @unique
     password String
 }
