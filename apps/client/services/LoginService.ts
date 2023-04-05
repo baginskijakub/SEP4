@@ -1,15 +1,14 @@
 import axios from "axios";
 
-const login:(username: string, password: string) => Promise<boolean> = (username: string, password: string) => {
-  return axios.get('http://localhost:3333/login',
-    {
-      params: {
-        username: username,
-        password: password
-      }
-    }
+const login = (username: string, password: string) => {
+  return axios.get(`http://localhost:3333//api/v1/users?username=${username}&password=${password}`
+
   ).then((response) => {
-    return response.data
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("Error");
+    }
   })
 }
 
