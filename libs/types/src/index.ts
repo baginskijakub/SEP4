@@ -9,6 +9,8 @@ export interface IPlant {
 }
 
 export interface IGraphData{
+  //Not sure about light, TBD
+  type: 'temperature' | 'humidity' | 'co2' | 'light'
   data: IGraphPoint[]
 }
 
