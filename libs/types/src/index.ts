@@ -7,3 +7,12 @@ export interface IPlant {
   latinName: string;
   image: string;
 }
+
+export interface IGraphData{
+  data: IGraphPoint[]
+}
+
+export interface IGraphPoint{
+  date: string
+  value: number
+}
