@@ -6,21 +6,51 @@ import { RiPlantFill } from "react-icons/ri";
 import { UserButton } from "../userButton/UserButton";
 import { useState } from "react";
 import { ManageAccount } from "../../account/accountComponent";
+
 export const Navbar:React.FC = () => {
 //this state is managing the visibility of the user button and the login and createAccount component
 //it can be notLogin, wantToLogIn, login , wantToRegister
-
   const [userStatus, setUserStatus] = useState("notLogin");
 
+  function logout(){
+    localStorage.clear();}
 
   function userBtnClicked()
   {
-   if (userStatus=="notLogin") {setUserStatus("wantToLogin")}
-   else{setUserStatus("notLogin")}
+    const token = localStorage.getItem("auth");
+    if (token) {
+      setUserStatus("notLogin");
+    } else {
+      document.body.style.opacity = "0.3";
+      setUserStatus("wantToLogin")};
   }
+     
+      const handleAcountClicks = (btnType: string) => {
+        {
+          if (btnType=="wantToSignUpBtn")
+          {
+          setUserStatus("wantToSignUp")
+          console.log("want to su")
+          document.body.style.opacity = "0.3";
+          document.getElementById('accountWrapper').style.opacity= "1";
+        }
+          else if (btnType=="wantToLoginBtn")
+        {
+        setUserStatus("wantToLogin")
+        console.log("want to login")
+        document.body.style.opacity = "0.3";
+        document.getElementById("accountWrapper").style.opacity= "1";
+    
+        }
+        else if (btnType=="closeBtn")
+        {setUserStatus("notLogin")
+        document.body.style.opacity = "1";
+        console.log("want to close")}
+      };
+     
+    };
+          
   
-
-
   return (
     <div className={styles.navbarWrapper}>
       <h1>Plantify</h1>
@@ -42,10 +72,10 @@ export const Navbar:React.FC = () => {
           <p>Tasks</p>
         </NavItem>
       </div>
-      <UserButton userStatus={userStatus} onClick={userBtnClicked}/>    
-      <ManageAccount userStatus={userStatus}/>
+      <UserButton userStatus={userStatus} onClick={userBtnClicked} onLogoutClick={logout}/>    
+      <ManageAccount userStatus={userStatus} onClick={handleAcountClicks}/>
     </div>
   );
-};
+;}
 
 
