@@ -1,6 +1,5 @@
 /// <reference types="jest" />
 
-import type { Request, Response } from 'express'
 import request from 'supertest'
 import express from 'express'
 import userRouter from '../controllers/userController'

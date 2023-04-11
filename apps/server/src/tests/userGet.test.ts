@@ -1,5 +1,5 @@
-const request = require('supertest')
-const app = require('../app') // where is instance of an Express application?
+import request from 'supertest'
+import app from '../app' // where is instance of an Express application?
 
 describe('User GET endpoint', () => {
   test('returns 400 if username or password is not provided', async () => {
