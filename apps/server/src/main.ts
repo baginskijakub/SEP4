@@ -1,13 +1,7 @@
-import express from 'express'
-import * as dotenv from 'dotenv'
-import cookieParser from 'cookie-parser'
-import userRouter from './controllers/userController'
 import WebSocket from 'ws'
-dotenv.config()
+import { app } from './server'
 
 export const lorawanSocket = new WebSocket(process.env.LORAWAN_SOCKET_URL)
-
-export const app = express()
 
 lorawanSocket.on('open', () => {
   console.log('Lorawan socket connected')
@@ -24,11 +18,6 @@ lorawanSocket.on('close', () => {
 lorawanSocket.on('error', (error) => {
   console.log('Lorawan socket error', error)
 })
-
-app.use(express.json())
-app.use(cookieParser())
-
-app.use('/api/v1/users', userRouter)
 
 const port = process.env.PORT || 3333
 const host = '0.0.0.0'

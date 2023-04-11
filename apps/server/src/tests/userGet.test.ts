@@ -1,10 +1,25 @@
 import request from 'supertest'
-import { app } from '../main' // where is instance of an Express application?
+import { app } from '../server' // where is instance of an Express application?
 import prisma from '../helperFunctions/setupPrisma'
+import bcrypt from 'bcrypt'
 
 describe('User GET endpoint', () => {
+  beforeEach(async () => {
+    const encryptedPassword = await bcrypt.hash('Password123', 10)
+    await prisma.user.create({
+      data: {
+        username: 'existing_user',
+        password: encryptedPassword,
+      },
+    })
+  })
+
+  afterEach(async () => {
+    await prisma.user.deleteMany()
+  })
+
   test('returns 400 if username or password is not provided', async () => {
-    const response = await request(app).get('/users/').query({})
+    const response = await request(app).get('/api/v1/users')
 
     expect(response.statusCode).toBe(400)
     expect(response.body.message).toBe('Username and password are required!')
@@ -36,7 +51,7 @@ describe('User GET endpoint', () => {
   test('returns 200 with a token if user exists and password is correct', async () => {
     const response = await request(app).get('/api/v1/users').query({
       username: 'existing_user',
-      password: 'correct_password',
+      password: 'Password123',
     })
 
     expect(response.statusCode).toBe(200)
@@ -45,18 +60,18 @@ describe('User GET endpoint', () => {
     expect(response.header['set-cookie'][0]).toMatch(/token=.+/)
   })
 
-  //   test('returns 502 if database error occurs', async () => {
-  //     jest.spyOn(prisma, 'default').mockImplementation(() => {
-  //       throw new Error('Database error')
-  //     })
+  test('returns 502 if database error occurs', async () => {
+    jest.spyOn(prisma.user, 'findUnique').mockImplementation(() => {
+      throw new Error('Database error')
+    })
 
-  //     const response = await request(app).get('/users/').query({
-  //       username: 'existing_user',
-  //       password: 'correct_password',
-  //     })
+    const response = await request(app).get('/api/v1/users').query({
+      username: 'existing_user',
+      password: 'Password123',
+    })
 
-  //     expect(response.statusCode).toBe(502)
-  //     expect(response.body.message).toBe('Database error')
-  //     expect(response.body.status).toBe('error')
-  //   })
+    expect(response.statusCode).toBe(502)
+    expect(response.body.message).toBe('Database error')
+    expect(response.body.status).toBe('error')
+  })
 })
