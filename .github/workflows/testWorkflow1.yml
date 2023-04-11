@@ -1,0 +1,15 @@
+name: CI Pipeline (SEP4YG2)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main]
+
+jobs:
+  build:
+    name: Test Pipeline SEP4YG2
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/c
+      - name: undefined
+        run: echo "Pipeline tests"
