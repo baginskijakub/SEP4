@@ -4,8 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches: [backend/proof-of-concept]
-    paths:
-      - 'apps/server**'
+
   pull_request:
     paths:
       - 'apps/server**'
