@@ -10,6 +10,5 @@ jobs:
     name: Test Pipeline SEP4YG2
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/c
-      - name: undefined
+      - name: test
         run: echo "Pipeline tests"
