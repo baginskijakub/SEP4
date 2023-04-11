@@ -9,7 +9,7 @@ on:
     paths:
       - 'apps/server**'
 jobs:
-  build:
+  tests:
     name: Tests
     runs-on: ubuntu-latest
     steps:
@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: 18.12
       - name: Install dotenv globally
-        run: npm install dotenv -g
+        run: npm install dotenv-cli -g
       - name: Install dependencies
         run: npm install
       - name: Push schema to test database
