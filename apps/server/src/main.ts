@@ -7,7 +7,7 @@ dotenv.config()
 
 export const lorawanSocket = new WebSocket(process.env.LORAWAN_SOCKET_URL)
 
-const app = express()
+export const app = express()
 
 lorawanSocket.on('open', () => {
   console.log('Lorawan socket connected')
