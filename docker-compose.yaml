@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: ./
+      dockerfile: ./apps/server/Dockerfile
+    image: 'server_image'
+    env_file:
+      - .env
