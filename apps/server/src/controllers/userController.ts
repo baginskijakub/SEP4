@@ -15,6 +15,7 @@ userRouter.get('/', async (req, res) => {
   const password = query.password as string
   if (!username || !password) {
     res.status(400).json({ message: 'Username and password are required!', status: 'error' })
+    return
   }
   try {
     const user = await prisma.user.findUnique({
