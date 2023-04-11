@@ -5,11 +5,10 @@ on:
   push:
     branches: [backend/proof-of-concept]
     paths:
-      - './apps/server**'
+      - 'apps/server**'
   pull_request:
-    branches: [dev]
     paths:
-      - './apps/server**'
+      - 'apps/server**'
 jobs:
   build:
     name: Tests
