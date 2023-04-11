@@ -2,6 +2,7 @@
     Keys to be stored in db:
         - DATABASE_URL, url of database
         - WEB_TOKEN_SECRET, key to encoding json web tokens
+        - LORAWAN_SOCKET_URL, URL to LORAWANT network
 
 Write to me to get .env file and paste to your project locally
 # Pls dont push to key to public, do not leak it !!
