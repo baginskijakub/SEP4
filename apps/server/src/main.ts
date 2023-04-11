@@ -31,7 +31,8 @@ app.use(cookieParser())
 app.use('/api/v1/users', userRouter)
 
 const port = process.env.PORT || 3333
-const server = app.listen(port, () => {
+const host = '0.0.0.0'
+const server = app.listen(port, host, () => {
   console.log(`Listening at http://localhost:${port}/api`)
 })
 server.on('error', console.error)
