@@ -4,11 +4,18 @@ on:
   workflow_dispatch:
   push:
     branches: [ backend/proof-of-concept]
-
+    paths:
+      - 'backend/apps/server'
+  pull_request:
+    branches: [ dev]
 jobs:
   build:
-    name: Test Pipeline SEP4YG2
+    name: Tests
     runs-on: ubuntu-latest
     steps:
-      - name: test
-        run: echo "Pipeline tests"
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Dependencies
+        run: npm install
+      - name: Run Tests
+        run: npx nx test server
