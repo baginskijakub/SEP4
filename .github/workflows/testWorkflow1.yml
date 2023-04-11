@@ -3,7 +3,7 @@ name: CI Pipeline (SEP4YG2)
 on:
   workflow_dispatch:
   push:
-    branches: [ main]
+    branches: [ backend/proof-of-concept]
 
 jobs:
   build:
