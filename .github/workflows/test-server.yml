@@ -15,6 +15,12 @@ jobs:
     steps:
       - name: Checkout brach
         uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18.12
+      - name: Install dotenv globally
+        run: npm install dotenv -g
       - name: Install dependencies
         run: npm install
       - name: Push schema to test database
