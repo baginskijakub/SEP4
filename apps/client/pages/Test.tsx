@@ -10,5 +10,4 @@ export const Test:React.FC = () => {
   )
 }
 
-export default  Test;
-
+export default Test
