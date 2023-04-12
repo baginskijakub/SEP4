@@ -12,6 +12,18 @@
   --theme-700: #4D8CE1;
   --theme-500: #4D99FF;
   --theme-300: #7CB4FF;
+
+  --action-success-700: #3DB429;
+  --action-success-500: #60F048;
+  --action-success-300: #6CFF8D;
+
+  --action-warning-700: #C9B928;
+  --action-warning-500: #F5E449;
+  --action-warning-300: #F9EC78;
+
+  --action-error-700: #AB2626;
+  --action-error-500: #F63E3E;
+  --action-error-300: #FF9696;
 }
 
 body{

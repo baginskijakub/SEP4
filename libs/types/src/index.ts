@@ -18,3 +18,9 @@ export interface IGraphPoint{
   date: string
   value: number
 }
+
+export interface IUser {
+  id: number;
+  name: string;
+  email: string;
+}
