@@ -11,6 +11,31 @@ generator client {
 }
 
 model User {
-    username String @id @unique
+    username String  @id @unique
     password String
+    plants   Plant[]
+}
+
+model Plant {
+    id          Int         @id
+    name        String
+    description String
+    image       String
+    latinName   String
+    user        User        @relation(fields: [username], references: [username])
+    username    String
+    GraphData   GraphData[]
+
+    @@index([username])
+}
+
+model GraphData {
+    plantId   Int
+    plant     Plant  @relation(fields: [plantId], references: [id])
+    type      String
+    value     Float
+    dateEpoch Int
+
+    @@id([plantId, type, dateEpoch])
+    @@index([plantId])
 }
