@@ -19,8 +19,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 18.12
-      - name: Install dotenv globally
-        run: npm install dotenv-cli -g
       - name: Install dependencies
         run: npm install
       - name: Push schema to test database

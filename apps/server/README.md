@@ -9,9 +9,9 @@ Write to me to get .env file and paste to your project locally
 
 # Commands for prisma:
     to push changes:
-        npx prisma db push --schema=./apps/server/prisma/schema.prisma
+        npx dotenv -e .env.development -- npx prisma db push --schema=./apps/server/prisma/schema.prisma
     to open prisma studio:
-        npx prisma studio --schema=./apps/server/prisma/schema.prisma
+        npx dotenv -e .env.development -- npx prisma studio --schema=./apps/server/prisma/schema.prisma
 
 
 # Current endpoints
