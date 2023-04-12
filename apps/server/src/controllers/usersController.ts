@@ -3,9 +3,6 @@ import { validatePassword } from '../businessLogic/users/validatePassword'
 import bcrypt from 'bcrypt'
 import prisma from '../helperFunctions/setupPrisma'
 import jwt from 'jsonwebtoken'
-import dotenv from 'dotenv'
-
-dotenv.config()
 
 const userRouter = express.Router()
 
