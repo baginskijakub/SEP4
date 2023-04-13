@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "server:test:db:push": "dotenv -e .env.test -- npx prisma db push --schema=./apps/server/prisma/schema.prisma",
-    "server:test": "set NODE_ENV=test&& npx nx test server"
+    "server:test": "set NODE_ENV=test&& npx nx test server",
+    "server:mock:graph": "dotenv -e .env.development -- ts-node ./apps/server/src/scripts/mockGraphData.ts"
   },
   "private": true,
   "devDependencies": {
@@ -52,7 +53,7 @@
     "prisma": "^4.12.0",
     "react-test-renderer": "18.2.0",
     "ts-jest": "^29.0.5",
-    "ts-node": "10.9.1",
+    "ts-node": "^10.9.1",
     "typescript": "~4.9.5",
     "uuid": "^9.0.0"
   },

@@ -19,7 +19,6 @@ model User {
 model Plant {
     id          Int         @id
     name        String
-    description String
     image       String
     latinName   String
     user        User        @relation(fields: [username], references: [username])
