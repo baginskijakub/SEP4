@@ -1,0 +1,16 @@
+.userButtonWrapper{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid var(--background-700);
+  border-radius: 6px;
+  width: calc(100% - 24px);
+  padding: 12px;
+}
+.userButtonSeparator{
+  height: 100%;
+  width: 1px;
+  background-color: var(--background-700);
+}
