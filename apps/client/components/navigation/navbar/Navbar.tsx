@@ -5,7 +5,7 @@ import { MdDashboard, MdFormatListBulletedAdd, MdDeviceThermostat } from 'react-
 import { RiPlantFill } from 'react-icons/ri'
 import { UserButton } from '../userButton/UserButton'
 import { useState } from 'react'
-import { ManageAccount } from '../../login/LoginModal'
+import { LoginModal } from '../../login/LoginModal'
 
 export const Navbar: React.FC = () => {
   const [displayLoginModal, setDisplayLoginModal] = useState(false)
@@ -33,7 +33,7 @@ export const Navbar: React.FC = () => {
       </div>
       <UserButton onClick={() => setDisplayLoginModal(!displayLoginModal)} />
       {/*conditional rendering dependent on state*/}
-      {displayLoginModal && <ManageAccount onClose={() => setDisplayLoginModal(false)} />}
+      {displayLoginModal && <LoginModal onClose={() => setDisplayLoginModal(false)} />}
     </div>
   )
 }

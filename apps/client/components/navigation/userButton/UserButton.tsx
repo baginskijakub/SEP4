@@ -1,5 +1,5 @@
 import React from 'react'
-import { MdLogout } from 'react-icons/md'
+import { MdLogout, MdLogin } from 'react-icons/md'
 import styles from './UserButton.module.css'
 import { useUser } from '../../../context/UserContext'
 
@@ -14,13 +14,13 @@ export const UserButton: React.FC<Props> = ({ onClick }) => {
       <div className={styles.userButtonWrapper} onClick={onClick}>
         <h5>Login</h5>
         <span className={styles.userButtonSeparator} />
-        <MdLogout size={20} color={'#B3B3B3'} />
+        <MdLogin size={20} color={'#B3B3B3'} />
       </div>
     )
   } else {
     return (
       <div className={styles.userButtonWrapper} onClick={onClick}>
-        <h5>Username </h5>
+        <h5>Logout </h5>
         <span className={styles.userButtonSeparator} />
         <MdLogout size={20} color={'#B3B3B3'} />
       </div>
