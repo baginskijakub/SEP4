@@ -32,7 +32,11 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
         onClose()
       })
       .catch((err) => {
-        setErrorLabel('Something went wrong')
+        if(passwordElement.current.value.length<6){
+          setErrorLabel('The password must be at least 6 characters')  
+        } else {
+          setErrorLabel('Something went wrong')
+        }
       })
   }
 
@@ -44,7 +48,11 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
         onClose()
       })
       .catch((err) => {
-        setErrorLabel('Something went wrong')
+        if(passwordElement.current.value.length<6){
+          setErrorLabel('The password must be at least 6 characters')  
+        } else {
+          setErrorLabel('Something went wrong')
+        }
       })
   }
 
