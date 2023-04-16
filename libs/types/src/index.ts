@@ -24,3 +24,12 @@ export interface IUser {
   name: string;
   email: string;
 }
+
+export interface IPlantIdealEnvironment {
+  mintemp: number;
+  maxtemp: number;
+  minhum: number;
+  maxhum: number;
+  minco2: number;
+  maxco2: number;
+}
