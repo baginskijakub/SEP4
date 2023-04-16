@@ -15,5 +15,5 @@
 }
 
 .navItem:hover{
-  background-color: var(--background-700);
+  background-color: var(--background-g-light);
 }

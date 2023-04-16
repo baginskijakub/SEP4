@@ -12,22 +12,22 @@ export const Navbar: React.FC = () => {
 
   return (
     <div className={styles.navbarWrapper}>
-      <h1>Plantify</h1>
+      <h1 className={styles.title}>Plantify</h1>
       <div className={styles.navbarInner}>
         <NavItem path={'/'}>
-          <MdDashboard size={20} color={'#B3B3B3'} />
+          <MdDashboard size={20} color={'#5BA937'} />
           <p>Dashboard</p>
         </NavItem>
         <NavItem path={'/'}>
-          <RiPlantFill size={20} color={'#B3B3B3'} />
+          <RiPlantFill size={20} color={'#5BA937'} />
           <p>Plants</p>
         </NavItem>
         <NavItem path={'/'}>
-          <MdFormatListBulletedAdd size={20} color={'#B3B3B3'} />
+          <MdFormatListBulletedAdd size={20} color={'#5BA937'} />
           <p>Tasks</p>
         </NavItem>
         <NavItem path={'/'}>
-          <MdDeviceThermostat size={20} color={'#B3B3B3'} />
+          <MdDeviceThermostat size={20} color={'#5BA937'} />
           <p>Tasks</p>
         </NavItem>
       </div>

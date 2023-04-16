@@ -1,5 +1,5 @@
 import React from 'react'
-import { MdLogout, MdLogin } from 'react-icons/md'
+import { MdLogout, MdAccountCircle, MdLogin } from 'react-icons/md'
 import styles from './UserButton.module.css'
 import { useUser } from '../../../context/UserContext'
 
@@ -9,21 +9,13 @@ interface Props {
 
 export const UserButton: React.FC<Props> = ({ onClick }) => {
   const user = useUser()
-  if (user === null) {
-    return (
+      return (
       <div className={styles.userButtonWrapper} onClick={onClick}>
-        <h5>Login</h5>
+      <div className={styles.nameIconWrapper}><MdAccountCircle size={20} color={'#5BA937'} />
+        {  (user === null)? <h5>Login</h5> : <h5>Username</h5>}</div>
         <span className={styles.userButtonSeparator} />
-        <MdLogin size={20} color={'#B3B3B3'} />
-      </div>
-    )
-  } else {
-    return (
-      <div className={styles.userButtonWrapper} onClick={onClick}>
-        <h5>Logout </h5>
-        <span className={styles.userButtonSeparator} />
-        <MdLogout size={20} color={'#B3B3B3'} />
+        {  (user === null)? <MdLogin size={20} color={'#5BA937'} /> :  <MdLogout size={20} color={'#5BA937'} />}  
       </div>
     )
   }
-}
+

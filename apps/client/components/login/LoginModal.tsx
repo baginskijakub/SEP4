@@ -56,12 +56,17 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
       emailElement.current.value === undefined ||
       passwordElement.current.value === ''
     ) {
-      setErrorLabel('Please fill in all the fields')
+      setErrorLabel('Please fill in all the fields')  
       return
     }
     if (isLogin) {
       onLogin()
     } else {
+      if(passwordElement.current.value.length<6)
+      {
+        setErrorLabel('The password must be at least 6 characters')  
+        return
+      }
       onRegister()
     }
   }
