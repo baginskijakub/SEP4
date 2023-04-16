@@ -1,10 +1,10 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { ManageAccount } from '../components/login/LoginModal';
+import { LoginModal } from '../components/login/LoginModal';
 import '@testing-library/jest-dom'
 
 describe("<ManageAccount />", () => {
     test("renders LoginModal component when login", () => {
-        render(<ManageAccount onClose={null}/>)
+        render(<LoginModal onClose={null}/>)
 
         const loginHeader = screen.getAllByText(/Login/i)[0]
         const loginButton = screen.getAllByText(/Login/i)[1]
@@ -18,7 +18,7 @@ describe("<ManageAccount />", () => {
     })
 
     test("renders LoginModal component when register", () => {
-        render(<ManageAccount onClose={null}/>)
+        render(<LoginModal onClose={null}/>)
 
         fireEvent.click(screen.getByText(/Sign up here/i))
 
@@ -34,7 +34,7 @@ describe("<ManageAccount />", () => {
     })
 
     test("renders error message when password is less than 6 characters", () => {
-        render(<ManageAccount onClose={null}/>)
+        render(<LoginModal onClose={null}/>)
 
         fireEvent.change(screen.getByPlaceholderText(/E-Mail/i), {target: {value: ',test@gmail.com'}})
         fireEvent.change(screen.getByPlaceholderText(/Password/i), {target: {value: '12345'}})
@@ -46,11 +46,11 @@ describe("<ManageAccount />", () => {
         fireEvent.change(screen.getByPlaceholderText(/Password/i), {target: {value: '12345'}})
         fireEvent.click(screen.getAllByText(/Register/i)[1])
 
-        expect(screen.getByLabelText(/The password must be at least 6 characters/i)).toBeInTheDocument()
+        expect(screen.getByText(/The password must be at least 6 characters/i)).toBeInTheDocument()
     })
 
     test("renders error message when input is empty", () => {
-        render(<ManageAccount onClose={null}/>)
+        render(<LoginModal onClose={null}/>)
 
         fireEvent.change(screen.getByPlaceholderText(/E-Mail/i), {target: {value: ''}})
         fireEvent.change(screen.getByPlaceholderText(/Password/i), {target: {value: ''}})
@@ -62,6 +62,6 @@ describe("<ManageAccount />", () => {
         fireEvent.change(screen.getByPlaceholderText(/Password/i), {target: {value: ''}})
         fireEvent.click(screen.getAllByText(/Register/i)[1])
 
-        expect(screen.getByLabelText(/Please fill in all fields/i)).toBeInTheDocument()
+        expect(screen.getByText(/Please fill in all fields/i)).toBeInTheDocument()
     })
 })

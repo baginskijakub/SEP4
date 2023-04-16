@@ -11,7 +11,7 @@ interface Props {
   onClose: () => void
 }
 
-export const ManageAccount: React.FC<Props> = ({ onClose }) => {
+export const LoginModal: React.FC<Props> = ({ onClose }) => {
   // state handling password visibility
   const [passwordVisibility, setPasswordVisibility] = useState(true)
   // state handling toggling between login and register
@@ -28,14 +28,15 @@ export const ManageAccount: React.FC<Props> = ({ onClose }) => {
   const onLogin = () => {
     login(emailElement.current.value, passwordElement.current.value)
       .then((res) => {
-        if (res.status === 200) {
-          changeUserContext({
-            ...res.data,
-          })
-        }
+        changeUserContext({ ...res.data })
+        onClose()
       })
       .catch((err) => {
-        setErrorLabel(err)
+        if(passwordElement.current.value.length<6){
+          setErrorLabel('The password must be at least 6 characters')  
+        } else {
+          setErrorLabel('Something went wrong')
+        }
       })
   }
 
@@ -43,14 +44,15 @@ export const ManageAccount: React.FC<Props> = ({ onClose }) => {
   const onRegister = () => {
     register(emailElement.current.value, passwordElement.current.value)
       .then((res) => {
-        if (res.status === 200) {
-          changeUserContext({
-            ...res.data,
-          })
-        }
+        changeUserContext({ ...res.data })
+        onClose()
       })
       .catch((err) => {
-        setErrorLabel(err)
+        if(passwordElement.current.value.length<6){
+          setErrorLabel('The password must be at least 6 characters')  
+        } else {
+          setErrorLabel('Something went wrong')
+        }
       })
   }
 
