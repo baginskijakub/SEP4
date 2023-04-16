@@ -33,35 +33,43 @@ describe("<ManageAccount />", () => {
         expect(screen.getByText(/Login here/i)).toBeInTheDocument()
     })
 
-    test("renders error message when password is less than 6 characters", () => {
+    test("renders error message when password is less than 6 characters", async () => {
         render(<LoginModal onClose={null}/>)
 
-        fireEvent.change(screen.getByPlaceholderText(/E-Mail/i), {target: {value: ',test@gmail.com'}})
-        fireEvent.change(screen.getByPlaceholderText(/Password/i), {target: {value: '12345'}})
-        fireEvent.click(screen.getAllByText(/Login/i)[1])
+        const userNameInput = screen.getByPlaceholderText(/E-Mail/i)
+        const passwordInput = screen.getByPlaceholderText(/Password/i)
 
-        expect(screen.getByLabelText(/The password must be at least 6 characters/i)).toBeInTheDocument()
+        await fireEvent.input(userNameInput, {target: {value: 'test'}})
+        await fireEvent.input(passwordInput, {target: {value: '12345'}})
+        await fireEvent.click(screen.getAllByText(/Login/i)[1])
 
-        fireEvent.change(screen.getByPlaceholderText(/E-Mail/i), {target: {value: ',test@gmail.com'}})
-        fireEvent.change(screen.getByPlaceholderText(/Password/i), {target: {value: '12345'}})
-        fireEvent.click(screen.getAllByText(/Register/i)[1])
+        expect(await screen.findByText("The password must be at least 6 characters")).toBeInTheDocument()
 
-        expect(screen.getByText(/The password must be at least 6 characters/i)).toBeInTheDocument()
+        fireEvent.click(screen.getByText(/Sign up here/i))
+        await fireEvent.input(userNameInput, {target: {value: 'test'}})
+        await fireEvent.input(passwordInput, {target: {value: '12345'}})
+        await fireEvent.click(screen.getAllByText(/Register/i)[1])
+
+        expect(await screen.findByText("The password must be at least 6 characters")).toBeInTheDocument()
     })
 
-    test("renders error message when input is empty", () => {
+    test("renders error message when input is empty", async () => {
         render(<LoginModal onClose={null}/>)
 
-        fireEvent.change(screen.getByPlaceholderText(/E-Mail/i), {target: {value: ''}})
-        fireEvent.change(screen.getByPlaceholderText(/Password/i), {target: {value: ''}})
-        fireEvent.click(screen.getAllByText(/Login/i)[1])
+        const userNameInput = screen.getByPlaceholderText(/E-Mail/i)
+        const passwordInput = screen.getByPlaceholderText(/Password/i)
 
-        expect(screen.getByLabelText(/Please fill in all fields/i)).toBeInTheDocument()
+        await fireEvent.input(userNameInput, {target: {value: ''}})
+        await fireEvent.input(passwordInput, {target: {value: ''}})
+        await fireEvent.click(screen.getAllByText(/Login/i)[1])
 
-        fireEvent.change(screen.getByPlaceholderText(/E-Mail/i), {target: {value: ''}})
-        fireEvent.change(screen.getByPlaceholderText(/Password/i), {target: {value: ''}})
-        fireEvent.click(screen.getAllByText(/Register/i)[1])
+        expect(await screen.findByText("Please fill in all the fields")).toBeInTheDocument()
 
-        expect(screen.getByText(/Please fill in all fields/i)).toBeInTheDocument()
+        fireEvent.click(screen.getByText(/Sign up here/i))
+        await fireEvent.input(userNameInput, {target: {value: ''}})
+        await fireEvent.input(passwordInput, {target: {value: ''}})
+        await fireEvent.click(screen.getAllByText(/Register/i)[1])
+
+        expect(await screen.findByText("Please fill in all the fields")).toBeInTheDocument()    
     })
 })
