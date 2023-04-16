@@ -4,13 +4,26 @@
   justify-content: space-between;
   align-items: center;
   gap: 4px;
-  border: 1px solid var(--background-700);
+  background-color: var(--background-g-light);
+  border: 1px solid var(--theme-2);
   border-radius: 6px;
   width: calc(100% - 24px);
   padding: 12px;
+  color: var(--text-2);
 }
+
 .userButtonSeparator{
   height: 100%;
   width: 1px;
-  background-color: var(--background-700);
+  background-color: var(--theme-2);
+}
+
+.nameIconWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.nameIconWrapper h5 {
+margin-left: 5px;
 }

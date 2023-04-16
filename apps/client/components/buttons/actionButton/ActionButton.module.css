@@ -4,7 +4,8 @@
   align-items: center;
   width: 24px;
   height: 24px;
-  background: #3E3F4A;
+  background: var(--theme-3);
+  color: var(--text-1);
   border-radius: 100px;
   padding: 4px;
   outline: none;
