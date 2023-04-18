@@ -93,7 +93,7 @@ plantsRouter.get('/', authorizeUser, async (req: UserRequest, res) => {
       }
     })
 
-    res.status(200).json({ plants, status: 'success' })
+    res.status(200).json(plants)
   } catch (error) {
     res.status(400).json({ message: 'Failed to fetch plants', status: 'error' })
   }
@@ -115,7 +115,7 @@ plantsRouter.get('/:plantId', authorizeUser, async (req: UserRequest, res) => {
     if (!plant) {
       res.status(404).json({ message: 'Plant was not found', status: 'error' })
     } else {
-      res.status(200).json({ plant, status: 'success' })
+      res.status(200).json(plant)
     }
   } catch (error) {
     res.status(400).json({ message: 'Failed to fetch plant', status: 'error' })
