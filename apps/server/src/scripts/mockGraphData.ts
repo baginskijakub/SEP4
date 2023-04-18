@@ -16,6 +16,7 @@ async function mockGraphData() {
     latinName: 'latino americano',
     id: 12,
     username: 'fakeUser1',
+    description: 'This is the test plant',
     image:
       'https://media.istockphoto.com/id/1372896722/photo/potted-banana-plant-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=bioeNAo7zEqALK6jvyGlxeP_Y7h6j0QjuWbwY4E_eP8=',
   }
