@@ -1,0 +1,40 @@
+datasource db {
+    provider = "mysql"
+
+    url = env("DATABASE_URL")
+
+    relationMode = "prisma"
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model User {
+    username String  @id @unique
+    password String
+    plants   Plant[]
+}
+
+model Plant {
+    id          Int         @id
+    name        String
+    image       String
+    latinName   String
+    user        User        @relation(fields: [username], references: [username])
+    username    String
+    GraphData   GraphData[]
+
+    @@index([username])
+}
+
+model GraphData {
+    plantId   Int
+    plant     Plant  @relation(fields: [plantId], references: [id])
+    type      String
+    value     Float
+    dateEpoch Int
+
+    @@id([plantId, type, dateEpoch])
+    @@index([plantId])
+}

@@ -1,0 +1,27 @@
+name: CI Pipeline (SEP4YG2)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [backend/proof-of-concept]
+
+  pull_request:
+    paths:
+      - 'apps/server**'
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout brach
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18.12
+      - name: Install dependencies
+        run: npm install
+      - name: Push schema to test database
+        run: npm run server:test:db:push
+      - name: Run Tests
+        run: npm run server:test
