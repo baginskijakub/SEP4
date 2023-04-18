@@ -2,11 +2,16 @@ name: CI Pipeline (SEP4YG2)
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - "apps/server/**"
+      - ".github/workflows/test-server.yml"
   pull_request:
     branches:
       - dev
     paths:
-      - "./apps/server**"
+      - "apps/server/**"
+      - ".github/workflows/test-server.yml"
 jobs:
   tests:
     name: Run tests on server
