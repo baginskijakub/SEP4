@@ -23,7 +23,7 @@ jobs:
         run: npm install
       - name: "Create env file"
         run: |
-          echo "${{ secrets.ENV_TEST_FILE }}" > .env
+          echo "${{ secrets.ENV_TEST }}" > .env
       - name: Push schema to test database
         run: npm run server:test:db:push
       - name: Run Tests
