@@ -2,15 +2,12 @@ name: CI Pipeline (SEP4YG2)
 
 on:
   workflow_dispatch:
-  push:
-    branches: [backend/proof-of-concept]
-
   pull_request:
     paths:
       - "apps/server**"
 jobs:
   tests:
-    name: Tests
+    name: Run tests on server
     runs-on: ubuntu-latest
     steps:
       - name: Checkout brach
