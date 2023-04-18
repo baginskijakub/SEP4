@@ -7,7 +7,7 @@ on:
 
   pull_request:
     paths:
-      - 'apps/server**'
+      - "apps/server**"
 jobs:
   tests:
     name: Tests
@@ -21,6 +21,9 @@ jobs:
           node-version: 18.12
       - name: Install dependencies
         run: npm install
+      - name: "Create env file"
+        run: |
+          echo "${{ secrets.ENV_TEST_FILE }}" > .env
       - name: Push schema to test database
         run: npm run server:test:db:push
       - name: Run Tests
