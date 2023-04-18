@@ -5,7 +5,7 @@
   align-items: flex-start;
   padding: 12px;
   gap: 20px;
-  background: var(--background-b-med);
+  background: var(--background-b-dark);
   border: 1px solid var(--background-b-dark);
   box-shadow: 0 2px 8px rgba(21, 21, 21, 0.25);
   border-radius: 13px;
