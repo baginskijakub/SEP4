@@ -31,7 +31,7 @@ userRouter.get('/', async (req, res) => {
     }
     const token = jwt.sign({ username: user.username }, process.env.WEB_TOKEN_SECRET)
     res
-      .cookie('token', token, { httpOnly: true })
+      .cookie('token', token, { httpOnly: true, domain: 'localhost' })
       .status(200)
       .json({ message: 'User successfully logged in', status: 'success' })
   } catch (error) {

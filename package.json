@@ -7,7 +7,7 @@
     "server:test": "set NODE_ENV=test&& npx nx test server",
     "server:mock:graph": "dotenv -e .env.development -- ts-node ./apps/server/src/scripts/mockGraphData.ts",
     "server:dev:db:push": "npx dotenv -e .env.development -- npx prisma db push --schema=./apps/server/prisma/schema.prisma",
-    "prisma:studio": "npx dotenv -e .env.development -- npx prisma studio --schema=./apps/server/prisma/schema.prisma"
+    "prisma:studio": "npx dotenv -e .env.development -- npx prisma studio --schema=./apps/server/prisma/schema.prisma",
     "test": "jest"
   },
   "private": true,
@@ -66,7 +66,6 @@
   },
   "dependencies": {
     "@next/font": "^13.2.4",
-    "@nrwl/nx-darwin-x64": "^15.9.2",
     "@prisma/client": "^4.12.0",
     "axios": "^1.3.4",
     "bcrypt": "^5.1.0",
