@@ -2,15 +2,14 @@ name: CI Pipeline (SEP4YG2)
 
 on:
   workflow_dispatch:
-  push:
-    branches: [backend/proof-of-concept]
-
   pull_request:
+    branches:
+      - dev
     paths:
-      - 'apps/server**'
+      - "./apps/server**"
 jobs:
   tests:
-    name: Tests
+    name: Run tests on server
     runs-on: ubuntu-latest
     steps:
       - name: Checkout brach
@@ -21,6 +20,9 @@ jobs:
           node-version: 18.12
       - name: Install dependencies
         run: npm install
+      - name: "Create env file"
+        run: |
+          echo "${{ secrets.ENV_TEST }}" > .env
       - name: Push schema to test database
         run: npm run server:test:db:push
       - name: Run Tests
