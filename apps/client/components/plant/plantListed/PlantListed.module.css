@@ -1,0 +1,45 @@
+.plantWrapper{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 12px;
+  gap: 20px;
+  background: var(--background-b-med);
+  border: 1px solid var(--background-b-dark);
+  box-shadow: 0 2px 8px rgba(21, 21, 21, 0.25);
+  border-radius: 13px;
+  color: var(--text-1);
+}
+
+.plantWrapper img{
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.plantInner{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 4px;
+}
+
+.plantInner h3{
+  color: var(--text-900);
+}
+
+.plantInner p{
+  color: var(--text-700);
+}
+
+.plantControls{
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}

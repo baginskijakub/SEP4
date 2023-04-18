@@ -1,0 +1,109 @@
+.accountWrapperOuter{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(33, 34, 44, 0.5) 0%, rgba(23, 24, 32, 0.5) 100%);
+  backdrop-filter: blur(12px);
+  margin: 0;
+}
+
+.accountWrapper {
+    padding: 60px 40px 40px;
+    gap: 20px;
+    background-color: var(--background-b-med);
+    z-index: 3;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--background-b-dark);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    border-radius: 16px;
+}
+
+  .accountWrapper h1 {
+    margin-bottom: 40px;
+    color: var(--text-3);
+  }
+
+  .accountForm {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    gap: 24px;
+  }
+
+  .accountForm input, .accountForm input:focus {
+    width: 220px;
+    background: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    color: var(--text-3);
+  }
+
+  .inputWrapper {
+    display: flex;
+    flex-direction: row;
+
+    padding: 12px 12px 12px 24px;
+    gap: 16px;
+
+    width: 300px;
+
+    background: var(--background-b-light);
+    border: 1px solid var(--background-b-dark);
+    box-shadow: 0 2px 8px rgba(21, 21, 21, 0.25);
+    border-radius: 73px;
+  }
+
+  .accountBtnContainer {
+    display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  gap: 24px;
+
+  }
+
+
+  .accountText {
+    display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0;
+  gap: 4px;
+  color: var(--text-3);
+  }
+
+  .signUpBtn {
+    color: var(--theme-1);
+  }
+
+  .icon {
+    float: left;
+    color: var(--theme-3);
+  }
+
+  .closeBtn{
+    position: absolute;
+    right: -1px;
+    top: -1px;
+    padding: 8px;
+    border-radius: 0 16px 0 12px;
+   color: var(--text-3);
+     cursor: pointer;
+  }
+
+  .errorLabel{
+    height: 20px;
+    color: var(--action-error-500);
+  }

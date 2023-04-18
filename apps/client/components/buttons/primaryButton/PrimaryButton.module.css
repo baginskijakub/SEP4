@@ -1,0 +1,14 @@
+.primaryButtonContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 16px;
+  gap: 4px;
+  width: 199px;
+  height: 49px;
+  background: var(--theme-1);
+  border-radius: 70px;
+  border: none;
+  outline: none;
+}

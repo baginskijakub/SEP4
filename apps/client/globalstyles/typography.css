@@ -1,0 +1,226 @@
+h1 {
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 95%;
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 100%;
+  letter-spacing: -0.03em;
+}
+
+h3 {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 120%;
+  letter-spacing: -0.03em;
+}
+
+h4 {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 120%;
+  letter-spacing: -0.02em;
+}
+
+h5 {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 115%;
+  letter-spacing: -0.02em;
+}
+
+h6 {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 150%;
+}
+
+.body {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 120%;
+  letter-spacing: -0.02em;
+}
+
+.body-small {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 130%;
+}
+
+.caption {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  letter-spacing: -0.01em;
+}
+
+.caption-small {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 120%;
+}
+
+@media screen and (max-width: 1350px) {
+  h1 {
+    font-size: 32px;
+    line-height: 95%;
+    letter-spacing: -0.03em;
+  }
+  h2 {
+    font-size: 32px;
+    line-height: 100%;
+    letter-spacing: -0.03em;
+  }
+  h3 {
+    font-size: 20px;
+    line-height: 120%;
+    letter-spacing: -0.03em;
+  }
+  h4 {
+    font-size: 14px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+  }
+  h5 {
+    font-size: 12px;
+    line-height: 115%;
+    letter-spacing: -0.02em;
+  }
+  h6 {
+    font-size: 10px;
+    line-height: 150%;
+  }
+  .body {
+    font-size: 14px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+  }
+  .body-small {
+    font-size: 12px;
+    line-height: 130%;
+    letter-spacing: -0.01em;
+  }
+  .caption {
+    font-size: 10px;
+    line-height: 150%;
+    letter-spacing: -0.01em;
+  }
+  .caption-small {
+    font-size: 8px;
+    line-height: 120%;
+  }
+}
+@media screen and (max-width: 1050px) {
+  h1 {
+    font-size: 20px;
+    line-height: 95%;
+    letter-spacing: -0.03em;
+  }
+  h2 {
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: -0.03em;
+  }
+  h3 {
+    font-size: 14px;
+    line-height: 120%;
+    letter-spacing: -0.03em;
+  }
+  h4 {
+    font-size: 12px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+  }
+  h5 {
+    font-size: 10px;
+    line-height: 115%;
+    letter-spacing: -0.02em;
+  }
+  h6 {
+    font-size: 8px;
+    line-height: 150%;
+  }
+  .body {
+    font-size: 12px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+  }
+  .body-small {
+    font-size: 10px;
+    line-height: 130%;
+    letter-spacing: -0.01em;
+  }
+  .caption {
+    font-size: 8px;
+    line-height: 150%;
+    letter-spacing: -0.01em;
+  }
+  .caption-small {
+    font-size: 8px;
+    line-height: 120%;
+  }
+}
+@media screen and (max-width: 850px) {
+  h1 {
+    font-size: 18px;
+    line-height: 95%;
+    letter-spacing: -0.03em;
+  }
+
+  h2 {
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: -0.03em;
+  }
+
+  h3 {
+    font-size: 12px;
+    line-height: 120%;
+    letter-spacing: -0.03em;
+  }
+
+  h4 {
+    font-size: 10px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+  }
+
+  h5 {
+    font-size: 8px;
+    line-height: 115%;
+    letter-spacing: -0.02em;
+  }
+
+  h6 {
+    font-size: 8px;
+    line-height: 115%;
+  }
+
+  .body {
+    font-size: 12px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+  }
+
+  .body-small {
+    font-size: 10px;
+    line-height: 130%;
+    letter-spacing: -0.01em;
+  }
+
+  .caption {
+    font-size: 8px;
+    line-height: 150%;
+    letter-spacing: -0.01em;
+  }
+
+  .caption-small {
+    font-size: 8px;
+    line-height: 120%;
+  }
+}
