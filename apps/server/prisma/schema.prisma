@@ -17,11 +17,12 @@ model User {
 }
 
 model Plant {
-    id          Int         @id
+    id          Int         @id @default(autoincrement())
     name        String
     image       String
     latinName   String
-    user        User        @relation(fields: [username], references: [username])
+    description String
+    user        User        @relation(fields: [username], references: [username], onDelete: Cascade)
     username    String
     GraphData   GraphData[]
 
@@ -30,7 +31,7 @@ model Plant {
 
 model GraphData {
     plantId   Int
-    plant     Plant  @relation(fields: [plantId], references: [id])
+    plant     Plant  @relation(fields: [plantId], references: [id], onDelete: Cascade)
     type      String
     value     Float
     dateEpoch Int

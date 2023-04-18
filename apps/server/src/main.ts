@@ -8,7 +8,7 @@ lorawanSocket.on('open', () => {
 })
 
 lorawanSocket.on('message', (data) => {
-  console.log('Lorawan socket message', data)
+  console.log('Lorawan socket message', JSON.parse(data.toString()))
 })
 
 lorawanSocket.on('close', () => {
