@@ -16,6 +16,7 @@ plantsRouter.post('/', async (req, res) => {
   }
 });
 
+
 //GET all plants assigned to the usrer
 plantsRouter.get('/', async (req, res) => {
   const { username } = req.query;
