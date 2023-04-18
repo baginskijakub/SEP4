@@ -8,6 +8,15 @@
 
 }
 
+.plantContainerOuter{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 64px;
+}
+
 .plantWrapperOuter{
     display: flex;
     flex-direction: row;
@@ -17,8 +26,8 @@
     gap: 10px;
 
     position: absolute;
-    width: 1512px;
-    height: 982px;
+    width: 100vw;
+    height: 100vh;
     left: 0px;
     top: 0px;
 
@@ -36,7 +45,7 @@
 
     /* old styles/background/800 */
 
-    background: var(--background-800);
+    background: white;
     /* old styles/background/700 */
 
     border: 1px solid var(--background-700);
@@ -124,4 +133,11 @@
 
     width: 576px;
     height: 34px;
+}
+
+.errorLabel{
+    color: red;
+    width: 100%;
+    text-align: center;
+    height: 20px;
 }
