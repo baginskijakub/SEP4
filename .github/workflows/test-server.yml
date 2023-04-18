@@ -3,8 +3,10 @@ name: CI Pipeline (SEP4YG2)
 on:
   workflow_dispatch:
   pull_request:
+    branches:
+      - dev
     paths:
-      - "apps/server**"
+      - "./apps/server**"
 jobs:
   tests:
     name: Run tests on server
