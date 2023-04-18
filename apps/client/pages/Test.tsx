@@ -9,7 +9,7 @@ export const Test:React.FC = () => {
       Test
       <CreatePlant onClose={function (): void {
         throw new Error('Function not implemented.')
-      } }/>
+      } } mode={'create'}/>
     </div>
   )
 }
