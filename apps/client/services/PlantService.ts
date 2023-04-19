@@ -18,7 +18,6 @@ const getPlantById = (plantId: number) => {
     nickName: 'plant nickname',
     latinName: 'latin name',
     image: 'https://www.gardeningknowhow.com/wp-content/uploads/2008/05/rubber-plant.jpg',
-    description:'plant desc',
     idealEnvironment: {
       mintemp: 20,
       maxtemp: 50,
@@ -31,8 +30,8 @@ const getPlantById = (plantId: number) => {
 }
 
 
-const deletePlant = (plant: IPlant) => {
-  console.log('delete',plant)
+const deletePlant = (plantId: number) => {
+  console.log('delete',plantId)
   return {
      ///
   }
