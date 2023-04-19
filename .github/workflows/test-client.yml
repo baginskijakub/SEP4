@@ -23,5 +23,7 @@ jobs:
         run: npm install
       - name: Start server
         run: npx nx run server:serve
+      - name: Wait for server to start
+        run: sleep 10s
       - name: Run Tests
         run: npm run client:test
