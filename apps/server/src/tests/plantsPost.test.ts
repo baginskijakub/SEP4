@@ -8,7 +8,7 @@ describe('Plant POST endpoint', () => {
     const encryptedPassword = await bcrypt.hash('Password123', 10)
     await prisma.user.create({
       data: {
-        username: 'test_user',
+        email: 'test_user',
         password: encryptedPassword,
       },
     })
