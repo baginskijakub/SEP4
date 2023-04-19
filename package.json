@@ -8,7 +8,9 @@
     "server:mock:graph": "dotenv -e .env.development -- ts-node ./apps/server/src/scripts/mockGraphData.ts",
     "server:dev:db:push": "npx dotenv -e .env.development -- npx prisma db push --schema=./apps/server/prisma/schema.prisma",
     "prisma:studio": "npx dotenv -e .env.development -- npx prisma studio --schema=./apps/server/prisma/schema.prisma",
-    "test": "jest"
+    "client:test": "jest",
+    "client:build": "nx run client:build",
+    "start": "nx serve client --configuration=production --"
   },
   "private": true,
   "devDependencies": {
