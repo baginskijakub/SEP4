@@ -1,5 +1,5 @@
 import request from 'supertest'
-import { app } from '../server' // where is instance of an Express application?
+import { app } from '../server'
 import prisma from '../helperFunctions/setupPrisma'
 import bcrypt from 'bcrypt'
 
