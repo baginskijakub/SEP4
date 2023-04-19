@@ -26,7 +26,7 @@ jobs:
       - name: Push schema to test database
         run: npm run server:test:db:push
       - name: Start server
-        run: npx nx run server:serve
+        run: npx nx run server:serve &
       - name: Wait for server to start
         run: sleep 10s
       - name: Run Tests
