@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef} from 'react'
 import styles from './LoginModal.module.css'
 import { MdOutlineMail, MdLock, MdVisibility, MdVisibilityOff, MdOutlineClose } from 'react-icons/md'
 import { useState } from 'react'
@@ -31,9 +31,9 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
         changeUserContext({ ...res.data })
         onClose()
       })
-      .catch((err) => {
+      .catch(() => {
         if(passwordElement.current.value.length<6){
-          setErrorLabel('The password must be at least 6 characters')  
+          setErrorLabel('The password must be at least 6 characters')
         } else {
           setErrorLabel('Something went wrong')
         }
@@ -47,9 +47,9 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
         changeUserContext({ ...res.data })
         onClose()
       })
-      .catch((err) => {
+      .catch(() => {
         if(passwordElement.current.value.length<6){
-          setErrorLabel('The password must be at least 6 characters')  
+          setErrorLabel('The password must be at least 6 characters')
         } else {
           setErrorLabel('Something went wrong')
         }
@@ -64,7 +64,7 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
       emailElement.current.value === undefined ||
       passwordElement.current.value === ''
     ) {
-      setErrorLabel('Please fill in all the fields')  
+      setErrorLabel('Please fill in all the fields')
       return
     }
     if (isLogin) {
@@ -72,7 +72,7 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
     } else {
       if(passwordElement.current.value.length<6)
       {
-        setErrorLabel('The password must be at least 6 characters')  
+        setErrorLabel('The password must be at least 6 characters')
         return
       }
       onRegister()
