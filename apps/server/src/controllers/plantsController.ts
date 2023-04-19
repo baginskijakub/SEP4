@@ -71,7 +71,7 @@ plantsRouter.post('/', authorizeUser, async (req: UserRequest, res) => {
         username: decodedToken.username,
       },
     })
-    res.status(201).json({ message: 'Plant successfully registerd', plant, status: 'success' })
+    res.status(201).json({ message: 'Plant successfully registered', plant, status: 'success' })
   } catch (error) {
     res.status(400).json({ message: 'Failed to register plant', status: 'error' })
   }
