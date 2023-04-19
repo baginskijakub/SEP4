@@ -14,10 +14,11 @@ export const Graph: React.FC<Props> = ({ id, type }) => {
     getPlantEnvironmentHistory(id, type).then((res) => {
       setData(res)
     })
-  })
+  }, [type])
 
+  if(!data) return <div>Loading</div>
   return (
-    <ResponsiveContainer width={'100%'} height={400}>
+    <ResponsiveContainer width={'100%'} height={180}>
       <AreaChart data={data.data}>
         <defs>
           <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
