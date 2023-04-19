@@ -3,7 +3,7 @@ name: CI Pipeline client (SEP4YG2)
 on:
   workflow_dispatch:
   push:
-    branches: [frontend/sprint3/chore/ci-pipeline]
+    branches: [frontend/sprint3/chore/ci-pipeline, dev, main]
 
   pull_request:
     paths:
