@@ -1,0 +1,25 @@
+name: CI Pipeline client (SEP4YG2)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [frontend/sprint3/chore/ci-pipeline]
+
+  pull_request:
+    paths:
+      - 'apps/client**'
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout brach
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18.12
+      - name: Install dependencies
+        run: npm install
+      - name: Run Tests
+        run: nx run client:test
