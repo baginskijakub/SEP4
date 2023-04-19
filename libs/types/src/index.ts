@@ -4,10 +4,14 @@ export interface IPlant {
   id: number
   name: string
   nickName: string
-  description: string
   latinName: string
   image: string
-  idealEnvironment: []
+  idealEnvironment?: { mintemp: number,
+    maxtemp: number,
+    minhum: number,
+    maxhum: number,
+    minco2: number,
+    maxco2: number}
 }
 
 export interface IGraphData {
