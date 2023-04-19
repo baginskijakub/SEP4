@@ -18,7 +18,7 @@ export const Navbar: React.FC = () => {
           <MdDashboard size={20} color={'#5BA937'} />
           <p>Dashboard</p>
         </NavItem>
-        <NavItem path={'/'}>
+        <NavItem path={'/Plants'}>
           <RiPlantFill size={20} color={'#5BA937'} />
           <p>Plants</p>
         </NavItem>

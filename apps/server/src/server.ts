@@ -9,7 +9,7 @@ dotenv.config({ path: `.env.${process.env.NODE_ENV}` })
 
 export const app = express()
 
-app.use(cors())
+app.use(cors({ origin: 'http://localhost:4200', credentials: true }))
 app.use(express.json())
 app.use(cookieParser())
 
