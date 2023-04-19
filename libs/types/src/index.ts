@@ -3,9 +3,11 @@ export * from './lib/types'
 export interface IPlant {
   id: number
   name: string
+  nickName: string
   description: string
   latinName: string
   image: string
+  idealEnvironment: []
 }
 
 export interface IGraphData {
