@@ -12,7 +12,7 @@ interface Props {
 export const RemovePlant: React.FC <Props> = ({ onClose, plantId }) => {
     const [plant, setPlant] = useState(getPlantById(plantId)) 
    
-    const deleteBtnClick = () => {deletePlant(plant)}
+    const deleteBtnClick = () => {deletePlant(plantId)}
    
     return (
      <div className={styles.modalWrapperOuter}>
