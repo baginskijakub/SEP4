@@ -1,14 +1,13 @@
-name: CI Pipeline (SEP4YG2)
+name: CI Pipeline client (SEP4YG2)
 
 on:
   workflow_dispatch:
   pull_request:
     paths:
-      - "apps/server/**"
-      - ".github/workflows/test-server.yml"
+      - "apps/client**"
 jobs:
   tests:
-    name: Run tests on server
+    name: Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout branch
@@ -22,7 +21,13 @@ jobs:
       - name: "Create env file"
         run: |
           echo "${{ secrets.ENV_TEST }}" > .env
+      - name: Generate database
+        run: npm run server:test:db:generate
       - name: Push schema to test database
         run: npm run server:test:db:push
+      - name: Start server
+        run: npx nx run server:serve &
+      - name: Wait for server to start
+        run: sleep 10s
       - name: Run Tests
-        run: npm run server:test
+        run: npm run client:test
