@@ -2,7 +2,6 @@ name: CI Pipeline (SEP4YG2)
 
 on:
   workflow_dispatch:
-  push:
   pull_request:
     paths:
       - "apps/server/**"
