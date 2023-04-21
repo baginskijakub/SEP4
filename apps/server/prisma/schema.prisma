@@ -11,22 +11,39 @@ generator client {
 }
 
 model User {
-    username String  @id @unique
+    email    String  @id @unique
     password String
     plants   Plant[]
 }
 
 model Plant {
-    id          Int         @id @default(autoincrement())
-    name        String
-    image       String
-    latinName   String
-    description String
-    user        User        @relation(fields: [username], references: [username], onDelete: Cascade)
-    username    String
-    GraphData   GraphData[]
+    id                 Int                 @id @default(autoincrement())
+    name               String
+    image              String
+    latinName          String
+    nickName           String
+    user               User                @relation(fields: [email], references: [email], onDelete: Cascade)
+    email              String
+    GraphData          GraphData[]
+    minTemperature     Float
+    maxTemperature     Float
+    minHumidity        Float
+    maxHumidity        Float
+    minCo2             Float
+    maxCo2             Float
+    CurrentEnvironment CurrentEnvironment?
 
-    @@index([username])
+    @@index([email])
+}
+
+model CurrentEnvironment {
+    plant       Plant @relation(fields: [plantId], references: [id])
+    plantId     Int   @id
+    temperature Float
+    co2         Float
+    humidity    Float
+
+    @@index([plantId])
 }
 
 model GraphData {
