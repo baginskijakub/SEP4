@@ -12,6 +12,17 @@ services:
     ports:
       - '3333:3333'
 
+  testDb:
+    image: mysql:latest
+    restart: always
+    ports:
+      - '3310:3306'
+    environment:
+      MYSQL_USER: 'prisma'
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_PASSWORD: 'secret'
+      MYSQL_DATABASE: 'test'
+
   next:
     restart: always
     build:
