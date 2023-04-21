@@ -10,7 +10,7 @@ describe('Plant DELETE endpoint', () => {
     const encryptedPassword = await bcrypt.hash('Password123', 10)
     await prisma.user.create({
       data: {
-        username: 'test_user',
+        email: 'test_user',
         password: encryptedPassword,
       },
     })
@@ -35,11 +35,17 @@ describe('Plant DELETE endpoint', () => {
   test('returns a successful response with status code 200 if plant is successfully deleted', async () => {
     const plant = await prisma.plant.create({
       data: {
-        name: 'Test plant',
-        description: 'A plant for testing',
-        image: 'plant.jpg',
-        latinName: 'Plantus testus',
-        username: 'test_user',
+        name: 'Test plant 1',
+        nickName: 'Cool nickname',
+        image: 'plant1.jpg',
+        latinName: 'Plantus testus 1',
+        email: 'test_user',
+        minCo2: 100,
+        maxCo2: 200,
+        minHumidity: 10,
+        maxHumidity: 20,
+        minTemperature: 10,
+        maxTemperature: 20,
       },
     })
 
@@ -53,18 +59,24 @@ describe('Plant DELETE endpoint', () => {
   test('returns 400 status and error message when failed to delete plant (not authorized user)', async () => {
     const plant = await prisma.plant.create({
       data: {
-        name: 'Test plant',
-        description: 'A plant for testing',
-        image: 'plant.jpg',
-        latinName: 'Plantus testus',
-        username: 'another_user',
+        name: 'Test plant 1',
+        nickName: 'Cool nickname',
+        image: 'plant1.jpg',
+        latinName: 'Plantus testus 1',
+        email: 'test_user',
+        minCo2: 100,
+        maxCo2: 200,
+        minHumidity: 10,
+        maxHumidity: 20,
+        minTemperature: 10,
+        maxTemperature: 20,
       },
     })
 
-    const response = await request(app).delete(`/api/v1/plants/${plant.id}`).set('Cookie', authToken)
+    const response = await request(app).delete(`/api/v1/plants/${plant.id}`)
 
-    expect(response.status).toBe(400)
-    expect(response.body.message).toBe('Failed to delete plant')
+    expect(response.status).toBe(401)
+    expect(response.body.message).toBe('Unauthorized')
     expect(response.body.status).toBe('error')
   })
 

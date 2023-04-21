@@ -63,13 +63,25 @@ plantsRouter.post('/', authorizeUser, async (req: UserRequest, res) => {
       return
     }
 
+    const existingUser = await prisma.user.findUnique({ where: { email: decodedToken.email as string } })
+    if (!existingUser) {
+      res.status(400).json({ message: 'User does not exist', status: 'error' })
+      return
+    }
+
     const plant = await prisma.plant.create({
       data: {
         name: requestPlant.name,
-        description,
-        image,
-        latinName,
+        nickName: requestPlant.nickName,
+        image: requestPlant.image,
+        latinName: requestPlant.latinName,
         email: decodedToken.email,
+        minCo2: requestPlant?.idealEnvironment.minCo2,
+        maxCo2: requestPlant?.idealEnvironment.maxCo2,
+        minHumidity: requestPlant?.idealEnvironment.minHumidity,
+        maxHumidity: requestPlant?.idealEnvironment.maxHumidity,
+        maxTemperature: requestPlant?.idealEnvironment.maxTemperature,
+        minTemperature: requestPlant?.idealEnvironment.minTemperature,
       },
     })
     res.status(201).json({ message: 'Plant successfully registered', plant, status: 'success' })
@@ -82,13 +94,13 @@ plantsRouter.post('/', authorizeUser, async (req: UserRequest, res) => {
 plantsRouter.get('/', authorizeUser, async (req: UserRequest, res) => {
   try {
     const decodedToken = req.user
-    const plantsFromDb = await prisma.plant.findMany({ where: { username: decodedToken.username as string } })
+    const plantsFromDb = await prisma.plant.findMany({ where: { email: decodedToken.email as string } })
 
     const plants: IPlant[] = plantsFromDb.map((plant) => {
       return {
         id: plant.id,
         name: plant.name,
-        description: plant.description,
+        nickName: plant.nickName,
         image: plant.image,
         latinName: plant.latinName,
       }
@@ -149,15 +161,25 @@ plantsRouter.get('/:plantId', authorizeUser, async (req: UserRequest, res) => {
 // //PATCH
 plantsRouter.patch('/:plantId', authorizeUser, async (req, res) => {
   const { plantId } = req.params
-  const { name, description, image, latinName } = req.body
+  const requestPlant: unknown = req.body
   try {
+    if (!isValidPlant(requestPlant) || requestPlant === null) {
+      res.status(400).json({ message: 'Missing parameters to register a plant', status: 'error' })
+      return
+    }
     await prisma.plant.update({
       where: { id: parseInt(plantId) },
       data: {
-        name,
-        description,
-        image,
-        latinName,
+        name: requestPlant.name,
+        nickName: requestPlant.nickName,
+        image: requestPlant.image,
+        latinName: requestPlant.latinName,
+        minCo2: requestPlant?.idealEnvironment.minCo2,
+        maxCo2: requestPlant?.idealEnvironment.maxCo2,
+        minHumidity: requestPlant?.idealEnvironment.minHumidity,
+        maxHumidity: requestPlant?.idealEnvironment.maxHumidity,
+        maxTemperature: requestPlant?.idealEnvironment.maxTemperature,
+        minTemperature: requestPlant?.idealEnvironment.minTemperature,
       },
     })
     res.status(200).json({ message: 'Plant updated successfully', status: 'success' })
