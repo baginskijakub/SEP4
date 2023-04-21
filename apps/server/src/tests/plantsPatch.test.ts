@@ -11,22 +11,25 @@ describe('Plant PATCH endpoint', () => {
     const encryptedPassword = await bcrypt.hash('Password123', 10)
     await prisma.user.create({
       data: {
-        username: 'test_user',
+        email: 'test_user',
         password: encryptedPassword,
       },
     })
 
     const plant = await prisma.plant.create({
       data: {
+        id: 1,
         name: 'Test plant',
-        description: 'A plant for testing',
+        nickName: 'A plant for testing',
         image: 'plant.jpg',
         latinName: 'Plantus testus',
-        user: {
-          connect: {
-            username: 'test_user',
-          },
-        },
+        email: 'test_user',
+        minCo2: 100,
+        maxCo2: 200,
+        minHumidity: 10,
+        maxHumidity: 20,
+        minTemperature: 10,
+        maxTemperature: 20,
       },
     })
 
@@ -49,9 +52,17 @@ describe('Plant PATCH endpoint', () => {
   test('returns a successful response with status code 200 if plant is successfully updated', async () => {
     const updatedPlant = {
       name: 'Updated plant name',
-      description: 'Updated plant description',
+      nickName: 'Updated plant nickName',
       image: 'updated-plant.jpg',
       latinName: 'Updated plantus testus',
+      idealEnvironment: {
+        minCo2: 100,
+        maxCo2: 200,
+        minHumidity: 10,
+        maxHumidity: 20,
+        minTemperature: 10,
+        maxTemperature: 20,
+      },
     }
 
     const response = await request(app).patch(`/api/v1/plants/${plantId}`).set('Cookie', authToken).send(updatedPlant)
@@ -65,10 +76,44 @@ describe('Plant PATCH endpoint', () => {
       include: { user: true },
     })
 
-    expect(plant).toMatchObject(updatedPlant)
+    expect(plant).toMatchObject({
+      name: 'Updated plant name',
+      nickName: 'Updated plant nickName',
+      image: 'updated-plant.jpg',
+      latinName: 'Updated plantus testus',
+      minCo2: 100,
+      maxCo2: 200,
+      minHumidity: 10,
+      maxHumidity: 20,
+      minTemperature: 10,
+      maxTemperature: 20,
+    })
   })
 
   test('returns 400 status and error message when failed to update plant (not valid plantId)', async () => {
+    const updatedPlant = {
+      name: 'Updated plant name',
+      nickName: 'Updated plant nickName',
+      image: 'updated-plant.jpg',
+      latinName: 'Updated plantus testus',
+      idealEnvironment: {
+        minCo2: 100,
+        maxCo2: 200,
+        minHumidity: 10,
+        maxHumidity: 20,
+        minTemperature: 10,
+        maxTemperature: 20,
+      },
+    }
+
+    const response = await request(app).patch('/api/v1/plants/999').set('Cookie', authToken).send(updatedPlant)
+
+    expect(response.status).toBe(400)
+    expect(response.body.message).toBe('Failed to update plant')
+    expect(response.body.status).toBe('error')
+  })
+
+  test('returns 400 status and error message when failed to update plant (not valid request body)', async () => {
     const updatedPlant = {
       name: 'Updated plant name',
       description: 'Updated plant description',
@@ -76,10 +121,10 @@ describe('Plant PATCH endpoint', () => {
       latinName: 'Updated plantus testus',
     }
 
-    const response = await request(app).patch('/api/v1/plants/999').set('Cookie', authToken).send(updatedPlant)
+    const response = await request(app).patch('/api/v1/plants/1').set('Cookie', authToken).send(updatedPlant)
 
     expect(response.status).toBe(400)
-    expect(response.body.message).toBe('Failed to update plant')
+    expect(response.body.message).toBe('Missing parameters to register a plant')
     expect(response.body.status).toBe('error')
   })
 
