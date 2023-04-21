@@ -1,0 +1,23 @@
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 16px;
+  gap: 24px;
+  background: var(--background-b-med);
+  border-radius: 20px;
+  border: 1px solid var(--background-b-dark);
+  height: 27vh;
+}
+
+.inner{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+
