@@ -23,7 +23,7 @@ const getPlantById = (plantId: number) => {
 
 const addPlant = (plant: IPlant) => {
   return axios.post(`http://localhost:3333/api/v1/plants`, plant).then((response) => {
-    if (response.status === 200) {
+    if (response.status === 201) {
       return response.data
     } else {
       throw new Error('Error fetching data')
