@@ -6,8 +6,8 @@ export interface IPlant {
   nickName: string
   latinName: string
   image: string
-  idealEnvironment: IPlantIdealEnvironment
-  currentEnvironment: IPlantCurrentEnvironment
+  idealEnvironment?: IPlantIdealEnvironment
+  currentEnvironment?: IPlantCurrentEnvironment
 }
 
 export interface IPlantCurrentEnvironment {
@@ -16,34 +16,31 @@ export interface IPlantCurrentEnvironment {
   humidity: number
 }
 
+export interface IGraphPoint {
+  date: string
+  value: number
+}
+
+export interface IGraphData {
+  type: 'temperature' | 'humidity' | 'co2'
+  data: IGraphPoint[]
+}
 
 export interface IGraphPoint {
   date: string
   value: number
 }
 
-export interface IGraphData{
-  //Not sure about light, TBD
-  type: 'temperature' | 'humidity' | 'co2'
-  data: IGraphPoint[]
-}
-
-export interface IGraphPoint{
-  date: string
-  value: number
-}
-
 export interface IUser {
-  id: number;
-  name: string;
-  email: string;
+  name: string
+  email: string
 }
 
 export interface IPlantIdealEnvironment {
-  minTemperature: number;
-  maxTemperature: number;
-  minHumidity: number;
-  maxHumidity: number;
-  minCo2: number;
-  maxCo2: number;
+  minTemperature: number
+  maxTemperature: number
+  minHumidity: number
+  maxHumidity: number
+  minCo2: number
+  maxCo2: number
 }

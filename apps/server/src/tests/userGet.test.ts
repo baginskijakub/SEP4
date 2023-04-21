@@ -1,5 +1,5 @@
 import request from 'supertest'
-import { app } from '../server' // where is instance of an Express application?
+import { app } from '../server'
 import prisma from '../helperFunctions/setupPrisma'
 import bcrypt from 'bcrypt'
 
@@ -8,7 +8,7 @@ describe('User GET endpoint', () => {
     const encryptedPassword = await bcrypt.hash('Password123', 10)
     await prisma.user.create({
       data: {
-        username: 'existing_user',
+        email: 'existing_user',
         password: encryptedPassword,
       },
     })

@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import { Request, Response, NextFunction } from 'express'
 
 export interface UserRequest extends Request {
-  user: { username: string }
+  user: { email: string }
 }
 
 export default function authorizeUser(req: UserRequest, res: Response, next: NextFunction) {
@@ -12,7 +12,7 @@ export default function authorizeUser(req: UserRequest, res: Response, next: Nex
     return
   }
   try {
-    const decodedToken = jwt.verify(token, process.env.WEB_TOKEN_SECRET) as { username: string }
+    const decodedToken = jwt.verify(token, process.env.WEB_TOKEN_SECRET) as { email: string }
     if (!decodedToken) {
       res.status(401).json({ message: 'Unauthorized', status: 'error' })
       return

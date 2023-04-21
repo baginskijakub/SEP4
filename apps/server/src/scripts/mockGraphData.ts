@@ -4,7 +4,7 @@ import { hash } from 'bcrypt'
 async function mockGraphData() {
   const prisma = new PrismaClient()
   const fakeUser = {
-    username: 'fakeUser1',
+    email: 'fakeUser1',
     password: await hash('fakePassword1', 10),
   }
   await prisma.user.create({
@@ -15,13 +15,28 @@ async function mockGraphData() {
     name: 'Test plant',
     latinName: 'latino americano',
     id: 12,
-    username: 'fakeUser1',
-    description: 'This is the test plant',
+    email: 'fakeUser1',
+    nickName: 'Test nickname',
     image:
       'https://media.istockphoto.com/id/1372896722/photo/potted-banana-plant-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=bioeNAo7zEqALK6jvyGlxeP_Y7h6j0QjuWbwY4E_eP8=',
+    minTemperature: 5,
+    maxTemperature: 10,
+    minHumidity: 11,
+    maxHumidity: 12,
+    minCo2: 0.5,
+    maxCo2: 0.7,
   }
   await prisma.plant.create({
     data: fakePlant,
+  })
+
+  await prisma.currentEnvironment.create({
+    data: {
+      plantId: 12,
+      temperature: 41.12,
+      co2: 0.6,
+      humidity: 11.5,
+    },
   })
 
   const fakeGraphPoints = [
