@@ -1,0 +1,103 @@
+.modalWrapperOuter {
+    position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(33, 34, 44, 0.5) 0%, rgba(23, 24, 32, 0.5) 100%);
+  backdrop-filter: blur(12px);
+  margin: 0;
+}
+
+.modalWrapper {
+    padding: 60px 40px 40px;
+    gap: 20px;
+    background-color: var(--background-b-med);
+    z-index: 3;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--background-b-dark);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    border-radius: 16px;
+    color: var(--text-3);
+}
+
+.plantWrapper{
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 12px;
+    gap: 20px;
+    background: var(--background-b-dark);
+    border: 1px solid var(--background-b-dark);
+    box-shadow: 0 2px 8px rgba(21, 21, 21, 0.25);
+    border-radius: 13px;
+    color: var(--text-1);
+  }
+  
+  .plantWrapper img{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+  
+  .plantInner{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    gap: 4px;
+  }
+  
+  .plantInner h3{
+    color: var(--text-1);
+  }
+  
+  .plantInner p{
+    color: var(--text-1);
+  }
+
+  .btnWrapper {
+    width: 100%;
+     display: flex;
+     justify-content: end;
+     gap: 10px;
+  }
+
+  .cancelBtn, .deleteBtn {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 6px 16px;
+        gap: 4px;
+        width: auto;
+        background: var(--theme-1);
+        border-radius: 70px;
+        border: none;
+        outline: none;
+        color: var(--text-1);
+
+  }
+
+  .cancelBtn {
+    background: var(--background-b-dark);
+  }
+
+  .plantName {
+    color: var(--theme-1); 
+  }
+
+
+  
+  

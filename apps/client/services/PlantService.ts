@@ -1,3 +1,4 @@
+import { IPlant } from '@sep4/types'
 import axios from 'axios'
 import { IPlant } from "@sep4/types";
 
