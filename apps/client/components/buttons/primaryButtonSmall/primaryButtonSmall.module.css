@@ -1,0 +1,16 @@
+.addButtonContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 20px;
+    gap: 10px;
+
+    width: 105px;
+    height: 34px;
+
+    /* theme/500 */
+
+    background: var(--theme-1);
+    border-radius: 70px;
+}
