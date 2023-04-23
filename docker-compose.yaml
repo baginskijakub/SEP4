@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  server:
+    restart: always
+    build:
+      context: ./
+      dockerfile: ./apps/server/Dockerfile
+    image: 'server_image'
+    env_file:
+      - .env.development
+    ports:
+      - '3333:3333'
+
+  next:
+    restart: always
+    build:
+      context: ./
+      dockerfile: ./apps/client/Dockerfile
+    image: 'client_image'
+    env_file:
+      - .env.development
+    ports:
+      - '4200:4200'

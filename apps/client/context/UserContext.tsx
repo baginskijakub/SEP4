@@ -21,6 +21,7 @@ export const UserContextProvider: React.FC<Props> = ({ children }) => {
 
   function changeUser(user: IUser | null) {
     setUser(user)
+    console.log(user)
   }
 
   return (

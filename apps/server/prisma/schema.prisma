@@ -1,0 +1,58 @@
+datasource db {
+    provider = "mysql"
+
+    url = env("DATABASE_URL")
+
+    relationMode = "prisma"
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model User {
+    email    String  @id @unique
+    password String
+    plants   Plant[]
+}
+
+model Plant {
+    id                 Int                 @id @default(autoincrement())
+    name               String
+    image              String
+    latinName          String
+    nickName           String
+    user               User                @relation(fields: [email], references: [email], onDelete: Cascade)
+    email              String
+    GraphData          GraphData[]
+    minTemperature     Float
+    maxTemperature     Float
+    minHumidity        Float
+    maxHumidity        Float
+    minCo2             Float
+    maxCo2             Float
+    CurrentEnvironment CurrentEnvironment?
+
+    @@index([email])
+}
+
+model CurrentEnvironment {
+    plant       Plant @relation(fields: [plantId], references: [id])
+    plantId     Int   @id
+    temperature Float
+    co2         Float
+    humidity    Float
+
+    @@index([plantId])
+}
+
+model GraphData {
+    plantId   Int
+    plant     Plant  @relation(fields: [plantId], references: [id], onDelete: Cascade)
+    type      String
+    value     Float
+    dateEpoch Int
+
+    @@id([plantId, type, dateEpoch])
+    @@index([plantId])
+}
