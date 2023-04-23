@@ -4,11 +4,14 @@
   "license": "MIT",
   "scripts": {
     "server:test:db:push": "dotenv -e .env.test -- npx prisma db push --schema=./apps/server/prisma/schema.prisma",
+    "server:test:db:generate": "dotenv -e .env.test -- npx prisma generate --schema=./apps/server/prisma/schema.prisma",
     "server:test": "set NODE_ENV=test&& npx nx test server",
     "server:mock:graph": "dotenv -e .env.development -- ts-node ./apps/server/src/scripts/mockGraphData.ts",
     "server:dev:db:push": "npx dotenv -e .env.development -- npx prisma db push --schema=./apps/server/prisma/schema.prisma",
     "prisma:studio": "npx dotenv -e .env.development -- npx prisma studio --schema=./apps/server/prisma/schema.prisma",
-    "test": "jest"
+    "client:test": "jest",
+    "client:build": "nx run client:build",
+    "start": "nx serve client --configuration=production --"
   },
   "private": true,
   "devDependencies": {

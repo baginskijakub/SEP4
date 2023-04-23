@@ -5,9 +5,9 @@
   align-items: flex-start;
   padding: 12px;
   gap: 20px;
-  background: var(--background-b-dark);
+  width: calc(100% - 26px);
+  background: var(--background-b-med);
   border: 1px solid var(--background-b-dark);
-  box-shadow: 0 2px 8px rgba(21, 21, 21, 0.25);
   border-radius: 13px;
   color: var(--text-1);
 }
@@ -28,11 +28,11 @@
 }
 
 .plantInner h3{
-  color: var(--text-900);
+  color: var(--text-3);
 }
 
 .plantInner p{
-  color: var(--text-700);
+  color: var(--text-3);
 }
 
 .plantControls{

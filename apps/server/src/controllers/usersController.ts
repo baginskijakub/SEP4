@@ -17,7 +17,7 @@ userRouter.get('/', async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
       where: {
-        username,
+        email: username,
       },
     })
     if (!user) {
@@ -29,7 +29,7 @@ userRouter.get('/', async (req, res) => {
       res.status(400).json({ message: 'Password is incorrect!', status: 'error' })
       return
     }
-    const token = jwt.sign({ username: user.username }, process.env.WEB_TOKEN_SECRET)
+    const token = jwt.sign({ email: user.email }, process.env.WEB_TOKEN_SECRET)
     res
       .cookie('token', token, { httpOnly: true, domain: 'localhost' })
       .status(200)
@@ -54,7 +54,7 @@ userRouter.post('/', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10)
     await prisma.user.create({
       data: {
-        username,
+        email: username,
         password: hashedPassword,
       },
     })

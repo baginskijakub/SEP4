@@ -6,6 +6,7 @@ import { IGraphData, IGraphPoint } from '@sep4/types'
 import { isValidType } from '../businessLogic/plants/isValidGraphType'
 import { formatDate } from '../businessLogic/plants/formatDate'
 import { IPlant } from '@sep4/types'
+import { isValidPlant } from '../businessLogic/plants/isValidPlant'
 
 const plantsRouter = express.Router()
 
@@ -53,25 +54,37 @@ plantsRouter.get('/:plantId/environment/:type', authorizeUser, async (req, res) 
 })
 
 plantsRouter.post('/', authorizeUser, async (req: UserRequest, res) => {
-  const { name, description, image, latinName } = req.body
+  const requestPlant: unknown = req.body
 
   try {
     const decodedToken = req.user
-    if (!name || !description || !image || !latinName) {
+    if (!isValidPlant(requestPlant) || requestPlant === null) {
       res.status(400).json({ message: 'Missing parameters to register a plant', status: 'error' })
+      return
+    }
+
+    const existingUser = await prisma.user.findUnique({ where: { email: decodedToken.email as string } })
+    if (!existingUser) {
+      res.status(400).json({ message: 'User does not exist', status: 'error' })
       return
     }
 
     const plant = await prisma.plant.create({
       data: {
-        name,
-        description,
-        image,
-        latinName,
-        username: decodedToken.username,
+        name: requestPlant.name,
+        nickName: requestPlant.nickName,
+        image: requestPlant.image,
+        latinName: requestPlant.latinName,
+        email: decodedToken.email,
+        minCo2: requestPlant?.idealEnvironment.minCo2,
+        maxCo2: requestPlant?.idealEnvironment.maxCo2,
+        minHumidity: requestPlant?.idealEnvironment.minHumidity,
+        maxHumidity: requestPlant?.idealEnvironment.maxHumidity,
+        maxTemperature: requestPlant?.idealEnvironment.maxTemperature,
+        minTemperature: requestPlant?.idealEnvironment.minTemperature,
       },
     })
-    res.status(201).json({ message: 'Plant successfully registerd', plant, status: 'success' })
+    res.status(201).json({ message: 'Plant successfully registered', plant, status: 'success' })
   } catch (error) {
     res.status(400).json({ message: 'Failed to register plant', status: 'error' })
   }
@@ -81,13 +94,13 @@ plantsRouter.post('/', authorizeUser, async (req: UserRequest, res) => {
 plantsRouter.get('/', authorizeUser, async (req: UserRequest, res) => {
   try {
     const decodedToken = req.user
-    const plantsFromDb = await prisma.plant.findMany({ where: { username: decodedToken.username as string } })
+    const plantsFromDb = await prisma.plant.findMany({ where: { email: decodedToken.email as string } })
 
     const plants: IPlant[] = plantsFromDb.map((plant) => {
       return {
         id: plant.id,
         name: plant.name,
-        description: plant.description,
+        nickName: plant.nickName,
         image: plant.image,
         latinName: plant.latinName,
       }
@@ -104,19 +117,42 @@ plantsRouter.get('/:plantId', authorizeUser, async (req: UserRequest, res) => {
   const { plantId } = req.params
 
   try {
-    const plantFromDb = await prisma.plant.findUnique({ where: { id: parseInt(plantId) } })
+    const plantFromDb = await prisma.plant.findUnique({
+      where: { id: parseInt(plantId) },
+    })
+
+    if (!plantFromDb) {
+      return res.status(404).json({ message: 'Plant was not found', status: 'error' })
+    }
+
+    const currentEnvironmentFromDb = await prisma.currentEnvironment.findUnique({
+      where: { plantId: parseInt(plantId) },
+    })
     const plant: IPlant = {
       id: plantFromDb.id,
       name: plantFromDb.name,
-      description: plantFromDb.description,
+      nickName: plantFromDb.nickName,
       image: plantFromDb.image,
       latinName: plantFromDb.latinName,
+      idealEnvironment: {
+        minCo2: plantFromDb.minCo2,
+        maxCo2: plantFromDb.maxCo2,
+        minHumidity: plantFromDb.minHumidity,
+        maxHumidity: plantFromDb.maxHumidity,
+        minTemperature: plantFromDb.minTemperature,
+        maxTemperature: plantFromDb.maxTemperature,
+      },
     }
-    if (!plant) {
-      res.status(404).json({ message: 'Plant was not found', status: 'error' })
-    } else {
-      res.status(200).json(plant)
+
+    if (currentEnvironmentFromDb) {
+      plant.currentEnvironment = {
+        co2: currentEnvironmentFromDb.co2,
+        humidity: currentEnvironmentFromDb.humidity,
+        temperature: currentEnvironmentFromDb.temperature,
+      }
     }
+
+    res.status(200).json(plant)
   } catch (error) {
     res.status(400).json({ message: 'Failed to fetch plant', status: 'error' })
   }
@@ -125,15 +161,25 @@ plantsRouter.get('/:plantId', authorizeUser, async (req: UserRequest, res) => {
 // //PATCH
 plantsRouter.patch('/:plantId', authorizeUser, async (req, res) => {
   const { plantId } = req.params
-  const { name, description, image, latinName } = req.body
+  const requestPlant: unknown = req.body
   try {
+    if (!isValidPlant(requestPlant) || requestPlant === null) {
+      res.status(400).json({ message: 'Missing parameters to register a plant', status: 'error' })
+      return
+    }
     await prisma.plant.update({
       where: { id: parseInt(plantId) },
       data: {
-        name,
-        description,
-        image,
-        latinName,
+        name: requestPlant.name,
+        nickName: requestPlant.nickName,
+        image: requestPlant.image,
+        latinName: requestPlant.latinName,
+        minCo2: requestPlant?.idealEnvironment.minCo2,
+        maxCo2: requestPlant?.idealEnvironment.maxCo2,
+        minHumidity: requestPlant?.idealEnvironment.minHumidity,
+        maxHumidity: requestPlant?.idealEnvironment.maxHumidity,
+        maxTemperature: requestPlant?.idealEnvironment.maxTemperature,
+        minTemperature: requestPlant?.idealEnvironment.minTemperature,
       },
     })
     res.status(200).json({ message: 'Plant updated successfully', status: 'success' })
