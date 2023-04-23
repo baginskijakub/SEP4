@@ -9,12 +9,9 @@
     width: 87px;
     height: 34px;
 
-    /* old styles/background/900 */
-
-    background: var(--background-900);
-    /* old styles/background/700 */
-
-    border: 1px solid var(--background-700);
+    background: var(--background-b-dark);
+  
+    border: 1px solid var(--background-b-dark);
     border-radius: 70px;
 
 }
