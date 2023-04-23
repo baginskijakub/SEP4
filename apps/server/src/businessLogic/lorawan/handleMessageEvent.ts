@@ -38,7 +38,7 @@ export async function handleMessageEvent(lorawanMessage: ILorawanUplinkMessage |
     const payload = lorawanMessage.data
     if (!payload) return
     try {
-      const dataToSave = parsePayload(payload, lorawanMessage.ts)
+      const dataToSave = parsePayload(payload, Math.round(lorawanMessage.ts / 1000))
       await prisma.graphData.createMany({
         data: dataToSave,
       })
@@ -52,7 +52,7 @@ export async function handleMessageEvent(lorawanMessage: ILorawanUplinkMessage |
       const payload = message.data
       if (!payload) continue
       try {
-        dataToSave.push(...parsePayload(payload, message.ts))
+        dataToSave.push(...parsePayload(payload, Math.round(message.ts / 1000)))
       } catch (e) {
         console.log(e.message)
       }
