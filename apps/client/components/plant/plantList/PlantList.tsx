@@ -1,23 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { PlantListed } from "../plantListed/PlantListed";
 import styles from "./PlantList.module.css";
+import { IPlant } from "@sep4/types";
+import { CreatePlant } from "../createPlant/CreatePlant";
 
-export const PlantList:React.FC = () => {
+interface Props{
+  plants: IPlant[]
+  changeSelectedPlant: (id: number) => void
+}
+export const PlantList:React.FC<Props> = ({plants, changeSelectedPlant}) => {
+  const [displayCreateModal, setDisplayCreateModal] = useState(false)
+
+  useEffect(() => {
+    console.log(displayCreateModal)
+  }, [displayCreateModal])
+
   return (
     <div className={styles.wrapper}>
       <h3>Plants</h3>
       <div className={styles.container}>
-        <PlantListed name={'plant'} latinName={'latin name'} id={1} url={'https://media.istockphoto.com/id/1372896722/photo/potted-banana-plant-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=bioeNAo7zEqALK6jvyGlxeP_Y7h6j0QjuWbwY4E_eP8='} />
-        <PlantListed name={'plant'} latinName={'latin name'} id={1} url={'https://media.istockphoto.com/id/1372896722/photo/potted-banana-plant-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=bioeNAo7zEqALK6jvyGlxeP_Y7h6j0QjuWbwY4E_eP8='} />
-        <PlantListed name={'plant'} latinName={'latin name'} id={1} url={'https://media.istockphoto.com/id/1372896722/photo/potted-banana-plant-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=bioeNAo7zEqALK6jvyGlxeP_Y7h6j0QjuWbwY4E_eP8='} />
-        <PlantListed name={'plant'} latinName={'latin name'} id={1} url={'https://media.istockphoto.com/id/1372896722/photo/potted-banana-plant-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=bioeNAo7zEqALK6jvyGlxeP_Y7h6j0QjuWbwY4E_eP8='} />
-        <PlantListed name={'plant'} latinName={'latin name'} id={1} url={'https://media.istockphoto.com/id/1372896722/photo/potted-banana-plant-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=bioeNAo7zEqALK6jvyGlxeP_Y7h6j0QjuWbwY4E_eP8='} />
-        <PlantListed name={'plant'} latinName={'latin name'} id={1} url={'https://media.istockphoto.com/id/1372896722/photo/potted-banana-plant-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=bioeNAo7zEqALK6jvyGlxeP_Y7h6j0QjuWbwY4E_eP8='} />
-        <PlantListed name={'plant'} latinName={'latin name'} id={1} url={'https://media.istockphoto.com/id/1372896722/photo/potted-banana-plant-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=bioeNAo7zEqALK6jvyGlxeP_Y7h6j0QjuWbwY4E_eP8='} />
-        <PlantListed name={'plant'} latinName={'latin name'} id={1} url={'https://media.istockphoto.com/id/1372896722/photo/potted-banana-plant-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=bioeNAo7zEqALK6jvyGlxeP_Y7h6j0QjuWbwY4E_eP8='} />
-        <div className={styles.addPlantButton}>Add plant</div>
+        {plants.map((plant, index) => {
+          return(
+            <PlantListed onClick={() => changeSelectedPlant(index)} name={plant.name} latinName={plant.latinName} id={plant.id} key={plant.id} url={plant.image} />
+          )
+        })}
+        <div className={styles.addPlantButton} onClick={() => setDisplayCreateModal(true)}>Add plant</div>
       </div>
-
+      {displayCreateModal && <CreatePlant onClose={() => setDisplayCreateModal(false)} mode={'create'} />}
     </div>
   );
 };
