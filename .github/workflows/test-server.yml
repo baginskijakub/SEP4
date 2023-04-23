@@ -22,6 +22,14 @@ jobs:
       - name: "Create env file"
         run: |
           echo "${{ secrets.ENV_TEST }}" > .env
+      - name: Replace test url with localhost
+        run: sed -i '/DATABASE_URL/c\DATABASE_URL=mysql://root:root@localhost:3310/test' .env
+      - name: Mock development env
+        run: echo "" > .env.development
+      - name: Start MySQL
+        run: docker compose up -d testDb
+      - name: Wait for MySQL to start
+        run: sleep 10
       - name: Push schema to test database
         run: npm run server:test:db:push
       - name: Run Tests
