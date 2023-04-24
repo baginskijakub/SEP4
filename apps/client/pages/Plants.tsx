@@ -33,7 +33,7 @@ export const Plants:React.FC = () => {
   return (
     <div className={styles.pageWrapper}>
       {user && <PlantList plants={plants} changeSelectedPlant={changeSelectedPlant} selectedIndex={selectedPlant}/>}
-      {(selectedPlant || selectedPlant === 0) && <PlantWrapper plant={plants[selectedPlant]}/>}
+      {(user && (selectedPlant || selectedPlant === 0)) && <PlantWrapper plant={plants[selectedPlant]}/>}
     </div>
   );
 };
