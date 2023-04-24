@@ -1,44 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles/Plants.module.css";
 import { PlantList } from "../components/plant/plantList/PlantList";
 import { PlantWrapper } from "../components/plant/plantWrapper/PlantWrapper";
 import { IPlant } from "@sep4/types";
 import { useUser } from "../context/UserContext";
-import { useState } from 'react'
 import { CreatePlant } from '../components/plant/createPlant/CreatePlant';
-
+import { getAllPlants } from "../services/PlantService";
 
 export const Plants:React.FC = () => {
+  const [plants, setPlants] = useState<IPlant[]>([]);
+  const [selectedPlant, setSelectedPlant] = useState<IPlant>()
   const user = useUser()
-  const [displayCreatePlantModal, setDisplayCreatePlantModal] = useState(true)
-  
 
-  const plant: IPlant = {
-    id: 12,
-    name: "Plant 1",
-    nickName: "Plant 1",
-    latinName: "Plant 1",
-    image: "https://media.istockphoto.com/id/1372896722/photo/potted-banana-plant-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=bioeNAo7zEqALK6jvyGlxeP_Y7h6j0QjuWbwY4E_eP8=",
-    currentEnvironment: {
-      temperature: 12,
-      humidity: 12,
-      co2: 12
-    },
-    idealEnvironment: {
-      minTemperature: 12,
-      maxTemperature: 12,
-      minHumidity: 12,
-      maxHumidity: 12,
-      minCo2: 12,
-      maxCo2: 126
+  useEffect(() => {
+    getAllPlants().then((res) => {
+      setPlants(res)
+    }).catch((e) => {
+      console.log(e)
+    })
+  }, [])
+
+  useEffect(() => {
+    if(plants.length > 0){
+      setSelectedPlant(plants[0])
     }
+
+  }, [plants]);
+
+
+  const changeSelectedPlant = (index: number) => {
+      setSelectedPlant(plants[index])
   }
+
   return (
     <div className={styles.pageWrapper}>
-      <PlantList onAddClick= { () => setDisplayCreatePlantModal(true)}/>
-      {displayCreatePlantModal && <CreatePlant mode='create' onClose={() => setDisplayCreatePlantModal(false)}/>}
-      {user && <PlantWrapper plant={plant}/>}
-      </div>
+      {user && <PlantList plants={plants} changeSelectedPlant={changeSelectedPlant}/>}
+      {user && <PlantWrapper plant={selectedPlant}/>}
+    </div>
   );
 };
 

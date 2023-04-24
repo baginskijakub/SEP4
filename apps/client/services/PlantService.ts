@@ -1,7 +1,6 @@
 import { IPlant } from '@sep4/types'
 import axios from 'axios'
 
-
 axios.defaults.withCredentials = true
 
 const getPlantEnvironmentHistory = (plantId: number, type: string) => {
@@ -56,4 +55,15 @@ const deletePlant = (plantId: number) => {
   })
 }
 
-export { getPlantEnvironmentHistory, getPlantById, addPlant, updatePlant, deletePlant }
+const getAllPlants = () => {
+  return axios.get(`http://localhost:3333/api/v1/plants/`).then((response) => {
+    console.log(response)
+    if (response.status === 200) {
+      return response.data
+    } else {
+      throw new Error('Error fetching data')
+    }
+  })
+}
+
+export { getPlantEnvironmentHistory, getPlantById, addPlant, updatePlant, deletePlant, getAllPlants }

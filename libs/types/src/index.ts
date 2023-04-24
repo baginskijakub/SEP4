@@ -44,5 +44,3 @@ export interface IPlantIdealEnvironment {
   minCo2: number
   maxCo2: number
 }
-
-
