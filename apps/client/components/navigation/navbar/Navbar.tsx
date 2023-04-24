@@ -28,7 +28,7 @@ export const Navbar: React.FC = () => {
         </NavItem>
         <NavItem path={'/'}>
           <MdDeviceThermostat size={20} color={'#5BA937'} />
-          <p>Tasks</p>
+          <p>Environment</p>
         </NavItem>
       </div>
       <UserButton onClick={() => setDisplayLoginModal(!displayLoginModal)} />
