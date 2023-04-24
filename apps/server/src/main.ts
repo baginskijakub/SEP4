@@ -1,5 +1,6 @@
 import WebSocket from 'ws'
 import { app } from './server'
+import { handleMessageEvent } from './businessLogic/lorawan/handleMessageEvent'
 
 export const lorawanSocket = new WebSocket(process.env.LORAWAN_SOCKET_URL)
 
@@ -8,10 +9,12 @@ lorawanSocket.on('open', () => {
 })
 
 lorawanSocket.on('message', (data) => {
-  console.log('Lorawan socket message', JSON.parse(data.toString()))
+  const message = JSON.parse(data.toString())
+  console.log('Lorawan socket message received', message)
+  handleMessageEvent(message)
 })
 
-lorawanSocket.on('close', () => {
+lorawanSocket.on('close', async () => {
   console.log('Lorawan socket closed')
 })
 
