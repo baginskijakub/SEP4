@@ -4,6 +4,7 @@ import { PlantList } from "../components/plant/plantList/PlantList";
 import { PlantWrapper } from "../components/plant/plantWrapper/PlantWrapper";
 import { IPlant } from "@sep4/types";
 import { useUser } from "../context/UserContext";
+import { CreatePlant } from '../components/plant/createPlant/CreatePlant';
 import { getAllPlants } from "../services/PlantService";
 
 export const Plants:React.FC = () => {

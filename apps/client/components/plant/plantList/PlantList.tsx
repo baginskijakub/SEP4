@@ -8,6 +8,7 @@ interface Props{
   plants: IPlant[]
   changeSelectedPlant: (id: number) => void
 }
+
 export const PlantList:React.FC<Props> = ({plants, changeSelectedPlant}) => {
   const [displayCreateModal, setDisplayCreateModal] = useState(false)
 

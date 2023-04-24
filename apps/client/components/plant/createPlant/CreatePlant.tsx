@@ -85,16 +85,9 @@ export const CreatePlant: React.FC<Props> = ({onClose, mode, plantId}) => {
     }
 
     const validateInputFields = () => {
-        if (plantNickname.current.value === '' || plantNickname.current.value ===undefined)
+        if (plantNickname.current.value === '' || plantNickname.current.value ===undefined||plantName.current.value === '' || plantName.current.value ===undefined||plantLatinName.current.value === '' || plantLatinName.current.value ===undefined)
         {
-            setErrorLabel('Please provide a nickname')
-        }
-        else if (plantName.current.value === '' || plantName.current.value ===undefined){
-            setErrorLabel('Please provide a plant name')
-        }
-        else if (plantLatinName.current.value === '' || plantLatinName.current.value ===undefined)
-        {
-            setErrorLabel('Please provide a latin name')
+            setErrorLabel('Please fill in all the fields')
         }
         else
         {
