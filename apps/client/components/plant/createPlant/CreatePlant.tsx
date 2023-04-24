@@ -5,7 +5,7 @@ import {InputField} from '../../utils/inputField/InputField'
 import { IPlant } from '@sep4/types'
 import { SecondaryButtonSmall } from '../../buttons/secondaryButtonSmall/secondaryButtonSmall'
 import { PrimaryButtonSmall } from '../../buttons/primaryButtonSmall/primaryButtonSmall'
-import { createPlant, getPlantById, updatePlant } from '../../../services/PlantService'
+import { addPlant, getPlantById, updatePlant } from '../../../services/PlantService'
 
 interface Props {
     onClose: () => void
@@ -22,12 +22,12 @@ export const CreatePlant: React.FC<Props> = ({onClose, mode, plantId}) => {
         latinName: 'latin name',
         image: 'image',
         idealEnvironment: {
-        mintemp: 20,
-        maxtemp: 50,
-        minhum: 50,
-        maxhum: 100,
-        minco2: 50,
-        maxco2: 70
+        minTemperature: 20,
+        maxTemperature: 50,
+        minHumidity: 50,
+        maxHumidity: 100,
+        minCo2: 50,
+        maxCo2: 70
     }
     }) 
 
@@ -52,7 +52,7 @@ export const CreatePlant: React.FC<Props> = ({onClose, mode, plantId}) => {
 
     useEffect(() => {
         if(plantId || plantId == 0){
-            setPlant(getPlantById(plantId))
+            getPlantById(plantId).then(plant=>setPlant(plant))
         }
     })
 
@@ -62,7 +62,8 @@ export const CreatePlant: React.FC<Props> = ({onClose, mode, plantId}) => {
         if (!validateInputFields()) return
 
         if(mode === 'create'){
-            createPlant({
+             
+            addPlant({
                 ...plant, 
                 nickName:plantNickname.current.value, 
                 name:plantName.current.value, 
@@ -81,16 +82,9 @@ export const CreatePlant: React.FC<Props> = ({onClose, mode, plantId}) => {
     }
 
     const validateInputFields = () => {
-        if (plantNickname.current.value === '' || plantNickname.current.value ===undefined)
+        if (plantNickname.current.value === '' || plantNickname.current.value ===undefined||plantName.current.value === '' || plantName.current.value ===undefined||plantLatinName.current.value === '' || plantLatinName.current.value ===undefined)
         {
-            setErrorLabel('Please provide a nickname')
-        }
-        else if (plantName.current.value === '' || plantName.current.value ===undefined){
-            setErrorLabel('Please provide a plant name')
-        }
-        else if (plantLatinName.current.value === '' || plantLatinName.current.value ===undefined)
-        {
-            setErrorLabel('Please provide a latin name')
+            setErrorLabel('Please fill in all the fields')
         }
         else
         {

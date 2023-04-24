@@ -4,9 +4,15 @@ import { PlantList } from "../components/plant/plantList/PlantList";
 import { PlantWrapper } from "../components/plant/plantWrapper/PlantWrapper";
 import { IPlant } from "@sep4/types";
 import { useUser } from "../context/UserContext";
+import { useState } from 'react'
+import { CreatePlant } from '../components/plant/createPlant/CreatePlant';
+
 
 export const Plants:React.FC = () => {
   const user = useUser()
+  const [displayCreatePlantModal, setDisplayCreatePlantModal] = useState(true)
+  
+
   const plant: IPlant = {
     id: 12,
     name: "Plant 1",
@@ -29,9 +35,10 @@ export const Plants:React.FC = () => {
   }
   return (
     <div className={styles.pageWrapper}>
-      <PlantList/>
+      <PlantList onAddClick= { () => setDisplayCreatePlantModal(true)}/>
+      {displayCreatePlantModal && <CreatePlant mode='create' onClose={() => setDisplayCreatePlantModal(false)}/>}
       {user && <PlantWrapper plant={plant}/>}
-    </div>
+      </div>
   );
 };
 
