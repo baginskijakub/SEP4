@@ -22,7 +22,7 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
   const passwordElement = useRef<HTMLInputElement>()
   const emailElement = useRef<HTMLInputElement>()
   // changing user context
-  const {setUser} = useUserContext()
+  const { setUser } = useUserContext()
 
   // function for login
   const onLogin = () => {
