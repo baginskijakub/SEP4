@@ -10,6 +10,33 @@
   border: 1px solid var(--background-b-dark);
   border-radius: 13px;
   color: var(--text-1);
+  transition: all 0.1s ease-in-out;
+}
+
+.plantWrapperSelected{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 12px;
+  gap: 20px;
+  width: calc(100% - 26px);
+  background: var(--background-b-med);
+  border-radius: 13px;
+  color: var(--text-1);
+  transition: all 0.1s ease-in-out;
+  border: 2px solid var(--text-2);
+}
+
+.plantWrapper:hover{
+  border: 2px solid var(--text-3)
+}
+
+.plantWrapperSelected img{
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 12px;
 }
 
 .plantWrapper img{

@@ -6,10 +6,11 @@ import { CreatePlant } from "../createPlant/CreatePlant";
 
 interface Props{
   plants: IPlant[]
-  changeSelectedPlant: (id: number) => void
+  changeSelectedPlant: (index: number) => void
+  selectedIndex: number
 }
 
-export const PlantList:React.FC<Props> = ({plants, changeSelectedPlant}) => {
+export const PlantList:React.FC<Props> = ({plants, changeSelectedPlant, selectedIndex}) => {
   const [displayCreateModal, setDisplayCreateModal] = useState(false)
 
   useEffect(() => {
@@ -22,7 +23,15 @@ export const PlantList:React.FC<Props> = ({plants, changeSelectedPlant}) => {
       <div className={styles.container}>
         {plants.map((plant, index) => {
           return(
-            <PlantListed onClick={() => changeSelectedPlant(index)} name={plant.name} latinName={plant.latinName} id={plant.id} key={plant.id} url={plant.image} />
+            <PlantListed
+              onClick={() => changeSelectedPlant(index)}
+              name={plant.name}
+              latinName={plant.latinName}
+              id={plant.id}
+              key={plant.id}
+              url={plant.image}
+              isSelected={index === selectedIndex}
+            />
           )
         })}
         <div className={styles.addPlantButton} onClick={() => setDisplayCreateModal(true)}>Add plant</div>

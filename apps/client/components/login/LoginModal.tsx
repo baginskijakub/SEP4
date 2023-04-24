@@ -4,7 +4,7 @@ import { MdOutlineMail, MdLock, MdVisibility, MdVisibilityOff, MdOutlineClose } 
 import { useState } from 'react'
 import { login } from '../../services/LoginService'
 import { register } from '../../services/RegisterService'
-import { useUserChange } from '../../context/UserContext'
+import { useUserContext } from '../../context/UserContext'
 import { PrimaryButton } from '../buttons/primaryButton/PrimaryButton'
 
 interface Props {
@@ -22,13 +22,16 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
   const passwordElement = useRef<HTMLInputElement>()
   const emailElement = useRef<HTMLInputElement>()
   // changing user context
-  const changeUserContext = useUserChange()
+  const {setUser} = useUserContext()
 
   // function for login
   const onLogin = () => {
     login(emailElement.current.value, passwordElement.current.value)
-      .then((res) => {
-        changeUserContext({ ...res.data })
+      .then(() => {
+        setUser({
+          email: emailElement.current.value,
+          name: emailElement.current.value.split('@')[0],
+        })
         onClose()
       })
       .catch(() => {
@@ -43,8 +46,11 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
   // function for register
   const onRegister = () => {
     register(emailElement.current.value, passwordElement.current.value)
-      .then((res) => {
-        changeUserContext({ ...res.data })
+      .then(() => {
+        setUser({
+          email: emailElement.current.value,
+          name: emailElement.current.value.split('@')[0],
+        })
         onClose()
       })
       .catch(() => {

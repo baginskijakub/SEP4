@@ -11,18 +11,20 @@ interface Props{
   latinName: string;
   id: number;
   url: string;
+  isSelected?: boolean;
   onClick?: () => void
 }
 
-export const PlantListed:React.FC<Props> = ({name, latinName, url, id, onClick}) => {
+export const PlantListed:React.FC<Props> = ({name, latinName, url, id, onClick, isSelected}) => {
   const [displayDeleteModal, setDisplayDeleteModal] = useState(false)
   const [displayEditModal, setDisplayEditModal] = useState(false)
 
   useEffect(()=>{
     console.log(displayDeleteModal)
   }, [displayDeleteModal])
+
   return (
-    <div className={styles.plantWrapper} onClick={onClick}>
+    <div className={isSelected ? styles.plantWrapperSelected : styles.plantWrapper } onClick={onClick}>
       <img src={url} alt={name}/>
       <div className={styles.plantInner}>
         <h3>{name}</h3>
