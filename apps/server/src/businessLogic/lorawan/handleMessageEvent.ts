@@ -45,7 +45,7 @@ export async function handleMessageEvent(lorawanMessage: ILorawanUplinkMessage |
     } catch (e) {
       console.log(e.message)
     }
-  } else {
+  } else if (lorawanMessage.cmd === 'cq') {
     const cache = lorawanMessage.cache
     const dataToSave: GraphDataCreateInput[] = []
     for (const message of cache) {
@@ -65,6 +65,7 @@ export async function handleMessageEvent(lorawanMessage: ILorawanUplinkMessage |
       console.log(e.message)
     }
   }
+  console.log('Graph data has been saved')
 }
 
 // Type guard helper function
