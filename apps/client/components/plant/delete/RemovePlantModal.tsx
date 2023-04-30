@@ -7,9 +7,10 @@ import { deletePlant, getPlantById} from '../../../services/PlantService'
 interface Props {
     onClose: () => void
     plantId: number
+  fetchAgain?: () => void
   }
 
-export const RemovePlant: React.FC <Props> = ({ onClose, plantId }) => {
+export const RemovePlant: React.FC <Props> = ({ onClose, plantId, fetchAgain }) => {
     const [plant, setPlant] = useState<IPlant>()
 
   useEffect(() => {
@@ -22,7 +23,16 @@ export const RemovePlant: React.FC <Props> = ({ onClose, plantId }) => {
       })
   }, [plantId])
 
-    const deleteBtnClick = () => {deletePlant(plantId)}
+    const deleteBtnClick = () => {
+      deletePlant(plantId).then(() => {
+        onClose()
+        fetchAgain()
+        }).catch((e) =>{
+          console.log(e)
+      }
+    )
+
+    }
 
   if(plant){
     return (

@@ -7,6 +7,7 @@ import UserContextProvider from "../context/UserContext";
 
 const inter = Inter({ subsets: ['latin'] });
 function CustomApp({ Component, pageProps }: AppProps) {
+
   return (
     <>
       <UserContextProvider>

@@ -8,9 +8,10 @@ interface Props{
   plants: IPlant[]
   changeSelectedPlant: (index: number) => void
   selectedIndex: number
+  fetchAgain: () => void
 }
 
-export const PlantList:React.FC<Props> = ({plants, changeSelectedPlant, selectedIndex}) => {
+export const PlantList:React.FC<Props> = ({plants, changeSelectedPlant, selectedIndex, fetchAgain}) => {
   const [displayCreateModal, setDisplayCreateModal] = useState(false)
 
   useEffect(() => {
@@ -31,12 +32,13 @@ export const PlantList:React.FC<Props> = ({plants, changeSelectedPlant, selected
               key={plant.id}
               url={plant.image}
               isSelected={index === selectedIndex}
+              fetchAgain={fetchAgain}
             />
           )
         })}
         <div className={styles.addPlantButton} onClick={() => setDisplayCreateModal(true)}>Add plant</div>
       </div>
-      {displayCreateModal && <CreatePlant onClose={() => setDisplayCreateModal(false)} mode={'create'} />}
+      {displayCreateModal && <CreatePlant onClose={() => setDisplayCreateModal(false)} mode={'create'} fetchAgain={fetchAgain}/>}
     </div>
   );
 };

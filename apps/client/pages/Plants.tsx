@@ -30,9 +30,18 @@ export const Plants:React.FC = () => {
       setSelectedPlant(index)
   }
 
+  const fetchData = () => {
+    setSelectedPlant(0)
+    getAllPlants().then((res) => {
+      setPlants(res)
+    }).catch((e) => {
+      console.log(e)
+    })
+  }
+
   return (
     <div className={styles.pageWrapper}>
-      {user && <PlantList plants={plants} changeSelectedPlant={changeSelectedPlant} selectedIndex={selectedPlant}/>}
+      {user && <PlantList plants={plants} changeSelectedPlant={changeSelectedPlant} selectedIndex={selectedPlant} fetchAgain={fetchData}/>}
       {(user && (selectedPlant || selectedPlant === 0)) && <PlantWrapper plant={plants[selectedPlant]}/>}
     </div>
   );

@@ -11,12 +11,13 @@ interface Props {
     onClose: () => void
     mode: 'edit' | 'create'
     plantId?: number
+    fetchAgain?: () => void
 }
 
-export const CreatePlant: React.FC<Props> = ({onClose, mode, plantId}) => {
+export const CreatePlant: React.FC<Props> = ({onClose, mode, plantId, fetchAgain}) => {
 
     const [plant, setPlant] = useState<IPlant>({
-      name: "Name",
+      name: "Plant name",
       nickName: "Nickname",
       latinName: "Latin name",
       id: 0,
@@ -54,6 +55,10 @@ export const CreatePlant: React.FC<Props> = ({onClose, mode, plantId}) => {
         if(plantId || plantId == 0){
             getPlantById(plantId).then((res) => {
               setPlant(res)
+              console.log(res)
+              plantNickname.current.value = res.nickName
+              plantName.current.value = res.name
+              plantLatinName.current.value = res.latinName
             }).catch((e) => {
               console.log(e)
             })
@@ -71,6 +76,9 @@ export const CreatePlant: React.FC<Props> = ({onClose, mode, plantId}) => {
                 nickName:plantNickname.current.value,
                 name:plantName.current.value,
                 latinName:plantLatinName.current.value
+            }).then(() => {
+              fetchAgain();
+              onClose();
             })
         }
         else {
@@ -79,9 +87,11 @@ export const CreatePlant: React.FC<Props> = ({onClose, mode, plantId}) => {
                 nickName:plantNickname.current.value,
                 name:plantName.current.value,
                 latinName:plantLatinName.current.value
+            }).then(() => {
+              fetchAgain()
+              onClose();
             })
         }
-
     }
 
     const validateInputFields = () => {
@@ -102,11 +112,11 @@ export const CreatePlant: React.FC<Props> = ({onClose, mode, plantId}) => {
             <div className={styles.plantWrapper}>
                 <div className={styles.plantContainerOuter}>
                     <div className={styles.plantContainer}>
-                        <input className={styles.nicknameInput} ref={plantNickname} type="text" placeholder='Plant nickname' />
+                        <input className={styles.nicknameInput} ref={plantNickname} type="text" placeholder={plant.nickName} />
 
-                        <input className={styles.secondaryInput} ref={plantName} type="text" placeholder='Plant name' />
+                        <input className={styles.secondaryInput} ref={plantName} type="text" placeholder={plant.name} />
 
-                        <input className={styles.secondaryInput} ref={plantLatinName} type="text" placeholder='Latin name' />
+                        <input className={styles.secondaryInput} ref={plantLatinName} type="text" placeholder={plant.latinName} />
                     </div>
                     <img
                         src="https://cdn-ailom.nitrocdn.com/opKfgPWIFCjrldmbrdKJvIDPqBFvBPjr/assets/images/optimized/rev-546509e/wp-content/uploads/2022/05/Albuca-spiralis.jpg"

@@ -13,9 +13,10 @@ interface Props{
   url: string;
   isSelected?: boolean;
   onClick?: () => void
+  fetchAgain?: () => void
 }
 
-export const PlantListed:React.FC<Props> = ({name, latinName, url, id, onClick, isSelected}) => {
+export const PlantListed:React.FC<Props> = ({name, latinName, url, id, onClick, isSelected, fetchAgain}) => {
   const [displayDeleteModal, setDisplayDeleteModal] = useState(false)
   const [displayEditModal, setDisplayEditModal] = useState(false)
 
@@ -38,8 +39,8 @@ export const PlantListed:React.FC<Props> = ({name, latinName, url, id, onClick, 
             <MdDeleteOutline size={20}/>
         </ActionButton>
       </div>
-      {displayEditModal && <CreatePlant onClose={() => setDisplayEditModal(false)} mode={'edit'}/>}
-      {displayDeleteModal && <RemovePlant onClose={() => setDisplayDeleteModal(false)} plantId={id} />}
+      {displayEditModal && <CreatePlant onClose={() => setDisplayEditModal(false)} mode={'edit'} fetchAgain={fetchAgain}/>}
+      {displayDeleteModal && <RemovePlant onClose={() => setDisplayDeleteModal(false)} plantId={id} fetchAgain={fetchAgain} />}
     </div>
   )
 }

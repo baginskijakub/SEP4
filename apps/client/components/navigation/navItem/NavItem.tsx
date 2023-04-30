@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./NavItem.module.css";
+import Link from "next/link";
 
 interface Props{
   path: string;
@@ -8,13 +9,13 @@ interface Props{
 
 export const NavItem:React.FC<Props> = ({path, children}) => {
 
-  const redirect = () => {
-    window.location.href = path;
-  }
-
   return (
-    <button onClick={redirect} className={styles.navItem + " body"}>
-      {children}
-    </button>
+    <Link href={path} className={styles.link}>
+      <div className={styles.navItem + " body"}>
+        {children}
+      </div>
+    </Link>
+
+
   );
 };
