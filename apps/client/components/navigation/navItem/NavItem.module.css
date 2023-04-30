@@ -1,0 +1,24 @@
+.navItem{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  justify-content: flex-start;
+  width: 200px;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  padding: 8px 12px 8px 8px;
+  border-radius: 8px;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.navItem:hover{
+  background-color: var(--background-g-light);
+}
+
+.link{
+  text-decoration: none;
+}

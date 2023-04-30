@@ -1,21 +1,30 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
+import WebSocket from 'ws'
+import { app } from './server'
+import { handleMessageEvent } from './businessLogic/lorawan/handleMessageEvent'
 
-import express from 'express';
-import * as path from 'path';
+export const lorawanSocket = new WebSocket(process.env.LORAWAN_SOCKET_URL)
 
-const app = express();
+lorawanSocket.on('open', () => {
+  console.log('Lorawan socket connected')
+})
 
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
+lorawanSocket.on('message', (data) => {
+  const message = JSON.parse(data.toString())
+  console.log('Lorawan socket message received', message)
+  handleMessageEvent(message)
+})
 
-app.get('/api', (req, res) => {
-  res.send({ message: 'Welcome to server!' });
-});
+lorawanSocket.on('close', async () => {
+  console.log('Lorawan socket closed')
+})
 
-const port = process.env.PORT || 3333;
-const server = app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}/api`);
-});
-server.on('error', console.error);
+lorawanSocket.on('error', (error) => {
+  console.log('Lorawan socket error', error)
+})
+
+const port = process.env.PORT || 3333
+const host = '0.0.0.0'
+const server = app.listen(port, host, () => {
+  console.log(`Listening at http://localhost:${port}/api`)
+})
+server.on('error', console.error)

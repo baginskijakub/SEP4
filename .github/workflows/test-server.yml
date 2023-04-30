@@ -1,0 +1,36 @@
+name: CI Pipeline (SEP4YG2)
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "apps/server/**"
+      - ".github/workflows/test-server.yml"
+jobs:
+  tests:
+    name: Run tests on server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18.12
+      - name: Install dependencies
+        run: npm install
+      - name: "Create env file"
+        run: |
+          echo "${{ secrets.ENV_TEST }}" > .env
+      - name: Replace test url with localhost
+        run: sed -i '/DATABASE_URL/c\DATABASE_URL=mysql://root:root@localhost:3310/test' .env
+      - name: Mock development env
+        run: echo "" > .env.development
+      - name: Start MySQL
+        run: docker compose up -d testDb
+      - name: Wait for MySQL to start
+        run: sleep 10
+      - name: Push schema to test database
+        run: npm run server:test:db:push
+      - name: Run Tests
+        run: npm run server:test

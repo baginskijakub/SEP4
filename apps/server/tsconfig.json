@@ -1,7 +1,17 @@
 {
   "extends": "../../tsconfig.base.json",
   "files": [],
-  "include": [],
+  "ts-node": {
+    // these options are overrides used only by ts-node
+    // same as the --compilerOptions flag and the TS_NODE_COMPILER_OPTIONS environment variable
+    "compilerOptions": {
+      "module": "commonjs",
+      "paths": {
+        "@sep4/types": ["../../libs/types/src/index.ts"]
+      }
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts"],
   "references": [
     {
       "path": "./tsconfig.app.json"
@@ -11,6 +21,6 @@
     }
   ],
   "compilerOptions": {
-    "esModuleInterop": true
+    "esModuleInterop": true,
   }
 }

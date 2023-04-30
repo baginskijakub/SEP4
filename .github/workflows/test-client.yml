@@ -1,0 +1,33 @@
+name: CI Pipeline client (SEP4YG2)
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "apps/client**"
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18.12
+      - name: Install dependencies
+        run: npm install
+      - name: "Create env file"
+        run: |
+          echo "${{ secrets.ENV_TEST }}" > .env
+      - name: Generate database
+        run: npm run server:test:db:generate
+      - name: Push schema to test database
+        run: npm run server:test:db:push
+      - name: Start server
+        run: npx nx run server:serve &
+      - name: Wait for server to start
+        run: sleep 10s
+      - name: Run Tests
+        run: npm run client:test
