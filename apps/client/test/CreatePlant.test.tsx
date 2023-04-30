@@ -7,7 +7,7 @@ describe("<CreatePlant />", () => {
         render(<CreatePlant onClose={null} mode='create' />)
 
         expect(screen.getByPlaceholderText(/Nickname/i)).toBeInTheDocument()
-        expect(screen.getByPlaceholderText(/Name/i)).toBeInTheDocument()
+        expect(screen.getByPlaceholderText(/Plant name/i)).toBeInTheDocument()
         expect(screen.getByPlaceholderText(/Latin name/i)).toBeInTheDocument()
 
         expect(screen.getByText(/Min temperature/i)).toBeInTheDocument()
@@ -25,7 +25,7 @@ describe("<CreatePlant />", () => {
         render(<CreatePlant onClose={null} mode='create'/>)
 
         const nicknameInput = screen.getByPlaceholderText(/Nickname/i)
-        const nameInput = screen.getByPlaceholderText(/Name/i)
+        const nameInput = screen.getByPlaceholderText(/Plant name/i)
         const latinNameInput = screen.getByPlaceholderText(/Latin name/i)
 
 

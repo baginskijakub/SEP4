@@ -17,7 +17,7 @@ interface Props {
 export const CreatePlant: React.FC<Props> = ({onClose, mode, plantId, fetchAgain}) => {
 
     const [plant, setPlant] = useState<IPlant>({
-      name: "Name",
+      name: "Plant name",
       nickName: "Nickname",
       latinName: "Latin name",
       id: 0,
