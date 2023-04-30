@@ -12,8 +12,13 @@
   border-radius: 8px;
   transition: all 0.15s ease-in-out;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .navItem:hover{
   background-color: var(--background-g-light);
+}
+
+.link{
+  text-decoration: none;
 }

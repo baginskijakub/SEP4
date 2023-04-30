@@ -1,5 +1,6 @@
 import React from "react";
 import { IUser } from "@sep4/types";
+
 const UserContext = React.createContext({
   user: null,
   setUser: null,
