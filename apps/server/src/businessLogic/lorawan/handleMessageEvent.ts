@@ -1,4 +1,5 @@
 import prisma from '../../helperFunctions/setupPrisma'
+import sendData from '../socketsLogic/sendData'
 
 interface ILorawanUplinkMessage {
   cmd: string // identifies type of message, rx = uplink message
@@ -57,6 +58,7 @@ export async function handleMessageEvent(lorawanMessage: ILorawanUplinkMessage |
         console.log(e.message)
       }
     }
+    //sendData(dataToSave, socketSessionId, io)
     try {
       await prisma.graphData.createMany({
         data: dataToSave,
