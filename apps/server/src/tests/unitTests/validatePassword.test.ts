@@ -1,4 +1,4 @@
-import { validatePassword } from '../businessLogic/users/validatePassword'
+import { validatePassword } from '../../businessLogic/users/validatePassword'
 
 describe('PasswordValidator', () => {
   test('validatePassword returns true for valid passwords', () => {
