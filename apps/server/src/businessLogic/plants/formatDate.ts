@@ -14,6 +14,9 @@ export function formatDate(dateEpoch: number): string {
     const minutes = dt.getMinutes().toString().padStart(2, '0')
     return `${hours}:${minutes}`
   } else {
-    return dt.toLocaleDateString()
+    const day = dt.getDate().toString().padStart(2, '0')
+    const month = (dt.getMonth() + 1).toString().padStart(2, '0') // getMonth() returns a zero-based index
+    const year = dt.getFullYear()
+    return `${day}/${month}/${year}`
   }
 }
