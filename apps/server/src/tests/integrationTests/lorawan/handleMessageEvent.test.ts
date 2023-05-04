@@ -90,4 +90,76 @@ describe('Handle lorawan message function', () => {
     expect(graphData[0].dateEpoch).toEqual(Math.round(123456789 / 1000))
   })
 
+  test('does not save the data to the database when the message type is not rx or cq', async () => {
+    const mockLorawanMessage = {
+      cmd: 'tx',
+      EUI: '0004A30B001C0B0C',
+      ts: 123456789,
+      fcnt: 1,
+      port: 1,
+      ack: false,
+      bat: 255,
+      data: '00DE013B038E',
+    }
+
+    await handleMessageEvent(mockLorawanMessage)
+    const graphData = await prisma.graphData.findMany({ orderBy: { value: 'asc' } })
+    expect(graphData.length).toEqual(0)
+  })
+
+  test('does not save to database if payload is missing', async () => {
+    const mockLorawanMessage = {
+      cmd: 'rx',
+      EUI: '0004A30B001C0B0C',
+      ts: 123456789,
+      fcnt: 1,
+      port: 1,
+      ack: false,
+      bat: 255,
+    }
+
+    await handleMessageEvent(mockLorawanMessage)
+    const graphData = await prisma.graphData.findMany({ orderBy: { value: 'asc' } })
+    expect(graphData.length).toEqual(0)
+  })
+
+  test('if same cache message is invalid payload, the rest of data is still correctly saved to database', async () => {
+    const mockLorawanMessage = {
+      cmd: 'cq',
+      page: 0,
+      perPage: 10,
+      total: 1,
+      cache: [
+        {
+          cmd: 'rx',
+          EUI: '0004A30B001C0B0C',
+          ts: 123456789,
+          fcnt: 1,
+          port: 1,
+          ack: false,
+          bat: 255,
+          data: '00DE013B038E',
+        },
+        {
+          cmd: 'rx',
+          EUI: '0004A30B001C0B0C',
+          ts: 123456789,
+          fcnt: 1,
+          port: 1,
+          ack: false,
+          bat: 255,
+          data: '00DE013B038Z',
+        },
+      ],
+    }
+
+    await handleMessageEvent(mockLorawanMessage)
+    const graphData = await prisma.graphData.findMany({ orderBy: { value: 'asc' } })
+    expect(graphData.length).toEqual(3)
+
+    expect(graphData[0].value).toEqual(22.2)
+    expect(graphData[1].value).toEqual(31.5)
+    expect(graphData[2].value).toEqual(910)
+    expect(graphData[0].dateEpoch).toEqual(Math.round(123456789 / 1000))
+  })
 })
