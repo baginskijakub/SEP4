@@ -10,7 +10,6 @@
     "server:cache:graph": "dotenv -e .env.development -- ts-node ./apps/server/src/scripts/getCachedSensorData.ts",
     "server:dev:db:push": "npx dotenv -e .env.development -- npx prisma db push --schema=./apps/server/prisma/schema.prisma",
     "prisma:studio": "npx dotenv -e .env.development -- npx prisma studio --schema=./apps/server/prisma/schema.prisma",
-    "prisma:generate:dev": "npx dotenv -e .env.development -- npx prisma generate --schema=./apps/server/prisma/schema.prisma",
     "client:test": "jest",
     "client:build": "nx run client:build",
     "start": "nx serve client --configuration=production --"

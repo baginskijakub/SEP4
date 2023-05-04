@@ -1,6 +1,6 @@
 import request from 'supertest'
-import { app } from '../../../server'
-import prisma from '../../../helperFunctions/setupPrisma'
+import { app } from '../server'
+import prisma from '../helperFunctions/setupPrisma'
 
 describe('User registration', () => {
   afterEach(async () => {
