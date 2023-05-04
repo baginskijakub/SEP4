@@ -78,7 +78,9 @@ function isUplinkMessage(
 
 // Parse payload to data format suitable to store in database
 
-function parsePayload(payload: string, timestamp: number) {
+export function parsePayload(payload: string, timestamp: number) {
+  if (payload.length !== 12 || !payload.match(/^([0-9A-Fa-f]+)$/g)) throw new Error('Invalid payload')
+
   const data = payload.split('').reduce((acc: string[], curr: string, index: number) => {
     const position = Math.floor(index / 4)
     if (!acc[position]) {
@@ -87,7 +89,6 @@ function parsePayload(payload: string, timestamp: number) {
     acc[position] += curr
     return acc
   }, [])
-  if (data.length !== 3) throw new Error('Invalid payload')
   const humidity = parseInt(data[0], 16) / 10
   const temperature = parseInt(data[1], 16) / 10
   const co2 = parseInt(data[2], 16)
