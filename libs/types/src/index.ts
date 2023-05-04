@@ -44,3 +44,16 @@ export interface IPlantIdealEnvironment {
   minCo2: number
   maxCo2: number
 }
+
+export interface ServerToClientEvents{
+  noArg: () => void;
+}
+
+export interface ClientToServerEvents {
+  event: () => void;
+}
+
+export interface SocketData{
+  // name: string;
+  id: number;
+}
