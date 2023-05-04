@@ -30,6 +30,7 @@ io.on('connect', (socket) => {
     })
     socket.on('disconnect', () => {
         console.log('Client disconnected')
+        socket.emit('repsonse',{message: 'client disconnected'})
     })
 })
 
