@@ -79,7 +79,7 @@ function isUplinkMessage(
 // Parse payload to data format suitable to store in database
 
 export function parsePayload(payload: string, timestamp: number) {
-  if (payload.length !== 12) throw new Error('Invalid payload')
+  if (payload.length !== 12 || !payload.match(/^([0-9A-Fa-f]+)$/g)) throw new Error('Invalid payload')
 
   const data = payload.split('').reduce((acc: string[], curr: string, index: number) => {
     const position = Math.floor(index / 4)
