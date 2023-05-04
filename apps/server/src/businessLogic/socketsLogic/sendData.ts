@@ -1,17 +1,19 @@
+import { cache } from '../../helperFunctions/singletonCache'
+
 interface IPlantCurrentEnvironment {
   temperature: number
   co2: number
   humidity: number
 }
 
-const sendData = async (inputData, socketSessionId, io) => {
+const sendData = async (inputData, io) => {
   const currentEnvironment: IPlantCurrentEnvironment = {
     temperature: inputData.temperature,
     co2: inputData.co2,
     humidity: inputData.humidity,
   }
 
-  //maybe socketSessionId needs to be gotten from somewhere else
+  const socketSessionId = cache.get(inputData.id)
   const socketInstance = io.to(socketSessionId)
 
   try {
