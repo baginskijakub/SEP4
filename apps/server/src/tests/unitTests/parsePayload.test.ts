@@ -18,4 +18,9 @@ describe('Parse Lorawan message', () => {
     expect(returnMessage[1].type).toEqual('temperature')
     expect(returnMessage[2].type).toEqual('co2')
   })
+
+  test('Parse payload throws an error, if the payload conatins non-hexadecimal characters', () => {
+    const invalidPayload = '00DE013B038Z'
+    expect(() => parsePayload(invalidPayload, 123456789)).toThrowError('Invalid payload')
+  })
 })
