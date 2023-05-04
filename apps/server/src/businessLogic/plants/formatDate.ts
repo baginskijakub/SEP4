@@ -10,7 +10,9 @@ export function formatDate(dateEpoch: number): string {
   const diff = now.getTime() - dt.getTime()
 
   if (diff < 86400000) {
-    return dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    const hours = dt.getHours().toString().padStart(2, '0')
+    const minutes = dt.getMinutes().toString().padStart(2, '0')
+    return `${hours}:${minutes}`
   } else {
     return dt.toLocaleDateString()
   }
