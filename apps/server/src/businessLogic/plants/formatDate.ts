@@ -1,15 +1,22 @@
 export function formatDate(dateEpoch: number): string {
-  // i want to return a string telling me how many hours have passed since the dateEpoch, or if it's more than 24 hours, how many days have passed
-  const date = new Date(dateEpoch)
   const now = new Date()
-  const diff = now.getTime() - date.getTime()
-  const hours = Math.floor(diff / 1000 / 60 / 60)
-  const days = Math.floor(hours / 24)
-  if (days > 0) {
-    return `${days} days ago`
+  const dt = new Date(dateEpoch * 1000)
+  if (isNaN(dt.getTime())) {
+    return 'Invalid date'
   }
-  if (hours > 0) {
-    return `${hours} hours ago`
+  if (dt.getTime() > now.getTime()) {
+    return 'Invalid date'
   }
-  return 'less than hour ago'
+  const diff = now.getTime() - dt.getTime()
+
+  if (diff < 86400000) {
+    const hours = dt.getHours().toString().padStart(2, '0')
+    const minutes = dt.getMinutes().toString().padStart(2, '0')
+    return `${hours}:${minutes}`
+  } else {
+    const day = dt.getDate().toString().padStart(2, '0')
+    const month = (dt.getMonth() + 1).toString().padStart(2, '0') // getMonth() returns a zero-based index
+    const year = dt.getFullYear()
+    return `${day}/${month}/${year}`
+  }
 }
