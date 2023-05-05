@@ -30,9 +30,9 @@ export const PlantWrapper:React.FC<Props> = ({plant}) => {
   return (
     <div className={styles.wrapper}>
         <PlantHead plant={plant}/>
-        <PlantCurrentEnvironment environment={mock}/>
+        <PlantCurrentEnvironment id={plant.id}/>
         <PlantIdealEnvironment environment={mock2}/>
-        <PlantPastEnvironment id={12}/>
+        <PlantPastEnvironment id={plant.id}/>
     </div>
   );
 };
