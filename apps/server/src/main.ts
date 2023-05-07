@@ -1,11 +1,9 @@
 import WebSocket from 'ws'
 import { app } from './server'
 import { handleMessageEvent } from './businessLogic/lorawan/handleMessageEvent'
-import http from 'http'
 import { Server } from 'socket.io'
-import NodeCache from 'node-cache'
+import { cache } from './helperFunctions/singletonCache'
 
-const cache = new NodeCache();
 export const lorawanSocket = new WebSocket(process.env.LORAWAN_SOCKET_URL)
 
 lorawanSocket.on('open', () => {
@@ -27,24 +25,27 @@ lorawanSocket.on('error', (error) => {
   console.log('Lorawan socket error', error)
 })
 
-const server = http.createServer(app)
-const io = new Server(server)
-
-io.on('connect', (socket) =>{
-  console.log('Client connected')
-  const cachedData = cache.get(socket.id)
-  if(cachedData){
-    console.log(`Sending data to id ${socket.id}`, cachedData)
-    socket.emit('cached_data',cachedData)
-  }
-  socket.on('disconnect', () =>{
-    console.log('Client disconnected')
-  })
-})
-
 const port = process.env.PORT || 3333
 const host = '0.0.0.0'
-server.listen(port, host, () =>{
+const server = app.listen(port, host, () => {
   console.log(`Listening at http://localhost:${port}/api`)
 })
 server.on('error', console.error)
+
+export const io = new Server(server)
+
+io.on('connect', (socket) => {
+  console.log('Client connected')
+  socket.on('connectInit', (plantId) => {
+    if (plantId) {
+      const listeners = cache.get<string[]>(plantId)
+      if (listeners) {
+        listeners.push(socket.id)
+        cache.set(plantId, listeners)
+      } else cache.set(plantId, [socket.id])
+    }
+  })
+  socket.on('disconnect', () => {
+    console.log('Client disconnected')
+  })
+})
