@@ -36,7 +36,7 @@ export const io = new Server(server)
 
 io.on('connect', (socket) => {
   console.log('Client connected')
-  socket.on('connectInit', (plantId) => {
+  socket.on('connectInit', (plantId: number) => {
     if (plantId) {
       const listeners = cache.get<string[]>(plantId)
       if (listeners) {
