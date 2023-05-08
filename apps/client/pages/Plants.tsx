@@ -9,7 +9,15 @@ import { getAllPlants } from "../services/PlantService";
 export const Plants:React.FC = () => {
   const [plants, setPlants] = useState<IPlant[]>([]);
   const [selectedPlant, setSelectedPlant] = useState<number>()
+  const [isDesktop, setIsDesktop] = useState(false)
   const {user} = useUserContext()
+  
+  React.useEffect(() => {
+      window.addEventListener("resize", () => {
+      window.innerWidth>1450 ? setIsDesktop(true) : setIsDesktop(false)
+           
+    });
+  }, []);
 
   useEffect(() => {
     getAllPlants().then((res) => {
@@ -38,13 +46,18 @@ export const Plants:React.FC = () => {
       console.log(e)
     })
   }
-
+if(isDesktop){
   return (
     <div className={styles.pageWrapper}>
       {user && <PlantList plants={plants} changeSelectedPlant={changeSelectedPlant} selectedIndex={selectedPlant} fetchAgain={fetchData}/>}
       {(user && (selectedPlant || selectedPlant === 0)) && <PlantWrapper plant={plants[selectedPlant]}/>}
     </div>
-  );
-};
+  );}
+  else 
+  {return (
+    <div className={styles.pageWrapper}>
+    <h1>working</h1></div>
+  );}}
+
 
 export default Plants;
