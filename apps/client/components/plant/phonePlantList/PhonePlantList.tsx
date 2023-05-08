@@ -16,18 +16,8 @@ interface Props{
 export const PhonePlantList:React.FC<Props> = ({plants, changeSelectedPlant, selectedIndex, fetchAgain}) => {
   const [displayCreateModal, setDisplayCreateModal] = useState(false)
   const [isFullList, setIsFullList] = useState(false)
-  const [selectedPlant, setSelectedPlant] = useState<number>()
+  const [selectedPlant, setSelectedPlant] = useState<number>(selectedIndex)
   
-  useEffect(() => {
-    if(plants.length > 0){
-      setSelectedPlant(0)
-    }
-
-  }, [plants]);
-
-  changeSelectedPlant = (index: number) => {
-      setSelectedPlant(index)
-  }
 
   useEffect(() => {
     console.log(displayCreateModal)
@@ -40,7 +30,7 @@ if(isFullList){
         {plants.map((plant, index) => {
           return(
             <PlantListed
-              onClick={() => changeSelectedPlant(index)}
+              onClick={() => {setSelectedPlant(index);changeSelectedPlant(index)}}
               name={plant.name}
               latinName={plant.latinName}
               id={plant.id}
@@ -54,6 +44,8 @@ if(isFullList){
         <div className={styles.addPlantButton} onClick={() => setDisplayCreateModal(true)}>Add plant</div>
       </div>
       {displayCreateModal && <CreatePlant onClose={() => setDisplayCreateModal(false)} mode={'create'} fetchAgain={fetchAgain}/>}
+      <div className={styles.arrowContainer}><MdKeyboardArrowUp size={40} onClick={()=>setIsFullList(false)}/></div>
+      
     </div>
   );
 }
@@ -64,17 +56,17 @@ else
       <h3>Plants</h3>
       <div className={styles.container}>
             <PlantListed
-              onClick={() => changeSelectedPlant(selectedIndex)}
-              name={plants[selectedIndex].name}
-              latinName={plants[selectedIndex].latinName}
-              id={plants[selectedIndex].id}
-              key={plants[selectedIndex].id}
-              url={plants[selectedIndex].image}
+              onClick={() => changeSelectedPlant(selectedPlant)}
+              name={plants[selectedPlant].name}
+              latinName={plants[selectedPlant].latinName}
+              id={plants[selectedPlant].id}
+              key={plants[selectedPlant].id}
+              url={plants[selectedPlant].image}
               isSelected={true}
               fetchAgain={fetchAgain}
             />
         <div className={styles.addPlantButton} onClick={() => setDisplayCreateModal(true)}>Add plant</div>
-        <div className={styles.arrowContainer}><MdKeyboardArrowDown size={40}/></div>
+        <div className={styles.arrowContainer}><MdKeyboardArrowDown size={40} onClick={()=>setIsFullList(true)}/></div>
       
       </div>
       {displayCreateModal && <CreatePlant onClose={() => setDisplayCreateModal(false)} mode={'create'} fetchAgain={fetchAgain}/>}
