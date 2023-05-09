@@ -1,13 +1,21 @@
 import express from 'express'
 import { IGraphData, IGraphPoint } from '@sep4/types'
 import prisma from '../helperFunctions/setupPrisma'
-import { isValidType } from '../businessLogic/plants/isValidGraphType'
+import { isValidType } from '../businessLogic/environment/isValidGraphType'
 import { formatDate } from '../businessLogic/plants/formatDate'
 import authorizeUser, { UserRequest } from '../middleware/authorizeUser'
+import { isValidDesiredEnv } from '../businessLogic/environment/isValidDesiredEnvironment'
 
 const environmentRouter = express.Router({ mergeParams: true })
 
 environmentRouter.use(authorizeUser)
+
+environmentRouter.post('/', async (req: UserRequest, res) => {
+    const { plantId } = req.params
+    const desiredEnvironment = req.body as unknown
+    if(!desiredEnvironment || !isValidDesiredEnv) return res.status(400).json({message: 'Invalid desired environment', status: 'error'})
+    
+})
 
 environmentRouter.get('/:type', async (req: UserRequest, res) => {
   try {
