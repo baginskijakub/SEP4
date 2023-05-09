@@ -9,3 +9,15 @@
   flex-direction: column;
   width: calc(100vw - 240px);
 }
+
+.mobileWrapper{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.mobileInner{
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+}

@@ -20,4 +20,24 @@
 
 .title {
   font-size: 40px;
-  }
+}
+
+.navbar_close_btn {
+  position: absolute;
+		top: 2rem;
+		right: 2rem;
+}
+
+.navbar_btn {
+  padding: 5px;
+	cursor: pointer;
+	background: transparent;
+	border: none;
+	outline: none;
+	color: var(--textColor);
+	visibility: hidden;
+	opacity: 0;
+	font-size: 1.8rem;
+}
+
+
