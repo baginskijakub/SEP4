@@ -1,59 +1,17 @@
 import express from 'express'
 import prisma from '../helperFunctions/setupPrisma'
+import environmentRouter from './environmentController'
 import { UserRequest } from '../middleware/authorizeUser'
 import authorizeUser from '../middleware/authorizeUser'
-import { IGraphData, IGraphPoint } from '@sep4/types'
-import { isValidType } from '../businessLogic/plants/isValidGraphType'
-import { formatDate } from '../businessLogic/plants/formatDate'
 import { IPlant } from '@sep4/types'
 import { isValidPlant } from '../businessLogic/plants/isValidPlant'
 
 const plantsRouter = express.Router()
 
-plantsRouter.get('/:plantId/environment/:type', authorizeUser, async (req, res) => {
-  try {
-    const { plantId, type } = req.params
+plantsRouter.use('/:plantId/environment', environmentRouter)
+plantsRouter.use(authorizeUser)
 
-    if (!plantId || !type) {
-      res.status(400).json({ message: 'Missing parameters', status: 'error' })
-      return
-    }
-
-    if (!isValidType(type)) {
-      res.status(400).json({ message: 'Wrong type', status: 'error' })
-      return
-    }
-
-    const graphData = await prisma.graphData.findMany({
-      where: {
-        plantId: parseInt(plantId),
-        type: type,
-      },
-      orderBy: {
-        dateEpoch: 'asc',
-      },
-    })
-
-    const graphPoints: IGraphPoint[] = graphData.map((data) => {
-      return {
-        date: formatDate(data.dateEpoch),
-        value: data.value,
-      }
-    })
-
-    const formattedGraphData: IGraphData = {
-      type: type,
-      data: graphPoints,
-    }
-
-    res.status(200).json(formattedGraphData)
-  } catch (error) {
-    res.status(401).json({ message: 'Unauthorized', status: 'error' })
-    return
-  }
-})
-
-plantsRouter.post('/', authorizeUser, async (req: UserRequest, res) => {
+plantsRouter.post('/', async (req: UserRequest, res) => {
   const requestPlant: unknown = req.body
 
   try {
@@ -91,7 +49,7 @@ plantsRouter.post('/', authorizeUser, async (req: UserRequest, res) => {
 })
 
 // GET all plants assigned to the usrer
-plantsRouter.get('/', authorizeUser, async (req: UserRequest, res) => {
+plantsRouter.get('/', async (req: UserRequest, res) => {
   try {
     const decodedToken = req.user
     const plantsFromDb = await prisma.plant.findMany({ where: { email: decodedToken.email as string } })
@@ -113,7 +71,7 @@ plantsRouter.get('/', authorizeUser, async (req: UserRequest, res) => {
 })
 
 //GET the plant after id
-plantsRouter.get('/:plantId', authorizeUser, async (req: UserRequest, res) => {
+plantsRouter.get('/:plantId', async (req: UserRequest, res) => {
   const { plantId } = req.params
 
   try {
@@ -159,7 +117,7 @@ plantsRouter.get('/:plantId', authorizeUser, async (req: UserRequest, res) => {
 })
 
 // //PATCH
-plantsRouter.patch('/:plantId', authorizeUser, async (req, res) => {
+plantsRouter.patch('/:plantId', async (req, res) => {
   const { plantId } = req.params
   const requestPlant: unknown = req.body
   try {
@@ -189,7 +147,7 @@ plantsRouter.patch('/:plantId', authorizeUser, async (req, res) => {
 })
 
 //REMOVE
-plantsRouter.delete('/:plantId', authorizeUser, async (req: UserRequest, res) => {
+plantsRouter.delete('/:plantId', async (req: UserRequest, res) => {
   const { plantId } = req.params
   try {
     await prisma.plant.delete({ where: { id: parseInt(plantId) } })
