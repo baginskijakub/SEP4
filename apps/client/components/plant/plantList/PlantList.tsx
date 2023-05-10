@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { PlantListed } from "../plantListed/PlantListed";
 import styles from "./PlantList.module.css";
 import { IPlant } from "@sep4/types";
@@ -13,10 +13,6 @@ interface Props{
 
 export const PlantList:React.FC<Props> = ({plants, changeSelectedPlant, selectedIndex, fetchAgain}) => {
   const [displayCreateModal, setDisplayCreateModal] = useState(false)
-
-  useEffect(() => {
-    console.log(displayCreateModal)
-  }, [displayCreateModal])
 
   return (
     <div className={styles.wrapper}>
