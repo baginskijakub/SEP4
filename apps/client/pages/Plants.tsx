@@ -11,12 +11,12 @@ import { PhonePlantList } from "../components/plant/phoneVersions/phonePlantList
 export const Plants:React.FC = () => {
   const [plants, setPlants] = useState<IPlant[]>([]);
   const [selectedPlant, setSelectedPlant] = useState<number>()
-  const [isDesktop, setIsDesktop] = useState(false)
+  const [isDesktop, setIsDesktop] = useState(true)
   const {user} = useUserContext()
   
   React.useEffect(() => {
       window.addEventListener("resize", () => {
-      window.innerWidth>1450 ? setIsDesktop(true) : setIsDesktop(false)
+      window.innerWidth>480 ? setIsDesktop(true) : setIsDesktop(false)
            
     });
   }, []);
