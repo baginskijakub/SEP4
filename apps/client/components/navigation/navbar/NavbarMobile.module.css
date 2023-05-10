@@ -2,8 +2,14 @@
 .navbarInner{
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 200px;
+  gap: 20px;
+  border: 1px solid balck;
+  padding-bottom: 10px;
+  margin: 5px;
+}
+
+.navItem {
+  font-size: 25px;
 }
 
 .title {
@@ -36,8 +42,7 @@
 }
 
 .fullNavbarWrapper{
-  height: 100%;
-  width: 100%;
+  border: 1px solid;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,33 +53,24 @@
   color: var(--text-1);
 }
 
-.nav-btn {
+.navbar_close_btn {
   float: right;
-  padding: 5px;
   cursor: pointer;
   background: transparent;
   border: none;
   outline: none;
   color: var(--text-1);
-  visibility: hidden;
-  opacity: 0;
   font-size: 1.8rem;
   visibility: visible;
   opacity: 1;
 }
 
-
-  .navbar_close_btn {
-    position:inherit ;
-  }
-
-  .headerNav {
-    display: flex;
-    flex-direction: row;
-    width: 96%;
-    padding: 13px;
-    justify-content: space-between;
-    border: 1px solid black;
-  }
+.headerNav {
+  display: flex;
+  flex-direction: row;
+  width: 96%;
+  padding: 13px;
+  justify-content: space-between;
+}
 
   

@@ -29,32 +29,31 @@ export const NavbarMobile: React.FC = () => {
         <div className={styles.fullNavbarWrapper}>
             <div className={styles.headerNav}>
                 <h1 className={styles.title}>Plantify</h1>
-                <button className={styles.nav_btn}
+                <button className={styles.navbar_close_btn}
                     onClick= {() => {setShowFullNav(false)}}>
                     <FaTimes />
                 </button>
             </div>
             <div className={styles.navbarInner}>
                 <NavItem path={'/'}>
-                    <MdDashboard size={20} color={'#5BA937'} />
-                    <p>Dashboard</p>
+                    <MdDashboard size={30} color={'#5BA937'} />
+                    <p className={styles.navItem} onClick={() => {setShowFullNav(false)}}>Dashboard</p>
                 </NavItem>
                 <NavItem path={'/Plants'}>
-                    <RiPlantFill size={20} color={'#5BA937'} />
-                    <p>Plants</p>
+                    <RiPlantFill size={30} color={'#5BA937'} />
+                    <p className={styles.navItem} onClick={() => {setShowFullNav(false)}}>Plants</p>
                 </NavItem>
                 <NavItem path={'/'}>
-                    <MdFormatListBulletedAdd size={20} color={'#5BA937'} />
-                    <p>Tasks</p>
+                    <MdFormatListBulletedAdd size={30} color={'#5BA937'} />
+                    <p className={styles.navItem} onClick={() => {setShowFullNav(false)}}>Tasks</p>
                 </NavItem>
                 <NavItem path={'/'}>
-                    <MdDeviceThermostat size={20} color={'#5BA937'} />
-                    <p>Environment</p>
+                    <MdDeviceThermostat size={30} color={'#5BA937'} />
+                    <p className={styles.navItem} onClick={() => {setShowFullNav(false)}}>Environment</p>
                 </NavItem>
                 <UserButton onClick={() => setDisplayLoginModal(!displayLoginModal)} />
                 {/*conditional rendering dependent on state*/}
                 {displayLoginModal && <LoginModal onClose={() => setDisplayLoginModal(false)} />}
-                
             </div>
         </div>
     )

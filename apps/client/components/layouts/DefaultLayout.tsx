@@ -42,7 +42,7 @@ export const DefaultLayout:React.FC<Props> = ({children}) => {
       <div className={styles.mobileWrapper}> 
         <NavbarMobile /> 
         <div className={styles.mobileInner}>
-          <Breadcrumbs />
+          
           {children}
         </div>
       </div>
