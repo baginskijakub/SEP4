@@ -14,15 +14,15 @@ export const PlantCurrentEnvironment: React.FC<Props> = ({ plant }) => {
   const [displayModal, setDisplayModal] = useState<boolean>(false)
 
   useEffect(() => {
+
     // we might need 'api' added to the url
-    const socket = io("http://localhost:3333/")
-    socket.emit('connectInit', id)
-    socket.on("update", (data) => {
+    const socket = io('http://localhost:3333/api/')
+    socket.emit('connectInit', plant.id)
+    socket.on('update', (data) => {
       setEnvironment(data)
     })
   }, [])
 
-  
   return (
     <div className={styles.wrapper}>
       <div className={styles.inner}>

@@ -65,8 +65,8 @@ const getAllPlants = () => {
 }
 
 const adjustEnvironment = (id: number, environment: IPlantCurrentEnvironment) => {
-  return axios.post(`http://localhost:3333/api/v1/plants/${id}/environment`, environment).then((response) => {
-    if (response.status === 201) {
+  return axios.patch(`http://localhost:3333/api/v1/plants/${id}/environment`, environment).then((response) => {
+    if (response.status === 200) {
       return response.data
     } else {
       throw new Error('Error sending data')
