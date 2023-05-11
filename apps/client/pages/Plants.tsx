@@ -5,8 +5,8 @@ import { PlantWrapper } from "../components/plant/plantWrapper/PlantWrapper";
 import { IPlant } from "@sep4/types";
 import { useUserContext } from "../context/UserContext";
 import { getAllPlants } from "../services/PlantService";
-import { PhonePlantWrapper } from "../components/plant/phoneVersions/phonePlantWrapper/PhonePlantWrapper";
 import { PhonePlantList } from "../components/plant/phoneVersions/phonePlantList/PhonePlantList";
+import { PhonePlantWrapper } from "../components/plant/phoneVersions/phonePlantWrapper/PhonePlantWrapper";
 
 export const Plants:React.FC = () => {
   const [plants, setPlants] = useState<IPlant[]>([]);
