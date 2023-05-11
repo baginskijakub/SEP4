@@ -3,8 +3,11 @@ import { app } from './server'
 import { handleMessageEvent } from './businessLogic/lorawan/handleMessageEvent'
 import { Server } from 'socket.io'
 import { cache } from './helperFunctions/singletonCache'
+import http from 'http'
 
 export const lorawanSocket = new WebSocket(process.env.LORAWAN_SOCKET_URL)
+
+const server = http.createServer(app)
 
 lorawanSocket.on('open', () => {
   console.log('Lorawan socket connected')
@@ -25,12 +28,12 @@ lorawanSocket.on('error', (error) => {
   console.log('Lorawan socket error', error)
 })
 
-const port = process.env.PORT || 3333
+const port = process.env.PORT || 0
 const host = '0.0.0.0'
-const server = app.listen(port, host, () => {
+
+server.listen(port, host, () => {
   console.log(`Listening at http://localhost:${port}/api`)
 })
-server.on('error', console.error)
 
 export const io = new Server(server)
 

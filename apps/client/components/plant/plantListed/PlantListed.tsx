@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from 'react'
 import { ActionButton } from "../../buttons/actionButton/ActionButton";
 import {MdDeleteOutline, MdOutlineEdit} from "react-icons/md";
@@ -19,10 +19,6 @@ interface Props{
 export const PlantListed:React.FC<Props> = ({name, latinName, url, id, onClick, isSelected, fetchAgain}) => {
   const [displayDeleteModal, setDisplayDeleteModal] = useState(false)
   const [displayEditModal, setDisplayEditModal] = useState(false)
-
-  useEffect(()=>{
-    console.log(displayDeleteModal)
-  }, [displayDeleteModal])
 
   return (
     <div className={isSelected ? styles.plantWrapperSelected : styles.plantWrapper } onClick={onClick}>
