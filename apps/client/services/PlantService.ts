@@ -1,12 +1,10 @@
-import { IPlant } from '@sep4/types'
+import { IPlant, IPlantCurrentEnvironment } from "@sep4/types";
 import axios from 'axios'
 
 axios.defaults.withCredentials = true
 
 const getPlantEnvironmentHistory = (plantId: number, type: string) => {
-
   return axios.get(`http://localhost:3333/api/v1/plants/${plantId}/environment/${type}`).then((response) => {
-    console.log(response)
     if (response.status === 200) {
       return response.data
     } else {
@@ -18,6 +16,7 @@ const getPlantEnvironmentHistory = (plantId: number, type: string) => {
 const getPlantById = (plantId: number) => {
   return axios.get(`http://localhost:3333/api/v1/plants/${plantId}`).then((response) => {
     if (response.status === 200) {
+      console.log(response.data)
       return response.data
     } else {
       throw new Error('Error fetching data')
@@ -57,7 +56,6 @@ const deletePlant = (plantId: number) => {
 
 const getAllPlants = () => {
   return axios.get(`http://localhost:3333/api/v1/plants/`).then((response) => {
-    console.log(response)
     if (response.status === 200) {
       return response.data
     } else {
@@ -66,4 +64,14 @@ const getAllPlants = () => {
   })
 }
 
-export { getPlantEnvironmentHistory, getPlantById, addPlant, updatePlant, deletePlant, getAllPlants }
+const adjustEnvironment = (id: number, environment: IPlantCurrentEnvironment) => {
+  return axios.patch(`http://localhost:3333/api/v1/plants/${id}/environment`, environment).then((response) => {
+    if (response.status === 200) {
+      return response.data
+    } else {
+      throw new Error('Error sending data')
+    }
+  })
+}
+
+export { getPlantEnvironmentHistory, getPlantById, addPlant, updatePlant, deletePlant, getAllPlants, adjustEnvironment }

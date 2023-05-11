@@ -9,6 +9,15 @@
   border-radius: 12px;
 }
 
+.inner{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  align-items: flex-start;
+  gap: 24px;
+}
+
 .container{
   display: flex;
   flex-direction: row;

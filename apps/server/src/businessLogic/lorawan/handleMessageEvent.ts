@@ -45,6 +45,7 @@ export async function handleMessageEvent(lorawanMessage: ILorawanUplinkMessage |
       await prisma.graphData.createMany({
         data: dataToSave,
       })
+      console.log('Graph data has been saved')
     } catch (e) {
       console.log(e.message)
     }
@@ -64,11 +65,11 @@ export async function handleMessageEvent(lorawanMessage: ILorawanUplinkMessage |
       await prisma.graphData.createMany({
         data: dataToSave,
       })
+      console.log('Graph data has been saved')
     } catch (e) {
       console.log(e.message)
     }
   }
-  console.log('Graph data has been saved')
 }
 
 // Type guard helper function
