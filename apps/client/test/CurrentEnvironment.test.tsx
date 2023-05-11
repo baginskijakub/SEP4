@@ -1,6 +1,7 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { PlantCurrentEnvironment } from '../components/plant/plantCurrentEnvironment/PlantCurrentEnvironment'
 import '@testing-library/jest-dom'
+import 'setimmediate'
 
 const mockPlant = {
     id: 1,

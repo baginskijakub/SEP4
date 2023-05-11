@@ -89,8 +89,9 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "recharts": "^2.5.0",
-    "socket.io-client": "^4.6.1",
+    "setimmediate": "^1.0.5",
     "socket.io": "^4.6.1",
+    "socket.io-client": "^4.6.1",
     "supertest": "^6.3.3",
     "tslib": "^2.3.0",
     "ws": "^8.13.0"
