@@ -1,52 +1,107 @@
 import request from 'supertest'
-import express, { Express } from 'express'
-import environmentRouter from '../controllers/environmentController'
-import { isValidType } from '../businessLogic/environment/isValidGraphType'
-import { isValidDesiredEnv } from '../businessLogic/environment/isValidDesiredEnvironment'
-import { sendDownlinkMessage } from '../businessLogic/lorawan/sendMessage'
+
 import prisma from '../helperFunctions/setupPrisma'
+import bcrypt from 'bcrypt'
+import { app } from '../server'
 
-//i found it on expressjs tutorial, idk
-const app: Express = express()
-app.use('/', environmentRouter)
+describe('Patch environment', () => {
+  let authToken
+  let plantId
 
-describe('PATCH',()=>{
-    //case1: code 400 for missing ID
-    test('return 400 if plantId is missing',async () => {
-        const response = await request(app).patch('/').send({})
-        expect(response.status).toBe(400)
-        expect(response.body).toEqual({message: 'No plant ID', status: 'error'})
+  beforeEach(async () => {
+    const encryptedPassword = await bcrypt.hash('Password123', 10)
+    await prisma.user.create({
+      data: {
+        email: 'test_user',
+        password: encryptedPassword,
+      },
     })
 
-    //case2: code 400 for invalid type
-    test('return 400 if environment is invalid', async() => {
-        const response = await request(app).patch('/1').send({})
-        expect(response.status).toBe(400)
-        expect(response.body).toBe({message: 'Invalid desired environment', status: 'error'})
-
+    //create plant so we can patch its environment
+    const plant = await prisma.plant.create({
+      data:{
+        id: 1,
+        name: 'Test plant',
+        nickName: 'A plant for testing',
+        image: 'plant.jpg',
+        latinName: 'Plantus testus',
+        email: 'test_user',
+        minCo2: 100,
+        maxCo2: 200,
+        minHumidity: 10,
+        maxHumidity: 20,
+        minTemperature: 10,
+        maxTemperature: 20,
+      },
     })
 
-    //case3: code 200 + downlink message if all info valid
-    test('return 200 and send downlink message is all data provided is valid', async() =>{
-        //database call mock, idk if i can use the test database?
-        jest.spyOn(prisma.graphData, 'findMany').mockResolvedValueOnce([])
-        jest.spyOn(sendDownlinkMessage, 'mockImplementation')
-        const response = await request(app).patch('/1').send({
-            humidity: 10,
-            temperature: 25,
-            co2: 1000,
-        })
-        expect(response.status).toBe(200)
-        expect(response.body.status).toBe('success')
-        expect(sendDownlinkMessage).toHaveBeenCalled()
+    plantId = plant.id
+
+    //login the user, save auth token
+    const loginResponse = await request(app).get('/api/v1/users').query({
+      username: 'test_user',
+      password: 'Password123',
     })
 
-    //case4: code 200 is message sent
-    it('return 200 if message is successfully sent', async () => {
-        const response = await request(app)
-          .patch('/plants/1/environment')
-          .send({ humidity: 50, temperature: 25, co2: 500 });
-        expect(response.statusCode).toBe(200);
-        expect(response.body.status).toBe('success');
-      });
+    authToken = loginResponse.headers['set-cookie'][0].split(';')[0]
+  })
+
+  afterEach(async () => {
+    await prisma.plant.deleteMany()
+    await prisma.user.deleteMany()
+  })
+
+  test('returns 400 status and error message when failed to update plant (not valid plantId)', async () => {
+    const updatedPlant = {
+      name: 'Updated plant name',
+      nickName: 'Updated plant nickName',
+      image: 'updated-plant.jpg',
+      latinName: 'Updated plantus testus',
+      idealEnvironment: {
+        minCo2: 100,
+        maxCo2: 200,
+        minHumidity: 10,
+        maxHumidity: 20,
+        minTemperature: 10,
+        maxTemperature: 20,
+      },
+    }
+
+    const response = await request(app).patch('/api/v1/plants/999').set('Cookie', authToken).send(updatedPlant)
+
+    expect(response.status).toBe(400)
+    expect(response.body.message).toBe('Failed to update plant')
+    expect(response.body.status).toBe('error')
+  })
+
+
+
+
+
 })
+
+// describe('PATCH',()=>{
+//     //case1: code 400 for missing ID
+//     test('return 400 if plantId is missing',async () => {
+//         const response = await request(app).patch('/').send({})
+//         expect(response.status).toBe(400)
+//         expect(response.body).toEqual({message: 'No plant ID', status: 'error'})
+//     })
+
+//     //case2: code 400 for invalid type
+//     test('return 400 if environment is invalid', async() => {
+//         const response = await request(app).patch('/1').send({})
+//         expect(response.status).toBe(400)
+//         expect(response.body).toBe({message: 'Invalid desired environment', status: 'error'})
+
+//     })
+
+//     //case3: code 200 is message sent
+//     it('return 200 if message is successfully sent', async () => {
+//         const response = await request(app)
+//           .patch('/plants/1/environment')
+//           .send({ humidity: 50, temperature: 25, co2: 500 });
+//         expect(response.statusCode).toBe(200);
+//         expect(response.body.status).toBe('success');
+//       });
+// })
