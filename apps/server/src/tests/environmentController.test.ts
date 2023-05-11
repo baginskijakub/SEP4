@@ -1,5 +1,4 @@
 import request from 'supertest'
-
 import prisma from '../helperFunctions/setupPrisma'
 import bcrypt from 'bcrypt'
 import { app } from '../server'
@@ -119,4 +118,12 @@ describe('Patch environment', () => {
     expect(response.body.status).toBe('success')
     expect(response.body.payload).toBeDefined()
   })
+
+  test('returns 401 status and error message when the user is not authenticated', async () => {
+    const response = await request(app).patch(`/api/v1/plants/${plantId}/environment/temperature`)
+    expect(response.status).toBe(401)
+    expect(response.body.message).toBe('Unauthorized')
+    expect(response.body.status).toBe('error')
+  })
+
 })
