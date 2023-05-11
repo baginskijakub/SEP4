@@ -5,6 +5,7 @@ on:
   pull_request:
     paths:
       - "apps/server/**"
+      - "apps/client/**"
       - ".github/workflows/test-server.yml"
 jobs:
   tests:
