@@ -64,7 +64,6 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
 
   // function for toggling between login and register and validation
   const handleClick = () => {
-    console.log(emailElement, passwordElement)
     if (
       emailElement.current.value === '' ||
       emailElement.current.value === undefined ||

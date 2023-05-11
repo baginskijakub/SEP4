@@ -1,5 +1,3 @@
-import { render, screen, RenderResult } from '@testing-library/react';
-import { RemovePlant } from '../components/plant/delete/RemovePlantModal'
 import * as PlantService from '../../client/services/PlantService'
 
 jest.mock('../../client/services/PlantService')
@@ -30,17 +28,17 @@ describe("Remove plant component", () => {
             }
           };
           const expectedPlant = { ...plant };
-    
+
           jest.spyOn(PlantService, 'getPlantById').mockResolvedValue(plant);
-    
+
           // Act
           const result = await PlantService.getPlantById(1);
-    
+
           // Assert
           expect(result).toEqual(expectedPlant);
           expect(PlantService.getPlantById).toHaveBeenCalledTimes(1);
         });
-    
+
       });
 
 
