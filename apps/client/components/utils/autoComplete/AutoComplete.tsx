@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './AutoComplete.module.css'
 
 type SelectOptions = {
@@ -17,6 +17,7 @@ export function AutoComplete ({value, onChange, options} : SelectProps)
 {
 
   const [isOpen, setIsOpen] = useState(false)
+  const [highlighted, setHighlighted] = useState(0)
 
   function clearOptions() {
     onChange(undefined)
@@ -30,6 +31,10 @@ export function AutoComplete ({value, onChange, options} : SelectProps)
   function isOptionSelected(option: SelectOptions){
     return option == value
   }
+
+  useEffect(()=> {
+    if (isOpen) setHighlighted(0)
+  }, [isOpen])
 
   return (
     <div 
@@ -48,15 +53,20 @@ export function AutoComplete ({value, onChange, options} : SelectProps)
         ></button>
       <div className={styles.arrowDown}></div>
       <ul className={`${styles.options} ${isOpen ? styles.show : ""}`}>
-        {options.map(option => (
+        {options.map((option, index) => (
             <li 
                 onClick={e => {
                     e.stopPropagation()
                     selectOption(option)
                     setIsOpen(false)
                 }}
+                onMouseEnter= {() => setHighlighted(index)}
                 key={option.value} 
-                className={`${styles.option} ${isOptionSelected(option) ? styles.selected : ""} `}
+                className={`${styles.option} ${
+                    isOptionSelected(option) ? styles.selected : ""
+                } ${
+                    index === highlighted ? styles.highlighted : " "
+                }`}
             >
                 {option.label}
             </li>
