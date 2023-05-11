@@ -37,7 +37,7 @@ describe('Patch environment', () => {
 
     plantId = plant.id
 
-    //login the user, save auth token
+    
     const loginResponse = await request(app).get('/api/v1/users').query({
       username: 'test_user',
       password: 'Password123',
@@ -74,34 +74,14 @@ describe('Patch environment', () => {
     expect(response.body.status).toBe('error')
   })
 
-
+  test('returns 400 status and error message if type is invalid', async () => {
+    const response = await request(app).get(`/api/v1/plants/${plantId}/environment/invalid_type`).set('Cookie', authToken)
+    expect(response.status).toBe(400)
+    expect(response.body.message).toBe('Wrong type')
+    expect(response.body.status).toBe('error')
+  })
+  
 
 
 
 })
-
-// describe('PATCH',()=>{
-//     //case1: code 400 for missing ID
-//     test('return 400 if plantId is missing',async () => {
-//         const response = await request(app).patch('/').send({})
-//         expect(response.status).toBe(400)
-//         expect(response.body).toEqual({message: 'No plant ID', status: 'error'})
-//     })
-
-//     //case2: code 400 for invalid type
-//     test('return 400 if environment is invalid', async() => {
-//         const response = await request(app).patch('/1').send({})
-//         expect(response.status).toBe(400)
-//         expect(response.body).toBe({message: 'Invalid desired environment', status: 'error'})
-
-//     })
-
-//     //case3: code 200 is message sent
-//     it('return 200 if message is successfully sent', async () => {
-//         const response = await request(app)
-//           .patch('/plants/1/environment')
-//           .send({ humidity: 50, temperature: 25, co2: 500 });
-//         expect(response.statusCode).toBe(200);
-//         expect(response.body.status).toBe('success');
-//       });
-// })
