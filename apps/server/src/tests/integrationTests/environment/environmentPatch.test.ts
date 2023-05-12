@@ -1,7 +1,13 @@
 import request from 'supertest'
-import prisma from '../helperFunctions/setupPrisma'
+import prisma from '../../../helperFunctions/setupPrisma'
 import bcrypt from 'bcrypt'
-import { app } from '../server'
+import { app } from '../../../server'
+import { sendDownlinkMessage } from '../../../businessLogic/lorawan/sendMessage'
+
+jest.mock('../../../businessLogic/lorawan/sendMessage', () => ({
+  ...jest.requireActual('../../../businessLogic/lorawan/sendMessage'),
+  sendDownlinkMessage: jest.fn(() => console.log('mocked sending data')),
+}))
 
 describe('Patch environment', () => {
   let authToken
@@ -16,7 +22,6 @@ describe('Patch environment', () => {
       },
     })
 
-    //create plant so we can patch its environment
     const plant = await prisma.plant.create({
       data: {
         id: 1,
@@ -49,37 +54,14 @@ describe('Patch environment', () => {
     await prisma.user.deleteMany()
   })
 
-  //test from plantPatchTest
-  test('returns 400 status and error message when failed to update plant (not valid plantId)', async () => {
-    const updatedPlant = {
-      name: 'Updated plant name',
-      nickName: 'Updated plant nickName',
-      image: 'updated-plant.jpg',
-      latinName: 'Updated plantus testus',
-      idealEnvironment: {
-        minCo2: 100,
-        maxCo2: 200,
-        minHumidity: 10,
-        maxHumidity: 20,
-        minTemperature: 10,
-        maxTemperature: 20,
-      },
-    }
-
-    const response = await request(app).patch('/api/v1/plants/999').set('Cookie', authToken).send(updatedPlant)
-
-    expect(response.status).toBe(400)
-    expect(response.body.message).toBe('Failed to update plant')
-    expect(response.body.status).toBe('error')
-  })
-
-  //get, error 400, wrong type
-  test('returns 400 status and error message if type is invalid', async () => {
+  test('returns 400 status and error message when plant with passed id does not exists', async () => {
     const response = await request(app)
-      .get(`/api/v1/plants/${plantId}/environment/invalid_type`)
+      .patch('/api/v1/plants/999/environment')
       .set('Cookie', authToken)
+      .send({ humidity: 50, temperature: 25, co2: 800 })
+
     expect(response.status).toBe(400)
-    expect(response.body.message).toBe('Wrong type')
+    expect(response.body.message).toBe('Invalid plant id')
     expect(response.body.status).toBe('error')
   })
 
@@ -91,16 +73,27 @@ describe('Patch environment', () => {
       .send({ humidity: 50, temperature: 25, co2: 800 })
 
     expect(response.status).toBe(400)
-    expect(response.body.message).toBe('Missing plant id')
+    expect(response.body.message).toBe('Invalid plant id')
     expect(response.body.status).toBe('error')
   })
 
   //patch, error 400, invalid desired environment
-  test('returns a 400 error if desired environment is invalid', async () => {
+  test('returns a 400 error if value inside of desired environment is invalid', async () => {
     const response = await request(app)
       .patch(`/api/v1/plants/${plantId}/environment`)
       .set('Cookie', authToken)
       .send({ humidity: 'invalid', temperature: 25, co2: 800 })
+
+    expect(response.status).toBe(400)
+    expect(response.body.message).toBe('Invalid desired environment')
+    expect(response.body.status).toBe('error')
+  })
+
+  test('returns a 400 error if desired environment is invalid', async () => {
+    const response = await request(app)
+      .patch(`/api/v1/plants/${plantId}/environment`)
+      .set('Cookie', authToken)
+      .send({ humidity: 34.2, temperature: 25 })
 
     expect(response.status).toBe(400)
     expect(response.body.message).toBe('Invalid desired environment')
@@ -115,15 +108,15 @@ describe('Patch environment', () => {
       .send({ humidity: 50, temperature: 25, co2: 800 })
 
     expect(response.status).toBe(200)
+    expect(sendDownlinkMessage).toHaveBeenCalledTimes(1)
     expect(response.body.status).toBe('success')
-    expect(response.body.payload).toBeDefined()
+    expect(response.body.payload).toBe('01f400fa0320')
   })
 
   test('returns 401 status and error message when the user is not authenticated', async () => {
-    const response = await request(app).patch(`/api/v1/plants/${plantId}/environment/temperature`)
+    const response = await request(app).patch(`/api/v1/plants/${plantId}/environment`)
     expect(response.status).toBe(401)
     expect(response.body.message).toBe('Unauthorized')
     expect(response.body.status).toBe('error')
   })
-
 })
