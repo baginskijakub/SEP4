@@ -1,0 +1,101 @@
+.wrapper{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 12px;
+  gap: 12px;
+  width: 400px;
+  height: 80px;
+  border-radius: 12px;
+  position: relative;
+}
+
+.current{
+  background-color: var(--background-b-med);
+  border: 1px solid var(--background-b-dark);
+  color: var(--text-3);
+}
+
+.future{
+  background-color: var(--background-b-med);
+  border: 1px solid var(--background-b-dark);
+  color: var(--text-3);
+  opacity: 0.7;
+}
+
+.past{
+  background-color: var(--action-error-300);
+  border: 1px solid var(--action-error-500);
+  color: var(--action-error-700);
+}
+
+.wrapper img{
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 400px;
+  height: 100%;
+}
+
+.inner{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 4px;
+  width: 100%;
+}
+
+.bottom{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  width: 100%;
+}
+
+.controls{
+  position: absolute;
+  right: 8px;
+  top: 8px;
+}
+
+.button{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 10px;
+  background: var(--text-3);
+  border-radius: 6px;
+  outline: none;
+  border: none;
+  color: var(--text-1);
+  transition: all 0.1s ease-in-out;
+}
+
+.buttonPast{
+  background: var(--action-error-700);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 6px;
+  outline: none;
+  border: none;
+  color: var(--text-1);
+  transition: all 0.1s ease-in-out;
+}
+
+.button:hover{
+  opacity: 0.8;
+}
