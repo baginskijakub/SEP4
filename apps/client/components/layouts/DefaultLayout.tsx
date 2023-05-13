@@ -26,26 +26,25 @@ export const DefaultLayout:React.FC<Props> = ({children}) => {
     }
   }
 
-
-  if (isDesktop) {
-    return (
-      <div className={styles.defaultWrapper}> 
-          <Navbar /> 
-        <div className={styles.defaultInner}>
-          <Breadcrumbs />
-          {children}
+  return (
+    <>
+      {isDesktop && 
+        <div className={styles.defaultWrapper}>
+          <Navbar />
+          <div className={styles.defaultInner}>
+            <Breadcrumbs />
+            {children}
+          </div>
         </div>
-      </div>
-    );
-  } else {
-    return (
-      <div className={styles.mobileWrapper}> 
-        <NavbarMobile /> 
-        <div className={styles.mobileInner}>
-          
+      }
+      {!isDesktop &&
+        <div className={styles.mobileWrapper}>
+          <NavbarMobile />
+          <div className={styles.mobileInner}>
           {children}
+          </div>
         </div>
-      </div>
-    );
-  }
+      }
+    </>
+  );
 };
