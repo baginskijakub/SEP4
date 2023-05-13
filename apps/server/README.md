@@ -26,5 +26,8 @@ Write to me to get .env files and paste to your project locally
             [GET] returns singular plant belonging to the user, (username passed by the cookie), plantId passed in a route, if successful returns json with IPlant 
             [DELETE] - deletes plant from database based on plantId from the route, returns json with message and status
             [PATCH] - updates plant specified by plantId from the route, fields that should be updated are passed in body of the request (for example, {name : "newName"})
-            /environment/:type
-                [GET] - returns all graph points for the plant (specified by plantId from route), that are of the type specified also in route (possible type: temperature, humidity, co2, light), return type is IGraphData
+            /environment
+                [POST] takes IPlantCurrentEnvironment object as a body, transforms this data into valid payload and sends downlink message to IoT device 
+                with the payload, if message was enqueued correctly returns payload as hexadecimal string and status
+                /:type
+                    [GET] - returns all graph points for the plant (specified by plantId from route), that are of the type specified also in route (possible type: temperature, humidity, co2, light), return type is IGraphData

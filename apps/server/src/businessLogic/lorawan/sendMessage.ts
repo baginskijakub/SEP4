@@ -1,11 +1,11 @@
 import { lorawanSocket } from '../../main'
-export function sendDownlinkMessage(data: string) {
+export function sendDownlinkMessage(data: string, port: number) {
   //TODO handle confirmation message also in messageEvent
   lorawanSocket.send(
     JSON.stringify({
       cmd: 'tx',
       EUI: process.env.EUI,
-      port: 2,
+      port: port,
       confirmed: false,
       data,
     }),

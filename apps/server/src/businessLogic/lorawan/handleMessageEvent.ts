@@ -1,4 +1,5 @@
 import prisma from '../../helperFunctions/setupPrisma'
+import sendDataViaSocket from '../sockets/sendData'
 
 interface ILorawanUplinkMessage {
   cmd: string // identifies type of message, rx = uplink message
@@ -31,7 +32,7 @@ interface ILorawanCacheResponseMessage {
   cache: ILorawanUplinkMessage[] // array of cached messages, ordered by descending timestamp
 }
 
-type GraphDataCreateInput = { plantId: number; type: string; value: number; dateEpoch: number }
+export type GraphDataCreateInput = { plantId: number; type: string; value: number; dateEpoch: number }
 
 export async function handleMessageEvent(lorawanMessage: ILorawanUplinkMessage | ILorawanCacheResponseMessage) {
   if (isUplinkMessage(lorawanMessage)) {
@@ -39,9 +40,12 @@ export async function handleMessageEvent(lorawanMessage: ILorawanUplinkMessage |
     if (!payload) return
     try {
       const dataToSave = parsePayload(payload, Math.round(lorawanMessage.ts / 1000))
+      sendDataViaSocket(dataToSave, 'update')
+
       await prisma.graphData.createMany({
         data: dataToSave,
       })
+      console.log('Graph data has been saved')
     } catch (e) {
       console.log(e.message)
     }
@@ -61,11 +65,11 @@ export async function handleMessageEvent(lorawanMessage: ILorawanUplinkMessage |
       await prisma.graphData.createMany({
         data: dataToSave,
       })
+      console.log('Graph data has been saved')
     } catch (e) {
       console.log(e.message)
     }
   }
-  console.log('Graph data has been saved')
 }
 
 // Type guard helper function
