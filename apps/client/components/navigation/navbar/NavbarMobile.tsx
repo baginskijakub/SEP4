@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import styles from './NavbarMobile.module.css'
 import { NavItem } from '../navItem/NavItem'
 import { MdDashboard, MdFormatListBulletedAdd, MdDeviceThermostat, MdDensityMedium, MdClear } from 'react-icons/md'
@@ -19,8 +19,8 @@ export const NavbarMobile: React.FC = () => {
                     <button className={styles.navbar_close_btn}
                         onClick= {() => {setShowFullNav(true)}}>
                         <MdDensityMedium />
-                    </button> 
-                </div> 
+                    </button>
+                </div>
             </div>
         )
     }
@@ -42,7 +42,7 @@ export const NavbarMobile: React.FC = () => {
                     <RiPlantFill size={20} color={'#5BA937'} />
                     <p className={styles.navItem} onClick={() => {setShowFullNav(false)}}>Plants</p>
                 </NavItem>
-                <NavItem path={'/'}>
+                <NavItem path={'/Tasks'}>
                     <MdFormatListBulletedAdd size={20} color={'#5BA937'} />
                     <p className={styles.navItem} onClick={() => {setShowFullNav(false)}}>Tasks</p>
                 </NavItem>
