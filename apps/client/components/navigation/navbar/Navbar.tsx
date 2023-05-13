@@ -22,7 +22,7 @@ export const Navbar: React.FC = () => {
           <RiPlantFill size={20} color={'#5BA937'} />
           <p>Plants</p>
         </NavItem>
-        <NavItem path={'/'}>
+        <NavItem path={'/Tasks'}>
           <MdFormatListBulletedAdd size={20} color={'#5BA937'} />
           <p>Tasks</p>
         </NavItem>
