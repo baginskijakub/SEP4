@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./PlantIdealEnvironment.module.css";
 import { IPlantIdealEnvironment } from "@sep4/types";
+import { AutoComplete } from "../../utils/autoComplete/AutoComplete";
 
 interface DisplayEnvironment {
   min: string;
@@ -49,11 +50,7 @@ export const PlantIdealEnvironment:React.FC<Props> = ({environment}) => {
     <div className={styles.wrapper}>
       <div className={styles.inner}>
         <h4>Ideal environment</h4>
-        <select name="humidity" id="" onChange={(e) => setSelectedType(e.target.value)}>
-          <option value="temperature">Temperature</option>
-          <option value="humidity">Humidity</option>
-          <option value="co2">CO2</option>
-        </select>
+        <AutoComplete options={["humidity", "co2", "temperature"]} onChange={(value: string) => setSelectedType(value)}/>
       </div>
       <div className={styles.bar}>
         <p className={'body-small'}>{currentEnvironment.displayMin}</p>
