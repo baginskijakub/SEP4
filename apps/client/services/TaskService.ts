@@ -31,4 +31,25 @@ const completeTask = (taskId: number):Promise<ITask> => {
   })
 }
 
-export { getCurrentTasks, completeTask }
+const createTask = (task: ITask) => {
+  return axios.post(`http://localhost:3333/api/v1/tasks`, task).then((response) => {
+    if (response.status === 201) {
+      return response.data
+    } else {
+      throw new Error('Error fetching data')
+    }
+  })
+}
+
+const getTaskById = (taskId: number) => {
+  return axios.get(`http://localhost:3333/api/v1/plants/${taskId}`).then((response) => {
+    if (response.status === 200) {
+      console.log(response.data)
+      return response.data
+    } else {
+      throw new Error('Error fetching data')
+    }
+  })
+}
+
+export { getCurrentTasks, completeTask, createTask, getTaskById }
