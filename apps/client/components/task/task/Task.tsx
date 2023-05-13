@@ -4,6 +4,7 @@ import { getPlantById } from '../../../services/PlantService'
 import { ActionButton } from '../../buttons/actionButton/ActionButton'
 import { MdClose } from 'react-icons/md'
 import styles from './Task.module.css'
+import { completeTask } from "../../../services/TaskService";
 
 interface Props {
   task: ITask
@@ -11,16 +12,20 @@ interface Props {
 }
 export const Task: React.FC<Props> = ({ task , controlls}) => {
   const [plant, setPlant] = useState<IPlant>()
+  const [display, setDisplay] = useState<boolean>(true)
 
   useEffect(() => {
     getPlantById(task.plantId).then((res) => {
       setPlant(res)
     })
   }, [])
-
-  const onClose = () => {
-    console.log('close')
+  const onComplete = () => {
+    completeTask(task.id).then(() => {
+      console.log('completed')
+    })
   }
+
+  if (!display) return <></>
 
   return (
     <>
@@ -36,11 +41,11 @@ export const Task: React.FC<Props> = ({ task , controlls}) => {
             </div>
             <div className={styles.bottom}>
               <p>{task.date}</p>
-              <button className={task.status === 'past' ? styles.buttonPast : styles.button} onClick={onClose}>Complete</button>
+              {task.status !== 'future' && <button className={task.status === 'past' ? styles.buttonPast : styles.button} onClick={onComplete}>Complete</button>}
             </div>
           </div>
           { controlls && <div className={styles.controls}>
-            <ActionButton onClick={onClose}>
+            <ActionButton onClick={() => setDisplay(false)} danger={task.status === "past"}>
               <MdClose size={20} />
             </ActionButton>
           </div>}
