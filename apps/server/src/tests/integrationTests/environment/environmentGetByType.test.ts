@@ -99,26 +99,40 @@ describe('Get environment by type endpoint', () => {
   })
 
   //reponse code 200, successfull path - temperature
-  test('returns 200 status when the request is successful', async () => {
-    const response = await request(app).get(`/api/v1/plants/${plantId}/environment/temperature`)
-    .set('Cookie', authToken)
+  test('returns 200 status when the request is successful (temperature)', async () => {
+    const response = await request(app)
+      .get(`/api/v1/plants/${plantId}/environment/temperature`)
+      .set('Cookie', authToken)
     expect(response.status).toBe(200)
-    expect(response.body).toBeDefined()
-    })
+    expect(response.body['type']).toBeDefined()
+    expect(response.body['data']).toBeDefined()
+    expect(response.body['data'].length).toBe(3)
+    expect(response.body['data'][0]['value']).toBe(11.2)
+    expect(response.body['data'][0]['date']).toBeDefined()
+    expect(response.body['data'][1]['value']).toBe(14.2)
+    expect(response.body['data'][1]['date']).toBeDefined()
+    expect(response.body['data'][2]['value']).toBe(41.2)
+    expect(response.body['data'][2]['date']).toBeDefined()
+    expect(response.body['type']).toBe('temperature')
+  })
 
   //reponse code 200, successfull path - humidity
-  test('returns 200 status when the request is successful', async () => {
-    const response = await request(app).get(`/api/v1/plants/${plantId}/environment/humidity`)
-    .set('Cookie', authToken)
+  test('returns 200 status when the request is successful (humidity)', async () => {
+    const response = await request(app).get(`/api/v1/plants/${plantId}/environment/humidity`).set('Cookie', authToken)
     expect(response.status).toBe(200)
-    expect(response.body).toBeDefined()
-    })
+    const expectedResponse = { data: [], type: 'humidity' }
+    expect(response.body).toEqual(expectedResponse)
+  })
 
   //response cod3 200, succesfull path - co2
-  test('returns 200 status when the request is successful', async () => {
-    const response = await request(app).get(`/api/v1/plants/${plantId}/environment/co2`)
-    .set('Cookie', authToken)
+  test('returns 200 status when the request is successful (co2)', async () => {
+    const response = await request(app).get(`/api/v1/plants/${plantId}/environment/co2`).set('Cookie', authToken)
     expect(response.status).toBe(200)
-    expect(response.body).toBeDefined()
-    })
+    expect(response.body['type']).toBeDefined()
+    expect(response.body['data']).toBeDefined()
+    expect(response.body['data'].length).toBe(1)
+    expect(response.body['data'][0]['value']).toBe(9.2)
+    expect(response.body['data'][0]['date']).toBeDefined()
+    expect(response.body['type']).toBe('co2')
+  })
 })
