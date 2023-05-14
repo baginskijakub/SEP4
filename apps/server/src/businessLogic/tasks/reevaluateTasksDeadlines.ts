@@ -2,13 +2,7 @@ import prisma from '../../helperFunctions/setupPrisma'
 
 export async function reevaluateTasksDeadlines() {
   try {
-    const tasks = await prisma.task.findMany({
-      where: {
-        daysTillDeadline: {
-          gte: 0,
-        },
-      },
-    })
+    const tasks = await prisma.task.findMany()
 
     await Promise.allSettled(
       tasks.map(async (task) => {
