@@ -98,5 +98,27 @@ describe('Get environment by type endpoint', () => {
     expect(response.body.status).toBe('error')
   })
 
-  //missing following tests: successfull path
+  //reponse code 200, successfull path - temperature
+  test('returns 200 status when the request is successful', async () => {
+    const response = await request(app).get(`/api/v1/plants/${plantId}/environment/temperature`)
+    .set('Cookie', authToken)
+    expect(response.status).toBe(200)
+    expect(response.body).toBeDefined()
+    })
+
+  //reponse code 200, successfull path - humidity
+  test('returns 200 status when the request is successful', async () => {
+    const response = await request(app).get(`/api/v1/plants/${plantId}/environment/humidity`)
+    .set('Cookie', authToken)
+    expect(response.status).toBe(200)
+    expect(response.body).toBeDefined()
+    })
+
+  //response cod3 200, succesfull path - co2
+  test('returns 200 status when the request is successful', async () => {
+    const response = await request(app).get(`/api/v1/plants/${plantId}/environment/co2`)
+    .set('Cookie', authToken)
+    expect(response.status).toBe(200)
+    expect(response.body).toBeDefined()
+    })
 })
