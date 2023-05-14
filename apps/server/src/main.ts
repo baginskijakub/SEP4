@@ -4,6 +4,8 @@ import { handleMessageEvent } from './businessLogic/lorawan/handleMessageEvent'
 import { Server } from 'socket.io'
 import { cache } from './helperFunctions/singletonCache'
 import http from 'http'
+import cron from 'node-cron'
+import { reevaluateTasksDeadlines } from './businessLogic/tasks/reevaluateTasksDeadlines'
 
 export const lorawanSocket = new WebSocket(process.env.LORAWAN_SOCKET_URL)
 
@@ -51,4 +53,10 @@ io.on('connect', (socket) => {
   socket.on('disconnect', () => {
     console.log('Client disconnected')
   })
+})
+
+cron.schedule('0 3 * * *', () => {
+  console.log('Running cron job')
+  reevaluateTasksDeadlines()
+  console.log('Cron job finished')
 })

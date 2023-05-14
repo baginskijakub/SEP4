@@ -67,4 +67,5 @@ model Task {
     originalDeadline Int
 
     @@index([plantId])
+    @@index([daysTillDeadline])
 }
