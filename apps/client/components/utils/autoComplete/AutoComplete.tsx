@@ -1,21 +1,32 @@
 import React, { useEffect } from 'react'
 import { Autocomplete, TextField } from '@mui/material'
 
+
+export interface SelectItem {
+    label: string
+    value: unknown
+}
 interface Props {
-    options: string[]
-    onChange: (value: string) => void
+    options: string[] | SelectItem[]
+    onChange: (value: unknown) => void
 
 }
 
 export const AutoComplete: React.FC<Props> = ({options, onChange}) => {
-  
-    const [value, setValue] = React.useState<string | null>(options[0]);
+
+    const [value, setValue] = React.useState<string | SelectItem>(options[0]);
     const [inputValue, setInputValue] = React.useState('');
-    
+
     useEffect(() => {
+      if(typeof value === 'string'){
         onChange(value)
+      }
+      else{
+        onChange(value.value)
+      }
+
     }, [value])
-    
+
     return (
       <div>
         <Autocomplete
@@ -29,7 +40,7 @@ export const AutoComplete: React.FC<Props> = ({options, onChange}) => {
           onInputChange={(event, newInputValue) => {
             setInputValue(newInputValue);
           }}
-          id="controllable-states-demo"
+          id="autocomplete"
           options={options}
           sx={{ width: 150 }}
           renderInput={(params) => <TextField {...params} />}
