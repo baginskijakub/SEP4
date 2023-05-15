@@ -2,7 +2,7 @@ import * as React from 'react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { useEffect } from 'react';
 
 interface Props{
@@ -12,11 +12,11 @@ interface Props{
 export const DateSelector: React.FC<Props> = ({onChange}) =>
 {
 
-  const [value, setValue] = React.useState<Dayjs | null>();
+  const [value, setValue] = React.useState<Dayjs | null>(dayjs());
 
   useEffect(() => {
 
-    onChange(value)
+    onChange(value.date() + '/' + (value.month() + 1) + '/' + value.year())
 
   }, [value])
 
@@ -24,7 +24,7 @@ export const DateSelector: React.FC<Props> = ({onChange}) =>
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
       value={value}
-      sx={{width: 200 }}
+      format={'DD/MM/YYYY'}
       onChange={(newValue) => setValue(newValue)}/>
     </LocalizationProvider>
   );
