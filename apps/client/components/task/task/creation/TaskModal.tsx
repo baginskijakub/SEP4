@@ -7,7 +7,7 @@ import { createTask, getTaskById } from 'apps/client/services/TaskService'
 import { AutoComplete } from 'apps/client/components/utils/autoComplete/AutoComplete'
 import { getAllPlants, getPlantById } from 'apps/client/services/PlantService'
 import { PlantHead } from 'apps/client/components/plant/plantHead/PlantHead'
-import DateSelector from 'apps/client/components/utils/datePicker/DateSelector'
+import { DateSelector } from 'apps/client/components/utils/datePicker/DateSelector'
 
 interface Props {
     onClose: () => void
@@ -59,6 +59,10 @@ export const TaskModal: React.FC<Props> = ({onClose,taskId}) => {
 
     })
 
+    const onDateChange = () => {
+
+    }
+
     return (
     <div className={styles.taskWrapperOuter}>
       <div className={styles.taskWrapper}>
@@ -80,7 +84,7 @@ export const TaskModal: React.FC<Props> = ({onClose,taskId}) => {
             <div className={styles.selectionsContainer}>
                 <div className={styles.dateSelectorContainer}>
                     <h5>Date</h5>
-                    <DateSelector/>
+                    <DateSelector onChange={onDateChange}/>
                 </div>
                 <div className={styles.typeSelectorContainer}>
                     <h5>Task type</h5>
