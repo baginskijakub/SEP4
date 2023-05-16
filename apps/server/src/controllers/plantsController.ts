@@ -42,6 +42,17 @@ plantsRouter.post('/', async (req: UserRequest, res) => {
         minTemperature: requestPlant?.idealEnvironment.minTemperature,
       },
     })
+
+    if (requestPlant.wateringInterval) {
+      await prisma.task.create({
+        data: {
+          plantId: plant.id,
+          type: 'water',
+          daysTillDeadline: requestPlant.wateringInterval,
+          originalDeadline: requestPlant.wateringInterval,
+        },
+      })
+    }
     res.status(201).json({ message: 'Plant successfully registered', plant, status: 'success' })
   } catch (error) {
     res.status(400).json({ message: 'Failed to register plant', status: 'error' })
