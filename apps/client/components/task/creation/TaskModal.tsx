@@ -1,13 +1,13 @@
 import React, { useState, useEffect} from 'react'
 import styles from './TaskModal.module.css'
 import { ITask, IPlant } from '@sep4/types'
-import { PrimaryButtonSmall } from 'apps/client/components/buttons/primaryButtonSmall/primaryButtonSmall'
-import { SecondaryButtonSmall } from 'apps/client/components/buttons/secondaryButtonSmall/secondaryButtonSmall'
-import { AutoComplete, SelectItem } from 'apps/client/components/utils/autoComplete/AutoComplete'
-import { DateSelector } from 'apps/client/components/utils/datePicker/DateSelector'
-import { createTask, getTaskById } from 'apps/client/services/TaskService'
-import { getAllPlants, getPlantById } from 'apps/client/services/PlantService'
-import { PlantHead } from 'apps/client/components/plant/plantHead/PlantHead'
+import { PrimaryButtonSmall } from '../../../components/buttons/primaryButtonSmall/primaryButtonSmall'
+import { SecondaryButtonSmall } from '../../../components/buttons/secondaryButtonSmall/secondaryButtonSmall'
+import { AutoComplete, SelectItem } from '../../../components/utils/autoComplete/AutoComplete'
+import { DateSelector } from '../../../components/utils/datePicker/DateSelector'
+import { createTask, getTaskById } from '../../../services/TaskService'
+import { getAllPlants, getPlantById } from '../../../services/PlantService'
+import { PlantHead } from '../../plant/plantHead/PlantHead'
 import dayjs from 'dayjs'
 
 
@@ -25,7 +25,7 @@ export const TaskModal: React.FC<Props> = ({onClose}) => {
 
     const [task, setTask] = useState<ITask>({
         id: 0,
-        plantId: 1,
+        plantId: 0,
         type: 'water',
         status: 'current',
         date: currentDate.date() + '/' + (currentDate.month() + 1) + '/' + currentDate.year()
