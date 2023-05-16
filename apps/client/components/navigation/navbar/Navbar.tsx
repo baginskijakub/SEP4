@@ -6,6 +6,7 @@ import { RiPlantFill } from 'react-icons/ri'
 import { UserButton } from '../userButton/UserButton'
 import { useState } from 'react'
 import { LoginModal } from '../../login/LoginModal'
+import { NavLinks } from '../navLinks/NavLinks';
 
 export const Navbar: React.FC = () => {
   const [displayLoginModal, setDisplayLoginModal] = useState(false)
@@ -13,27 +14,7 @@ export const Navbar: React.FC = () => {
   return (
     <div className={styles.navbarWrapper}>
       <h1 className={styles.title}>Plantify</h1>
-      <div className={styles.navbarInner}>
-        <NavItem path={'/'}>
-          <MdDashboard size={20} color={'#5BA937'} />
-          <p>Dashboard</p>
-        </NavItem>
-        <NavItem path={'/Plants'}>
-          <RiPlantFill size={20} color={'#5BA937'} />
-          <p>Plants</p>
-        </NavItem>
-        <NavItem path={'/Tasks'}>
-          <MdFormatListBulletedAdd size={20} color={'#5BA937'} />
-          <p>Tasks</p>
-        </NavItem>
-        <NavItem path={'/'}>
-          <MdDeviceThermostat size={20} color={'#5BA937'} />
-          <p>Environment</p>
-        </NavItem>
-      </div>
-      <UserButton onClick={() => setDisplayLoginModal(!displayLoginModal)} />
-      {/*conditional rendering dependent on state*/}
-      {displayLoginModal && <LoginModal onClose={() => setDisplayLoginModal(false)} />}
+      <NavLinks />
     </div>
   )
 }

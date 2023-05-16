@@ -12,7 +12,7 @@ interface Props{
 
 export const DefaultLayout:React.FC<Props> = ({children}) => {
 
-  const [isDesktop, setDesktop] = useState(false)
+  const [isDesktop, setDesktop] = useState(true)
 
   useEffect(() => {
     window.addEventListener("resize", updateMedia)
@@ -28,25 +28,13 @@ export const DefaultLayout:React.FC<Props> = ({children}) => {
   }
 
   return (
-    <>
-      {isDesktop &&
-        <div className={styles.defaultWrapper}>
-          <Navbar />
-          <div className={styles.defaultInner}>
-            <Breadcrumbs />
-            {children}
-          </div>
-          <Dialog />
-        </div>
-      }
-      {!isDesktop &&
-        <div className={styles.mobileWrapper}>
-          <NavbarMobile />
-          <div className={styles.mobileInner}>
-          {children}
-          </div>
-        </div>
-      }
-    </>
+    <div className={styles.defaultWrapper}>
+      {isDesktop ? <Navbar /> : <NavbarMobile />}
+      <div className={styles.defaultInner}>
+        {isDesktop && <Breadcrumbs />}
+        {children}
+      </div>
+      <Dialog />
+    </div>
   );
 };

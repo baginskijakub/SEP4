@@ -1,0 +1,20 @@
+.navbarInner{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+  
+  .navItem {
+    font-size: 17px;
+  } 
+  
+@media screen and (max-width: 800px) {
+  .navbarInner{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border: 1px solid balck;
+    padding-bottom: 10px;
+    margin: 20px;
+  }
+}
