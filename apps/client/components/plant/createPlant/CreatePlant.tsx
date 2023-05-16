@@ -21,7 +21,7 @@ export const CreatePlant: React.FC<Props> = ({onClose, mode, plantId, fetchAgain
       nickName: "Nickname",
       latinName: "Latin name",
       id: 0,
-      image: "",
+      image: "image.jpg",
       idealEnvironment: {
         minTemperature: 0,
         maxTemperature: 0,
@@ -35,7 +35,7 @@ export const CreatePlant: React.FC<Props> = ({onClose, mode, plantId, fetchAgain
     const plantNickname = useRef<HTMLInputElement>()
     const plantName = useRef<HTMLInputElement>()
     const plantLatinName = useRef<HTMLInputElement>()
-
+    const plantImage = useRef<HTMLInputElement>()
     const [errorLabel, setErrorLabel] = useState<string>('')
 
     const handleIdealEnvironment =(value: number, type: string)=>{
@@ -59,11 +59,12 @@ export const CreatePlant: React.FC<Props> = ({onClose, mode, plantId, fetchAgain
               plantNickname.current.value = res.nickName
               plantName.current.value = res.name
               plantLatinName.current.value = res.latinName
+              plantImage.current.value = res.image
             }).catch((e) => {
               console.log(e)
             })
         }
-    })
+    }, [])
 
     // onSubmit saves plant to the database
     const onSubmit = ( mode: 'edit' | 'create') => {
@@ -75,7 +76,8 @@ export const CreatePlant: React.FC<Props> = ({onClose, mode, plantId, fetchAgain
                 ...plant,
                 nickName:plantNickname.current.value,
                 name:plantName.current.value,
-                latinName:plantLatinName.current.value
+                latinName:plantLatinName.current.value,
+                image: plantImage.current.value
             }).then(() => {
               fetchAgain();
               onClose();
@@ -86,7 +88,8 @@ export const CreatePlant: React.FC<Props> = ({onClose, mode, plantId, fetchAgain
                 ...plant,
                 nickName:plantNickname.current.value,
                 name:plantName.current.value,
-                latinName:plantLatinName.current.value
+                latinName:plantLatinName.current.value,
+                image: plantImage.current.value
             }).then(() => {
               fetchAgain()
               onClose();
@@ -95,7 +98,7 @@ export const CreatePlant: React.FC<Props> = ({onClose, mode, plantId, fetchAgain
     }
 
     const validateInputFields = () => {
-        if (plantNickname.current.value === '' || plantNickname.current.value ===undefined||plantName.current.value === '' || plantName.current.value ===undefined||plantLatinName.current.value === '' || plantLatinName.current.value ===undefined)
+        if (plantNickname.current.value === '' || plantNickname.current.value ===undefined||plantName.current.value === '' || plantName.current.value ===undefined||plantLatinName.current.value === '' || plantLatinName.current.value ===undefined||plantImage.current.value === '' || plantImage.current.value ===undefined)
         {
             setErrorLabel('Please fill in all the fields')
         }
@@ -117,9 +120,12 @@ export const CreatePlant: React.FC<Props> = ({onClose, mode, plantId, fetchAgain
                         <input className={styles.secondaryInput} ref={plantName} type="text" placeholder={plant.name} />
 
                         <input className={styles.secondaryInput} ref={plantLatinName} type="text" placeholder={plant.latinName} />
+                 
+                        <input className={styles.secondaryInput} ref={plantImage} type="text" placeholder={plant.image} />
+                
                     </div>
                     <img
-                        src="https://cdn-ailom.nitrocdn.com/opKfgPWIFCjrldmbrdKJvIDPqBFvBPjr/assets/images/optimized/rev-546509e/wp-content/uploads/2022/05/Albuca-spiralis.jpg"
+                        src={plant.image}
                         alt="pipi"
                         width={100}
                         height={100}
