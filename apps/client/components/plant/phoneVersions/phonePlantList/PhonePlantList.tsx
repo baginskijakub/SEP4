@@ -55,16 +55,22 @@ else
     <div className={styles.wrapper}>
       <h3>Plants</h3>
       <div className={styles.container}>
-            <PlantListed
-              onClick={() => changeSelectedPlant(selectedPlant)}
-              name={plants[selectedPlant].name}
-              latinName={plants[selectedPlant].latinName}
-              id={plants[selectedPlant].id}
-              key={plants[selectedPlant].id}
-              url={plants[selectedPlant].image}
-              isSelected={true}
-              fetchAgain={fetchAgain}
-            />
+
+  { //to avoid that i was getting null reference errors sometimes
+   plants[selectedPlant] ?
+   <PlantListed
+   onClick={() => changeSelectedPlant(selectedPlant)}
+   name={plants[selectedPlant].name}
+   latinName={plants[selectedPlant].latinName}
+   id={plants[selectedPlant].id}
+   key={plants[selectedPlant].id}
+   url={plants[selectedPlant].image}
+   isSelected={true}
+   fetchAgain={fetchAgain}
+   />  
+   : 
+  <h1>Select from list below</h1>
+}        
         <div className={styles.addPlantButton} onClick={() => setDisplayCreateModal(true)}>Add plant</div>
         <div className={styles.arrowContainer}><MdKeyboardArrowDown size={40} onClick={()=>setIsFullList(true)}/></div>
       

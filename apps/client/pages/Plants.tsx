@@ -15,13 +15,14 @@ export const Plants:React.FC = () => {
   const {user} = useUserContext()
   
   React.useEffect(() => {
+      window.innerWidth>1150 ? setIsDesktop(true) : setIsDesktop(false)
       window.addEventListener("resize", () => {
-      window.innerWidth>480 ? setIsDesktop(true) : setIsDesktop(false)
+      window.innerWidth>1150 ? setIsDesktop(true) : setIsDesktop(false)
            
     });
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { 
     getAllPlants().then((res) => {
       setPlants(res)
     }).catch((e) => {

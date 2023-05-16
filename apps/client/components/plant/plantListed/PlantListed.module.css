@@ -46,16 +46,17 @@
   border-radius: 12px;
 }
 
-.plantInner{
+.plantInner {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 0;
-  gap: 4px;
+  gap: 4px; 
 }
 
 .plantInner h3{
   color: var(--text-3);
+  max-width: 72%;
 }
 
 .plantInner p{
