@@ -3,13 +3,13 @@ import prisma from '../helperFunctions/setupPrisma'
 import authorizeUser, { UserRequest } from '../middleware/authorizeUser'
 import { ITask } from '@sep4/types'
 
-const tasksController = express.Router()
+const tasksRouter = express.Router()
 
-tasksController.use(authorizeUser)
+tasksRouter.use(authorizeUser)
 
-tasksController.delete('/:id', async (req: UserRequest, res) => {
+tasksRouter.delete('/:id', async (req: UserRequest, res) => {
   const { id } = req.params
-  if (isNaN(Number(id))) return res.status(400).json({ message: 'Invalid id', status: 'error' })
+  if (isNaN(Number(id))) return res.status(400).json({ message: 'Invalid task id', status: 'error' })
 
   try {
     const taskFromDb = await prisma.task.findUnique({
@@ -48,4 +48,4 @@ tasksController.delete('/:id', async (req: UserRequest, res) => {
   }
 })
 
-export default tasksController
+export default tasksRouter
