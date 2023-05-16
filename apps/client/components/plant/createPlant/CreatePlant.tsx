@@ -21,7 +21,7 @@ export const CreatePlant: React.FC<Props> = ({onClose, mode, plantId, fetchAgain
       nickName: "Nickname",
       latinName: "Latin name",
       id: 0,
-      image: "image.jpg",
+      image: "https://media.istockphoto.com/id/1372896722/photo/potted-banana-plant-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=bioeNAo7zEqALK6jvyGlxeP_Y7h6j0QjuWbwY4E_eP8=",
       idealEnvironment: {
         minTemperature: 0,
         maxTemperature: 0,
@@ -64,7 +64,7 @@ export const CreatePlant: React.FC<Props> = ({onClose, mode, plantId, fetchAgain
               console.log(e)
             })
         }
-    }, [])
+    })
 
     // onSubmit saves plant to the database
     const onSubmit = ( mode: 'edit' | 'create') => {
@@ -120,13 +120,13 @@ export const CreatePlant: React.FC<Props> = ({onClose, mode, plantId, fetchAgain
                         <input className={styles.secondaryInput} ref={plantName} type="text" placeholder={plant.name} />
 
                         <input className={styles.secondaryInput} ref={plantLatinName} type="text" placeholder={plant.latinName} />
-                 
+
                         <input className={styles.secondaryInput} ref={plantImage} type="text" placeholder={plant.image} />
-                
+
                     </div>
                     <img
                         src={plant.image}
-                        alt="pipi"
+                        alt={plant.name}
                         width={100}
                         height={100}
                     />
