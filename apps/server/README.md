@@ -34,3 +34,6 @@ Write to me to get .env files and paste to your project locally
                 with the payload, if message was enqueued correctly returns payload as hexadecimal string and status
                 /:type
                     [GET] - returns all graph points for the plant (specified by plantId from route), that are of the type specified also in route (possible type: temperature, humidity, co2, light), return type is IGraphData
+
+                /current
+                    [GET] - Retrieves tasks that are due today for the authenticated user.
