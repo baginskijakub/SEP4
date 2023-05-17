@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { PlantListed } from "../../plantListed/PlantListed";
+import { PlantListed } from "../plantListed/PlantListed";
 import styles from "./PhonePlantList.module.css";
 import { IPlant } from "@sep4/types";
-import { CreatePlant } from "../../createPlant/CreatePlant";
+import { CreatePlant } from "../createPlant/CreatePlant";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp} from 'react-icons/md'
 
 

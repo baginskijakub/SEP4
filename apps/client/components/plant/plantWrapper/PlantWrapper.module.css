@@ -5,3 +5,10 @@
   gap: 30px;
   border-radius: 20px;
 }
+
+@media only screen and (max-width: 1150px) {
+
+  .wrapper{
+    width: auto;
+  }
+}

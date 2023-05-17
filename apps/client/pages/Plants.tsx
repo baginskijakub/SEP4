@@ -5,8 +5,7 @@ import { PlantWrapper } from "../components/plant/plantWrapper/PlantWrapper";
 import { IPlant } from "@sep4/types";
 import { useUserContext } from "../context/UserContext";
 import { getAllPlants } from "../services/PlantService";
-import { PhonePlantList } from "../components/plant/phoneVersions/phonePlantList/PhonePlantList";
-import { PhonePlantWrapper } from "../components/plant/phoneVersions/phonePlantWrapper/PhonePlantWrapper";
+import { PhonePlantList } from "../components/plant/phonePlantList/PhonePlantList";
 
 export const Plants:React.FC = () => {
   const [plants, setPlants] = useState<IPlant[]>([]);
@@ -60,7 +59,7 @@ if(isDesktop){
   {return (
     <div className={styles.phoneWrapper}>
        {user && <PhonePlantList plants={plants} changeSelectedPlant={changeSelectedPlant} selectedIndex={selectedPlant} fetchAgain={fetchData}/>}
-       {(user && (selectedPlant || selectedPlant === 0)) && <PhonePlantWrapper plant={plants[selectedPlant]}/>}
+       {(user && (selectedPlant || selectedPlant === 0)) && <PlantWrapper plantId={plants[selectedPlant].id}/>}
   </div>
   );}}
 
