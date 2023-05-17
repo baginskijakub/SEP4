@@ -27,9 +27,9 @@ export const PlantList:React.FC<Props> = ({plants, changeSelectedPlant, selected
 }, []);
 
 
-if(isDesktop){
+
   return (
-    <div className={styles.wrapper}>
+    (isDesktop)?(<div className={styles.wrapper}>
       <h3>Plants</h3>
       <div className={styles.container}>
         {plants.map((plant, index) => {
@@ -50,12 +50,8 @@ if(isDesktop){
       </div>
       {displayCreateModal && <CreatePlant onClose={() => setDisplayCreateModal(false)} mode={'create'} fetchAgain={fetchAgain}/>}
     </div>
-  );
-}
-else{
-if(isFullList){
-  return (
-    <div className={styles.wrapper}>
+  ):
+(isFullList)?<div className={styles.wrapper}>
       <h3>Plants</h3>
       <div className={styles.fullContainer}>
         {plants.map((plant, index) => {
@@ -72,17 +68,13 @@ if(isFullList){
             />
           )
         })}
-        <div className={styles.addPlantButton} onClick={() => setDisplayCreateModal(true)}>Add plant</div>
+        <div className={styles.addPlantButton} onClick={() => setDisplayCreateModal(true)}>Hola</div>
       </div>
       {displayCreateModal && <CreatePlant onClose={() => setDisplayCreateModal(false)} mode={'create'} fetchAgain={fetchAgain}/>}
       <div className={styles.arrowContainer}><MdKeyboardArrowUp size={40} onClick={()=>setIsFullList(false)}/></div>
       
     </div>
-  );
-}
-else
-{
-  return (
+  :
     <div className={styles.wrapper}>
       <h3>Plants</h3>
       <div className={styles.container}>
@@ -108,4 +100,4 @@ else
       {displayCreateModal && <CreatePlant onClose={() => setDisplayCreateModal(false)} mode={'create'} fetchAgain={fetchAgain}/>}
     </div>
   );}
-};}
+
