@@ -29,6 +29,9 @@ jobs:
         run: npm run client:build
 
       - name: Configure AWS credentials
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           mkdir -p ~/.aws
           echo "[default]" > ~/.aws/credentials
