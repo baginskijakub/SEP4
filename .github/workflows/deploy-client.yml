@@ -29,9 +29,6 @@ jobs:
         run: npm run client:build
 
       - name: Configure AWS credentials
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           mkdir -p ~/.aws
           echo "[default]" > ~/.aws/credentials
@@ -45,6 +42,6 @@ jobs:
           npm install -g @aws-amplify/cli
           npx amplify configure --usage-data-off
           cd apps/client
-          npx amplify init --appId d1zfh8hd97i0di --envName main --region eu-north-1
-          npx amplify pull --appId d1zfh8hd97i0di --envName main
+          npx amplify init --appId d1zfh8hd97i0di --envName dev --region eu-north-1
+          npx amplify pull --appId d1zfh8hd97i0di
           npx amplify push --yes -profile default
