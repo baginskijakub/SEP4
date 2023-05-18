@@ -18,10 +18,12 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14
+
       - name: Delete node_modules and package-lock.json
       - run: |
           rm -rf node_modules
           rm package-lock.json
+
       - name: Clear cache
         run: npm cache clean --force
 
