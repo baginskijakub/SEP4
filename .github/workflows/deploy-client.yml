@@ -41,5 +41,5 @@ jobs:
           npm install -g @aws-amplify/cli
           npx amplify configure --usage-data-off
           cd apps/client
-          npx amplify init --amplify="{\"frontend\":\"javascript\",\"framework\":\"next\",\"config\":{}}"
+          npx amplify pull d1zfh8hd97i0di
           npx amplify push --yes
