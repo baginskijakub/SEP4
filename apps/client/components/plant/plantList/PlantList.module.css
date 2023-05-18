@@ -18,13 +18,6 @@
   gap: 12px;
 }
 
-.fullContainer{
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
 .addPlantButton{
   position: absolute;
   bottom: 12px;
@@ -43,13 +36,12 @@
   cursor: pointer;
 }
 
-
-.arrowContainer{
+.head{
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  gap: 12px;
 }
-
 
 @media only screen and (max-width: 1150px) {
   .wrapper{
@@ -59,7 +51,7 @@
 
   .addPlantButton {
     position: relative;
-    bottom: 0px;
+    bottom: 0;
     width: 100%;
   }
 }
