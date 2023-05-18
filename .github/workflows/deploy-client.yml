@@ -33,6 +33,12 @@ jobs:
       - name: Install dependencies
         run: npm i
 
+      - name: Force nx
+        run: npm install -D nx
+
+      - name: Check nx
+        run: nx --version
+
       - name: Build Next.js app
         run: nx run client:build
 
