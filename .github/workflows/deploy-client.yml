@@ -37,10 +37,12 @@ jobs:
         run: npm install -D nx
 
       - name: Check nx
-        run: nx --version
+        run: npm search @nrwl/cli
 
       - name: Build Next.js app
-        run: nx run client:build
+        run: |
+          cd apps/client
+          nx run client:build
 
       - name: Configure AWS credentials
         run: |
