@@ -20,7 +20,7 @@ jobs:
           node-version: 14
 
       - name: Delete node_modules and package-lock.json
-      - run: |
+        run: |
           rm -rf node_modules
           rm package-lock.json
 
