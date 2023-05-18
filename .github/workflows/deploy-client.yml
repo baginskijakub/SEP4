@@ -1,0 +1,41 @@
+name: Deploy to AWS Amplify
+
+on:
+  push:
+    branches:
+      - main
+      - frontend/sprint7/chore/cd-pipeline
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Next.js app
+        run: npm run nx run client:build
+
+      - name: Configure AWS credentials
+        run: |
+          echo "[default]" > ~/.aws/credentials
+          echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/.aws/credentials
+          echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
+          chmod 600 ~/.aws/credentials
+
+      - name: Deploy to Amplify
+        run: |
+          npm install -g @aws-amplify/cli
+          npx amplify configure --usage-data-off
+          cd apps/client
+          npx amplify init --amplify="{\"frontend\":\"javascript\",\"framework\":\"next\",\"config\":{}}"
+          npx amplify push --yes
