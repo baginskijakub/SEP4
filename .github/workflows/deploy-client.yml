@@ -19,13 +19,13 @@ jobs:
         with:
           node-version: 14
 
+      - name: Update npm
+        run: npm install -g npm@latest
+
       - name: Delete node_modules and package-lock.json
         run: |
           rm -rf node_modules
           rm package-lock.json
-
-      - name: Clear cache
-        run: npm cache clean --force
 
       - name: Clear cache
         run: npm cache clean --force
