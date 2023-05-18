@@ -45,5 +45,5 @@ jobs:
           npm install -g @aws-amplify/cli
           npx amplify configure --usage-data-off
           cd apps/client
-          npx amplify pull --appId d1zfh8hd97i0di --accessKeyId ${{ secrets.AWS_ACCESS_KEY_ID }} --secretAccessKey ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          npx amplify pull --appId d1zfh8hd97i0di --envName main
           npx amplify push --yes
