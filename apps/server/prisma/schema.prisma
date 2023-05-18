@@ -32,6 +32,7 @@ model Plant {
     minCo2             Float
     maxCo2             Float
     CurrentEnvironment CurrentEnvironment?
+    Task               Task[]
 
     @@index([email])
 }
@@ -55,4 +56,16 @@ model GraphData {
 
     @@id([plantId, type, dateEpoch])
     @@index([plantId])
+}
+
+model Task {
+    id               Int    @id @default(autoincrement())
+    type             String
+    plant            Plant  @relation(fields: [plantId], references: [id], onDelete: Cascade)
+    plantId          Int
+    daysTillDeadline Int
+    originalDeadline Int
+
+    @@index([plantId])
+    @@index([daysTillDeadline])
 }

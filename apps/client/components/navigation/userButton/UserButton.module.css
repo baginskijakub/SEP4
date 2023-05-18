@@ -27,3 +27,10 @@
 .nameIconWrapper h5 {
 margin-left: 5px;
 }
+
+@media screen and (max-width: 799px) {
+  .userName {
+    font-size: 15px;
+  }
+}
+  

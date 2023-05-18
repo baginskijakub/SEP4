@@ -16,3 +16,18 @@
 .actionButton:hover{
   opacity: 0.8;
 }
+
+.danger{
+  background: var(--action-error-700) !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  color: var(--text-1);
+  border-radius: 100px;
+  padding: 4px;
+  outline: none;
+  border: none;
+  transition: all ease-in-out 0.1s;
+}

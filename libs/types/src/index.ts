@@ -8,6 +8,7 @@ export interface IPlant {
   image: string
   idealEnvironment?: IPlantIdealEnvironment
   currentEnvironment?: IPlantCurrentEnvironment
+  wateringInterval?: number
 }
 
 export interface IPlantCurrentEnvironment {
@@ -43,4 +44,12 @@ export interface IPlantIdealEnvironment {
   maxHumidity: number
   minCo2: number
   maxCo2: number
+}
+
+export interface ITask {
+  id: number
+  plantId: number
+  type: 'water' | 'fertilize' | 'repot'
+  status: 'past' | 'future' | 'current'
+  date?: string
 }
