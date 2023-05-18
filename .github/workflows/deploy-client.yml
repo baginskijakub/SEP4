@@ -28,7 +28,16 @@ jobs:
       - name: Build Next.js app
         run: npm run client:build
 
-      - name: Configure AWS Credentials
+      - name: Configure AWS credentials
+        run: |
+          mkdir -p ~/.aws
+          echo "[default]" > ~/.aws/credentials
+          echo "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" >> ~/.aws/credentials
+          echo "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
+          echo "[default]" > ~/.aws/config
+          echo "region=eu-north-1" >> ~/.aws/config
+
+      - name: Configure AWS Credentials2
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: arn:aws:iam::052774457512:role/service-role/AmplifySSRLoggingRole-d1zfh8hd97i0di
