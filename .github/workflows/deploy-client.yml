@@ -26,9 +26,7 @@ jobs:
         run: npm i
 
       - name: Build Next.js app
-        run: |
-          cd apps/client
-          nx run client:build
+        run: npm run client:build
 
       - name: Configure AWS credentials
         run: |
