@@ -40,7 +40,7 @@ jobs:
       - name: Configure AWS Credentials2
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::052774457512:role/service-role/AmplifySSRLoggingRole-d1zfh8hd97i0di
+          role-to-assume: https://signin.aws.amazon.com/switchrole?roleName=DeployRole&account=052774457512
           aws-region: eu-north-1
 
       - name: Deploy to Amplify
