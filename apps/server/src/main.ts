@@ -6,6 +6,7 @@ import { cache } from './helperFunctions/singletonCache'
 import http from 'http'
 import cron from 'node-cron'
 import { reevaluateTasksDeadlines } from './businessLogic/tasks/reevaluateTasksDeadlines'
+import { sendUpdateOnConnection } from './businessLogic/sockets/sendUpdateOnConnections'
 
 export const lorawanSocket = new WebSocket(process.env.LORAWAN_SOCKET_URL)
 
@@ -48,6 +49,7 @@ io.on('connect', (socket) => {
   console.log('Client connected')
   socket.on('connectInit', (plantId: number) => {
     if (plantId) {
+      sendUpdateOnConnection(socket, plantId)
       const listeners = cache.get<string[]>(plantId)
       if (listeners) {
         listeners.push(socket.id)
