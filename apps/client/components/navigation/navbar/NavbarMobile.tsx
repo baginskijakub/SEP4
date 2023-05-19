@@ -15,7 +15,7 @@ export const NavbarMobile: React.FC = () => {
                     {showFullNav ? <MdClear /> : <MdDensityMedium />}
                 </button>
             </div>
-            {showFullNav && <NavLinks />}
+            {showFullNav && <NavLinks closeNav={() => setShowFullNav(false)} />}
         </div>
     )
 }
