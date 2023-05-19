@@ -8,8 +8,9 @@ interface Props {
   defaultValue: number;
   unit: string;
   ariaLabel: string;
+  step: number
 }
-export const Slider:React.FC<Props> = ({maxValue, minValue, defaultValue, unit, onChange, ariaLabel}) => {
+export const Slider:React.FC<Props> = ({maxValue, minValue, defaultValue, unit, onChange, ariaLabel, step}) => {
 
   return (
     <MUISlider
@@ -19,7 +20,7 @@ export const Slider:React.FC<Props> = ({maxValue, minValue, defaultValue, unit, 
       valueLabelFormat={(value) => `${value}${unit}`}
       valueLabelDisplay="auto"
       getAriaValueText={(value) => `${value}${unit}`}
-      step={unit === 'ppm' ? 0.01 : 0.25}
+      step={step}
       defaultValue={defaultValue}
       sx={{
         color: '#528E83'
