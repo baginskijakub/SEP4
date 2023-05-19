@@ -11,13 +11,7 @@ interface Props{
 
 
 export const DefaultLayout:React.FC<Props> = ({children}) => {
-
-  const [isDesktop, setDesktop] = useState(false)
-
-  useEffect(() => {
-    window.addEventListener("resize", updateMedia)
-    return () => window.removeEventListener("resize", updateMedia)
-  })
+  const [isDesktop, setDesktop] = useState(true)
 
   const updateMedia = () => {
     if (window.innerWidth > 800) {
@@ -27,26 +21,22 @@ export const DefaultLayout:React.FC<Props> = ({children}) => {
     }
   }
 
+  useEffect(() => {
+    updateMedia()
+    window.addEventListener("resize", updateMedia)
+    return () => window.removeEventListener("resize", updateMedia)
+  })
+
+  
+
   return (
-    <>
-      {isDesktop &&
-        <div className={styles.defaultWrapper}>
-          <Navbar />
-          <div className={styles.defaultInner}>
-            <Breadcrumbs />
-            {children}
-          </div>
-          <Dialog />
-        </div>
-      }
-      {!isDesktop &&
-        <div className={styles.mobileWrapper}>
-          <NavbarMobile />
-          <div className={styles.mobileInner}>
-          {children}
-          </div>
-        </div>
-      }
-    </>
+    <div className={styles.defaultWrapper}>
+      {isDesktop ? <Navbar /> : <NavbarMobile />}
+      <div className={styles.defaultInner}>
+        {isDesktop && <Breadcrumbs />}
+        {children}
+      </div>
+      <Dialog />
+    </div>
   );
 };

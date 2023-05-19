@@ -10,14 +10,18 @@
   width: calc(100vw - 240px);
 }
 
-.mobileWrapper{
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+@media screen and (max-width: 800px) {
+  .defaultInner{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+  }
+
+  .defaultWrapper{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
 }
 
-.mobileInner{
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-}
+
