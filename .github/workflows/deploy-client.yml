@@ -28,7 +28,11 @@ jobs:
       - name: Build Next.js app
         run: npm run client:build
 
-      - uses: aws-actions/configure-aws-credentials@v1
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: arn:aws:iam::052774457512:role/DeployRole
           role-session-name: GitHub-Action-Role
