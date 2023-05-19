@@ -6,3 +6,12 @@
   flex-direction: row;
   gap: 40px;
 }
+
+@media only screen and (max-width: 1150px) {
+  .pageWrapper{
+    width: auto;
+    height: auto;
+    flex-direction: column;
+  }
+  
+}

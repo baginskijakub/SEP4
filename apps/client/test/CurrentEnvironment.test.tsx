@@ -25,13 +25,14 @@ const mockPlant = {
 }
 describe("<Environment />", () => {
     test("renders environment component", () => {
-        render(<PlantCurrentEnvironment  plant={mockPlant}/>)
 
+        render(<PlantCurrentEnvironment  plant={mockPlant}/>)
         expect(screen.getByText("Current Environment")).toBeInTheDocument()
         expect(screen.getByText(/Temperature/i)).toBeInTheDocument()
         expect(screen.getByText(/Humidity/i)).toBeInTheDocument()
         expect(screen.getAllByText(/Environment/i)[0]).toBeInTheDocument()
     })
+
 
     test("renders environment component with correct values", () => {
         render(<PlantCurrentEnvironment plant={mockPlant}/>)
@@ -46,3 +47,4 @@ describe("<Environment />", () => {
     })
 
 })
+
