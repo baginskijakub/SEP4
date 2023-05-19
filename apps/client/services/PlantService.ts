@@ -74,4 +74,14 @@ const adjustEnvironment = (id: number, environment: IPlantCurrentEnvironment) =>
   })
 }
 
-export { getPlantEnvironmentHistory, getPlantById, addPlant, updatePlant, deletePlant, getAllPlants, adjustEnvironment }
+const adjustWatering = (id: number, watering: number) => {
+  return axios.patch(`${SERVER_URL}/plants/${id}/watering`, watering).then((response) => {
+    if (response.status === 200) {
+      return response.data
+    } else {
+      throw new Error('Error sending data')
+    }
+  })
+}
+
+export { getPlantEnvironmentHistory, getPlantById, addPlant, updatePlant, deletePlant, getAllPlants, adjustEnvironment, adjustWatering }

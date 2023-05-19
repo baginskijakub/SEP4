@@ -1,0 +1,88 @@
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  gap: 36px;
+  background: #BEDAD5;
+  border: 1px solid #528E83;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  color: #528E83;
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 16px;
+  width: 100%;
+}
+
+.adjustWrapper{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 56px;
+  background: #8ABCB3;
+  border: 1px solid #528E83;
+  border-radius: 12px;
+  color: white;
+  width: 100%;
+}
+
+.adjustLeft{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0;
+  gap: 20px;
+}
+
+.adjustLeft img{
+  width: 80px;
+  height: 80px;
+  margin-left: 8px;
+  border-radius: 8px;
+}
+
+.adjustRight{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 16px;
+  gap: 8px;
+  color: white;
+}
+
+.toggle{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
+.toggleButton{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  width: 24px;
+  height: 24px;
+  background: #528E83;
+  border-radius: 4px;
+  color: white;
+}
+
+.toggleChevron{
+  color: #528E83;
+  transition: all 0.3s ease;
+}
+
+.toggleChevron:hover{
+  opacity: 0.3;
+}
