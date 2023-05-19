@@ -47,12 +47,27 @@ describe('Plant POST endpoint', () => {
         minTemperature: 10,
         maxTemperature: 20,
       },
+      wateringInterval: 7,
     }
 
     const response = await request(app)
       .post('/api/v1/plants')
       .set('Cookie', loginResponse.headers['set-cookie'])
       .send(newPlant)
+
+
+      const task = await prisma.task.findFirst({
+        where: {
+          plantId: response.body.plant.id,
+        }
+      })
+
+    expect(task).toMatchObject({
+      plantId: response.body.plant.id,
+      type: 'water',
+      daysTillDeadline: 7,
+      originalDeadline: 7,
+    })
 
     expect(response.status).toBe(201)
     expect(response.body.message).toBe('Plant successfully registered')
