@@ -85,4 +85,35 @@ tasksRouter.delete('/:id', async (req: UserRequest, res) => {
   }
 })
 
+tasksRouter.get('/current', async (req: UserRequest, res) => {
+  try {
+    const decodedToken = req.user
+
+    const tasksFromDb = await prisma.task.findMany({
+      where: {
+        plant: {
+          email: decodedToken.email as string,
+        },
+        daysTillDeadline: {
+          equals: 0,
+        },
+      },
+    })
+
+    const tasks: ITask[] = tasksFromDb.map((task) => {
+      return {
+        id: task.id,
+        plantId: task.plantId,
+        type: task.type as 'water' | 'fertilize' | 'repot',
+        status: 'current',
+        date: `to be completed today`,
+      }
+    })
+
+    return res.status(200).json(tasks)
+  } catch (error) {
+    return res.status(500).json({ message: 'Server error', status: 'error' })
+  }
+})
+
 export default tasksRouter
