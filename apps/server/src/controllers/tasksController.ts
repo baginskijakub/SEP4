@@ -1,49 +1,50 @@
-import express from 'express';
-import prisma from '../helperFunctions/setupPrisma';
-import authorizeUser, { UserRequest } from '../middleware/authorizeUser';
-import { ITask } from '@sep4/types';
-import { isValidPlant } from '../businessLogic/plants/isValidPlant';
+import express from 'express'
+import prisma from '../helperFunctions/setupPrisma'
+import authorizeUser, { UserRequest } from '../middleware/authorizeUser'
+import { mapToDatabaseTaskFormat } from '../businessLogic/tasks/mapToDatabaseTaskFormat'
+import { isValidTask } from '../businessLogic/tasks/isValidTask'
 
-const taskRouter = express.Router();
+const taskRouter = express.Router()
 
-taskRouter.use(authorizeUser);
+taskRouter.use(authorizeUser)
 
 taskRouter.post('/', async (req: UserRequest, res) => {
-  const { plantId, type, status, date } = req.body;
+  const taskToConvert = req.body
+
+  if (!isValidTask(taskToConvert)) {
+    res.status(400).json({ message: 'Invalid task data', status: 'error' })
+    return
+  }
 
   try {
-    const decodedToken = req.user;
-    const existingUser = await prisma.user.findUnique({
-      where: { email: decodedToken.email as string },
-    });
-
-    if (!existingUser) {
-      res.status(400).json({ message: 'User does not exist', status: 'error' });
-      return;
-    }
-
     const existingPlant = await prisma.plant.findUnique({
-      where: { id: parseInt(plantId) },
-    });
+      where: { id: taskToConvert.plantId },
+    })
 
     if (!existingPlant) {
-      res.status(400).json({ message: 'Plant does not exist', status: 'error' });
-      return;
+      res.status(404).json({ message: 'Plant does not exist', status: 'error' })
+      return
+    }
+
+    const taskToSave = mapToDatabaseTaskFormat(taskToConvert)
+
+    if (!taskToSave) {
+      res.status(400).json({ message: 'Invalid task data', status: 'error' })
+      return
     }
 
     const task = await prisma.task.create({
-      data: {
-        plantId: parseInt(plantId),
-        type,
-        daysTillDeadline: 5,
-        originalDeadline: 5
-      },
-    });
+      data: taskToSave,
+    })
 
-    res.status(201).json({ message: 'Task successfully created', task, status: 'success' });
+    res.status(201).json({
+      ...taskToConvert,
+      id: task.id,
+      date: `${task.daysTillDeadline} day${task.daysTillDeadline > 1 ? 's' : ''} until deadline`,
+    })
   } catch (error) {
-    res.status(400).json({ message: 'Failed to create task', status: 'error' });
+    res.status(500).json({ message: 'Failed to create task', status: 'error' })
   }
-});
+})
 
-export default taskRouter;
+export default taskRouter
