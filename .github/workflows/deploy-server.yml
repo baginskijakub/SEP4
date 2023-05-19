@@ -10,7 +10,7 @@ on: # When do you want it to run
       - main
   workflow_dispatch:
 
-jobs: # Define jobs to run
+jobs:
   deploy:
     permissions:
       contents: read
