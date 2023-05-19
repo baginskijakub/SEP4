@@ -43,7 +43,7 @@ taskRouter.post('/', async (req: UserRequest, res) => {
       date: `${task.daysTillDeadline} day${task.daysTillDeadline > 1 ? 's' : ''} until deadline`,
     })
   } catch (error) {
-    res.status(500).json({ message: 'Failed to create task', status: 'error' })
+    res.status(502).json({ message: 'Failed to create task', status: 'error' })
   }
 })
 
