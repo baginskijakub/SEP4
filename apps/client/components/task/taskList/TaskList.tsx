@@ -9,17 +9,17 @@ interface Props{
 }
 
 export const TaskList: React.FC<Props> = ({tasks}) => {
-    
+
     const [displayTaskModal, setDisplayTaskModal] = useState(false)
-  
+
     return (
     <div className={styles.taskWrapper}>
         <h3>Tasks</h3>
         <div className={styles.taskContainer}>
             {tasks?.map((task) => {
                 return(
-                    <Task 
-                    task={task} 
+                    <Task
+                    task={task}
                     key={task.id} />
                 )
             })}
