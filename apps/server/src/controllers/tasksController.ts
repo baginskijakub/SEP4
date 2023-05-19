@@ -5,11 +5,11 @@ import { ITask } from '@sep4/types'
 import { mapToDatabaseTaskFormat } from '../businessLogic/tasks/mapToDatabaseTaskFormat'
 import { isValidTask } from '../businessLogic/tasks/isValidTask'
 
-const taskRouter = express.Router()
+const tasksRouter = express.Router()
 
-taskRouter.use(authorizeUser)
+tasksRouter.use(authorizeUser)
 
-taskRouter.post('/', async (req: UserRequest, res) => {
+tasksRouter.post('/', async (req: UserRequest, res) => {
   const taskToConvert = req.body
 
   if (!isValidTask(taskToConvert)) {
@@ -47,7 +47,6 @@ taskRouter.post('/', async (req: UserRequest, res) => {
     res.status(502).json({ message: 'Failed to create task', status: 'error' })
   }
 })
-
 
 tasksRouter.get('/', async (req: UserRequest, res) => {
   try {
