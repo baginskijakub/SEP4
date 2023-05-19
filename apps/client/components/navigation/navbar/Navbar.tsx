@@ -1,8 +1,5 @@
 import React from 'react'
 import styles from './Navbar.module.css'
-import { NavItem } from '../navItem/NavItem'
-import { MdDashboard, MdFormatListBulletedAdd, MdDeviceThermostat } from 'react-icons/md'
-import { RiPlantFill } from 'react-icons/ri'
 import { UserButton } from '../userButton/UserButton'
 import { useState } from 'react'
 import { LoginModal } from '../../login/LoginModal'
@@ -14,7 +11,10 @@ export const Navbar: React.FC = () => {
   return (
     <div className={styles.navbarWrapper}>
       <h1 className={styles.title}>Plantify</h1>
+      
       <NavLinks />
+      <UserButton onClick={() => setDisplayLoginModal(!displayLoginModal)} />
+      {displayLoginModal && <LoginModal onClose={() => setDisplayLoginModal(false)} />}
     </div>
   )
 }

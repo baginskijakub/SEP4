@@ -11,13 +11,7 @@ interface Props{
 
 
 export const DefaultLayout:React.FC<Props> = ({children}) => {
-
   const [isDesktop, setDesktop] = useState(true)
-
-  useEffect(() => {
-    window.addEventListener("resize", updateMedia)
-    return () => window.removeEventListener("resize", updateMedia)
-  })
 
   const updateMedia = () => {
     if (window.innerWidth > 800) {
@@ -26,6 +20,14 @@ export const DefaultLayout:React.FC<Props> = ({children}) => {
       setDesktop(false)
     }
   }
+
+  useEffect(() => {
+    updateMedia()
+    window.addEventListener("resize", updateMedia)
+    return () => window.removeEventListener("resize", updateMedia)
+  })
+
+  
 
   return (
     <div className={styles.defaultWrapper}>

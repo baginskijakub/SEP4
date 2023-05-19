@@ -1,12 +1,13 @@
 .navbarInner{
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 4px;
 }
   
-  .navItem {
-    font-size: 17px;
-  } 
+.navItem {
+  font-size: 17px;
+} 
   
 @media screen and (max-width: 800px) {
   .navbarInner{

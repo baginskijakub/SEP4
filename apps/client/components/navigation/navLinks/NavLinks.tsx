@@ -31,10 +31,6 @@ export const NavLinks: React.FC<Props> = ({ closeNav }) => {
         <MdDeviceThermostat size={20} color={'#5BA937'} />
         <p className={styles.navItem}>Environment</p>
       </NavItem>
-
-      <UserButton onClick={() => setDisplayLoginModal(!displayLoginModal)} />
-      {/*conditional rendering dependent on state*/}
-      {displayLoginModal && <LoginModal onClose={() => setDisplayLoginModal(false)} />}
     </div>
   )
 }
