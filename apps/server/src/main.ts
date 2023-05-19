@@ -37,7 +37,12 @@ server.listen(port, host, () => {
   console.log(`Listening at http://localhost:${port}/api`)
 })
 
-export const io = new Server(server)
+export const io = new Server(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST'],
+  },
+})
 
 io.on('connect', (socket) => {
   console.log('Client connected')
