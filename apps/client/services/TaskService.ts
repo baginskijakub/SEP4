@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { ITask } from "@sep4/types";
 axios.defaults.withCredentials = true
+import { SERVER_URL } from "../config";
+
 
 const getCurrentTasks = ():Promise<ITask[]> => {
   // return new Promise<ITask[]>((resolve, reject) => {
@@ -12,7 +14,7 @@ const getCurrentTasks = ():Promise<ITask[]> => {
   //     status: "current",
   //   }])
   // })
-  return axios.get(`http://localhost:3333/api/v1/tasks/`).then((response) => {
+  return axios.get(`${SERVER_URL}/tasks/`).then((response) => {
     if (response.status === 200) {
       return response.data
     } else {
@@ -22,7 +24,7 @@ const getCurrentTasks = ():Promise<ITask[]> => {
 }
 
 const completeTask = (taskId: number):Promise<ITask> => {
-  return axios.delete(`http://localhost:3333/api/v1/tasks/${taskId}`).then((response) => {
+  return axios.delete(`${SERVER_URL}/v1/tasks/${taskId}`).then((response) => {
     if (response.status === 200) {
       return response.data
     } else {
