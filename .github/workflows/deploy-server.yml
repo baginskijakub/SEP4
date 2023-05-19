@@ -1,0 +1,49 @@
+name: Deploy server
+env:
+  PROJECT_ID: ${{ secrets.GCP_PROJECT }}
+  SERVICE: plantify-backend # google run service name
+  REGION: europe-west1
+
+on: # When do you want it to run
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    permissions:
+      contents: read
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          token_format: 'access_token'
+          workload_identity_provider: 'projects/733811942940/locations/global/workloadIdentityPools/githubactions1/providers/github'
+          service_account: 'sep4-954@sep4-386916.iam.gserviceaccount.com'
+
+      - name: Login to GCR
+        uses: docker/login-action@v2
+        with:
+          registry: eu.gcr.io
+          username: oauth2accesstoken
+          password: ${{ steps.auth.outputs.access_token }}
+
+      - name: Build and Push Container
+        run: |-
+          docker build -t eu.gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} -f apps/server/Dockerfile .
+          docker push eu.gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
+      - name: Deploy to Cloud Run
+        id: cloudDeployment
+        uses: google-github-actions/deploy-cloudrun@v1
+        with:
+          service: ${{ env.SERVICE }}
+          image: eu.gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
+          region: ${{ env.REGION }}
+
+      - name: Show Output
+        run: echo ${{ steps.cloudDeployment.outputs.url }}

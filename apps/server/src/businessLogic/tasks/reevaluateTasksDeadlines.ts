@@ -17,6 +17,7 @@ export async function reevaluateTasksDeadlines() {
         })
       }),
     )
+    await prisma.$disconnect()
   } catch (error) {
     console.log(error.message)
   }
