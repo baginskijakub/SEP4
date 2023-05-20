@@ -42,6 +42,27 @@ describe('Complete task endpoint', () => {
           originalDeadline: 7,
         },
         {
+          id: 3,
+          plantId: 1,
+          type: 'water',
+          daysTillDeadline: 7,
+          originalDeadline: 7,
+        },
+        {
+          id: 4,
+          plantId: 1,
+          type: 'water',
+          daysTillDeadline: 14,
+          originalDeadline: 7,
+        },
+        {
+          id: 5,
+          plantId: 1,
+          type: 'water',
+          daysTillDeadline: 21,
+          originalDeadline: 7,
+        },
+        {
           id: 2,
           plantId: 1,
           type: 'fertilize',
@@ -74,7 +95,7 @@ describe('Complete task endpoint', () => {
   })
 
   test('returns 404 error if task with passed id does not exist', async () => {
-    const response = await request(app).delete('/api/v1/tasks/3').set('Cookie', authToken)
+    const response = await request(app).delete('/api/v1/tasks/6').set('Cookie', authToken)
 
     expect(response.status).toBe(404)
     expect(response.body.message).toBe('Task with passed id not found')
@@ -84,10 +105,13 @@ describe('Complete task endpoint', () => {
   test('returns 200 and refreshes days till deadline if type of task is water', async () => {
     const response = await request(app).delete(`/api/v1/tasks/1`).set('Cookie', authToken)
 
-    const tasks = await prisma.task.findMany()
+    const tasks = await prisma.task.findMany({
+      where: { plantId: 1, type: 'water' },
+      orderBy: { daysTillDeadline: 'desc' },
+    })
 
-    expect(tasks[0].daysTillDeadline).toBe(7)
-    expect(tasks.length).toBe(2)
+    expect(tasks.length).toBe(4)
+    expect(tasks[0].daysTillDeadline).toBe(28)
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual({
@@ -104,7 +128,7 @@ describe('Complete task endpoint', () => {
 
     const tasks = await prisma.task.findMany()
 
-    expect(tasks.length).toBe(1)
+    expect(tasks.length).toBe(4)
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual({
