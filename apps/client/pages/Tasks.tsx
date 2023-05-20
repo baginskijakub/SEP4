@@ -1,18 +1,10 @@
 import React from "react";
-import { Task } from "../components/task/task/Task";
-import { ITask } from "@sep4/types";
+import { TaskOverview } from "../components/task/overview/TaskOverview";
 
-export const Tasks:React.FC = () => {
-  const task: ITask = {
-    id: 1,
-    type: "water",
-    date: "2021-05-05",
-    plantId: 12,
-    status: "future",
-  }
+const Tasks:React.FC = () => {
   return (
     <div>
-      <Task task={task} />
+      <TaskOverview />
     </div>
   );
 };
