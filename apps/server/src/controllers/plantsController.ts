@@ -81,12 +81,12 @@ plantsRouter.post('/', async (req: UserRequest, res) => {
 
 plantsRouter.patch('/:plantId/watering', async (req: UserRequest, res) => {
   const { plantId } = req.params
-  const { wateringInterval } = req.body
-  if (!wateringInterval || typeof wateringInterval !== 'number') {
-    res.status(400).json({ message: 'Missing watering interval', status: 'error' })
+  const { watering } = req.body
+  if (!watering || isNaN(watering)) {
+    res.status(400).json({ message: 'Invalid watering interval', status: 'error' })
     return
   }
-  if (wateringInterval < 0) {
+  if (watering < 0) {
     res.status(400).json({ message: 'Watering interval must be a positive number', status: 'error' })
     return
   }
@@ -95,23 +95,27 @@ plantsRouter.patch('/:plantId/watering', async (req: UserRequest, res) => {
     return
   }
   try {
-    const tasks = await prisma.task.findMany({ where: { plantId: parseInt(plantId), type: 'water' } })
+    const tasks = await prisma.task.findMany({
+      where: { plantId: parseInt(plantId), type: 'water' },
+      orderBy: { daysTillDeadline: 'asc' },
+    })
     let multiplier = 0
     let daysLeftTillFirstDeadline
     for (const task of tasks) {
       if (multiplier === 0) {
         daysLeftTillFirstDeadline = task.daysTillDeadline
+        multiplier++
         continue
       }
 
-      multiplier++
       await prisma.task.update({
         where: { id: task.id },
         data: {
-          daysTillDeadline: daysLeftTillFirstDeadline + wateringInterval * multiplier,
-          originalDeadline: wateringInterval,
+          daysTillDeadline: daysLeftTillFirstDeadline + watering * multiplier,
+          originalDeadline: watering,
         },
       })
+      multiplier++
     }
     return res.status(200).send({ message: 'Watering interval updated', status: 'success' })
   } catch (error) {
