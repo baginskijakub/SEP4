@@ -1,8 +1,15 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { CreatePlant } from '../components/plant/createPlant/CreatePlant';
 import '@testing-library/jest-dom'
-
+import { login } from "../services/LoginService";
+import { getAllPlants } from "../services/PlantService";
 describe("<CreatePlant />", () => {
+    beforeEach(() => {
+      login('fakeUser1', 'fakePassword1').then(() => {
+        console.log('logged in')
+      })
+    }, 10000)
+
     test("renders createPlant component", () => {
         render(<CreatePlant onClose={null} mode='create' />)
 
@@ -56,5 +63,26 @@ describe("<CreatePlant />", () => {
         expect(await screen.findByText("Please fill in all the fields")).toBeInTheDocument()
 
     })
+
+  test("Creates a plant when all inputs are filled", async () => {
+    render(<CreatePlant onClose={null} mode='create'/>)
+
+    const nicknameInput = screen.getByPlaceholderText(/Nickname/i)
+    const nameInput = screen.getByPlaceholderText(/Plant name/i)
+    const latinNameInput = screen.getByPlaceholderText(/Latin name/i)
+
+    await fireEvent.input(nicknameInput, {target: {value: 'hehe'}})
+    await fireEvent.input(nameInput, {target: {value: 'hehe'}})
+    await fireEvent.input(latinNameInput, {target: {value: 'hehe'}})
+
+    await fireEvent.click(screen.getByText(/Add Plant/i))
+
+    const createdPlant = await getAllPlants().then((plants) => {
+      return plants.find((plant) => plant.nickname === 'hehe')
+    })
+    expect(createdPlant).toBeDefined()
+
+  })
+
 })
 
