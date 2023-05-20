@@ -44,13 +44,33 @@ plantsRouter.post('/', async (req: UserRequest, res) => {
     })
 
     if (requestPlant.wateringInterval) {
-      await prisma.task.create({
-        data: {
-          plantId: plant.id,
-          type: 'water',
-          daysTillDeadline: requestPlant.wateringInterval,
-          originalDeadline: requestPlant.wateringInterval,
-        },
+      await prisma.task.createMany({
+        data: [
+          {
+            plantId: plant.id,
+            type: 'water',
+            daysTillDeadline: requestPlant.wateringInterval,
+            originalDeadline: requestPlant.wateringInterval,
+          },
+          {
+            plantId: plant.id,
+            type: 'water',
+            daysTillDeadline: requestPlant.wateringInterval * 2,
+            originalDeadline: requestPlant.wateringInterval,
+          },
+          {
+            plantId: plant.id,
+            type: 'water',
+            daysTillDeadline: requestPlant.wateringInterval * 3,
+            originalDeadline: requestPlant.wateringInterval,
+          },
+          {
+            plantId: plant.id,
+            type: 'water',
+            daysTillDeadline: requestPlant.wateringInterval * 4,
+            originalDeadline: requestPlant.wateringInterval,
+          },
+        ],
       })
     }
     res.status(201).json({ message: 'Plant successfully registered', plant, status: 'success' })
