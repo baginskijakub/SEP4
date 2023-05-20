@@ -15,7 +15,7 @@ export const Tasks:React.FC = () => {
 
   return (
     <div className={styles.pageWrapper}>
-      <TaskList tasks={task}/>
+      <TaskList/>
       <div className={styles.pageInner}>
         <Task task={task[0]}/>
       </div>
