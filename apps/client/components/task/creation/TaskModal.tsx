@@ -1,11 +1,11 @@
 import React, { useState, useEffect} from 'react'
 import styles from './TaskModal.module.css'
 import { ITask, IPlant } from '@sep4/types'
-import { PrimaryButtonSmall } from '../../../components/buttons/primaryButtonSmall/primaryButtonSmall'
-import { SecondaryButtonSmall } from '../../../components/buttons/secondaryButtonSmall/secondaryButtonSmall'
-import { AutoComplete, SelectItem } from '../../../components/utils/autoComplete/AutoComplete'
-import { DateSelector } from '../../../components/utils/datePicker/DateSelector'
-import { createTask, getTaskById } from '../../../services/TaskService'
+import { PrimaryButtonSmall } from "../../buttons/primaryButtonSmall/primaryButtonSmall"
+import { SecondaryButtonSmall } from "../../buttons/secondaryButtonSmall/secondaryButtonSmall"
+import { AutoComplete, SelectItem } from "../../utils/autoComplete/AutoComplete"
+import { DateSelector } from "../../utils/datePicker/DateSelector"
+import { createTask } from '../../../services/TaskService'
 import { getAllPlants, getPlantById } from '../../../services/PlantService'
 import { PlantHead } from '../../plant/plantHead/PlantHead'
 import dayjs from 'dayjs'
@@ -17,7 +17,7 @@ interface Props {
 
 
 export const TaskModal: React.FC<Props> = ({onClose}) => {
-  
+
     const [selectedPlant, setSelectedPlant] = useState<IPlant>();
     const [selectedPlantId, setSelectedPlantId] = useState<number>()
     const [plants, setPlants] = useState<SelectItem[]>([]);
@@ -37,7 +37,7 @@ export const TaskModal: React.FC<Props> = ({onClose}) => {
     }
 
     //created task is saved in database
-    const onSubmit = () => 
+    const onSubmit = () =>
     {
         console.log(task)
         createTask(task)
@@ -51,7 +51,7 @@ export const TaskModal: React.FC<Props> = ({onClose}) => {
 
     useEffect(() => {
         if(selectedPlantId) {
-            getPlantById(selectedPlantId).then((res) => 
+            getPlantById(selectedPlantId).then((res) =>
             {
                 setSelectedPlant(res)
             })
@@ -78,9 +78,9 @@ export const TaskModal: React.FC<Props> = ({onClose}) => {
             <div className={styles.plantInfoContainer}>
                 <div className={styles.plantDropdownContainer}>
                     <h5>Select plant related to the task</h5>
-                    
+
                     {plants.length > 0 &&  <AutoComplete options={plants} onChange={handlePlantSelection} />}
-                </div> 
+                </div>
                 <div className={styles.plantComponentContainer}>
                     {selectedPlant && <PlantHead plant={selectedPlant}/> }
                 </div>
