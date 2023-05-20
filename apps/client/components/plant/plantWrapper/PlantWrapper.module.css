@@ -2,8 +2,9 @@
   width: calc(70% - 40px);
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 16px;
   border-radius: 20px;
+  color: var(--text-3);
 }
 
 @media only screen and (max-width: 1150px) {

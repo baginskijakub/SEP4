@@ -9,6 +9,7 @@
   background: var(--background-b-med);
   border-radius: 20px;
   border: 1px solid var(--background-b-dark);
+  color: var(--text-3);
 }
 
 .container{
