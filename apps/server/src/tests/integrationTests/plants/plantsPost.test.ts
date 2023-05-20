@@ -55,17 +55,42 @@ describe('Plant POST endpoint', () => {
       .set('Cookie', loginResponse.headers['set-cookie'])
       .send(newPlant)
 
+    const tasks = await prisma.task.findMany({
+      where: {
+        plantId: response.body.plant.id,
+      },
+      orderBy: {
+        daysTillDeadline: 'asc',
+      },
+    })
 
-      const task = await prisma.task.findFirst({
-        where: {
-          plantId: response.body.plant.id,
-        }
-      })
+    expect(tasks.length).toBe(4)
 
-    expect(task).toMatchObject({
+    expect(tasks[0]).toMatchObject({
       plantId: response.body.plant.id,
       type: 'water',
       daysTillDeadline: 7,
+      originalDeadline: 7,
+    })
+
+    expect(tasks[1]).toMatchObject({
+      plantId: response.body.plant.id,
+      type: 'water',
+      daysTillDeadline: 14,
+      originalDeadline: 7,
+    })
+
+    expect(tasks[2]).toMatchObject({
+      plantId: response.body.plant.id,
+      type: 'water',
+      daysTillDeadline: 21,
+      originalDeadline: 7,
+    })
+
+    expect(tasks[3]).toMatchObject({
+      plantId: response.body.plant.id,
+      type: 'water',
+      daysTillDeadline: 28,
       originalDeadline: 7,
     })
 
