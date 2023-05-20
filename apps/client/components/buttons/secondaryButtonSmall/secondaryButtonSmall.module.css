@@ -9,4 +9,5 @@
     background: var(--background-b-dark);
     border: 1px solid var(--background-b-dark);
     border-radius: 70px;
+  color: white;
 }
