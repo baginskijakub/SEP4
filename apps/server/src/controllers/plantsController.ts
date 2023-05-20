@@ -59,6 +59,46 @@ plantsRouter.post('/', async (req: UserRequest, res) => {
   }
 })
 
+plantsRouter.patch('/:plantId/watering', async (req: UserRequest, res) => {
+  const { plantId } = req.params
+  const { wateringInterval } = req.body
+  if (!wateringInterval || typeof wateringInterval !== 'number') {
+    res.status(400).json({ message: 'Missing watering interval', status: 'error' })
+    return
+  }
+  if (wateringInterval < 0) {
+    res.status(400).json({ message: 'Watering interval must be a positive number', status: 'error' })
+    return
+  }
+  if (isNaN(parseInt(plantId))) {
+    res.status(400).json({ message: 'Invalid plant id', status: 'error' })
+    return
+  }
+  try {
+    const tasks = await prisma.task.findMany({ where: { plantId: parseInt(plantId), type: 'water' } })
+    let multiplier = 0
+    let daysLeftTillFirstDeadline
+    for (const task of tasks) {
+      if (multiplier === 0) {
+        daysLeftTillFirstDeadline = task.daysTillDeadline
+        continue
+      }
+
+      multiplier++
+      await prisma.task.update({
+        where: { id: task.id },
+        data: {
+          daysTillDeadline: daysLeftTillFirstDeadline + wateringInterval * multiplier,
+          originalDeadline: wateringInterval,
+        },
+      })
+    }
+    return res.status(200).send({ message: 'Watering interval updated', status: 'success' })
+  } catch (error) {
+    return res.status(502).send({ message: 'Server error', status: 'error' })
+  }
+})
+
 // GET all plants assigned to the usrer
 plantsRouter.get('/', async (req: UserRequest, res) => {
   try {
