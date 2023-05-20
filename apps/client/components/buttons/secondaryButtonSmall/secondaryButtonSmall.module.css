@@ -3,10 +3,16 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 12px 20px;
+    padding: 6px 20px;
     gap: 10px;
     outline: none !important;
     background: var(--background-b-dark);
-    border: 1px solid var(--background-b-dark);
-    border-radius: 70px;
+    border: 1px solid var(--text-3);
+    border-radius: 6px;
+    color: white;
+  transition: all ease-in-out 0.2s;
+}
+
+.cancelButtonContainer:hover{
+  background: var(--text-3);
 }
