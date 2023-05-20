@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
-      - "apps/server/**"
-      - ".github/workflows/test-server.yml"
+      - 'apps/server/**'
+      - '.github/workflows/test-server.yml'
 jobs:
   tests:
     name: Run tests on server
@@ -19,7 +19,7 @@ jobs:
           node-version: 18.12
       - name: Install dependencies
         run: npm install
-      - name: "Create env file"
+      - name: 'Create env file'
         run: |
           echo "${{ secrets.ENV_TEST }}" > .env
       - name: Replace test url with localhost
@@ -34,3 +34,8 @@ jobs:
         run: npm run server:test:db:push
       - name: Run Tests
         run: npm run server:test
+      - name: Archive coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-report
+          path: /apps/server/src/tests/coverage
