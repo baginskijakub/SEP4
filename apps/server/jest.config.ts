@@ -7,6 +7,8 @@ export default {
     '^.+\\.[tj]s$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.spec.json' }],
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/apps/server',
+  coverageDirectory: './src/tests/coverage',
+  collectCoverage: true,
+  coverageReporters: ['html', 'lcov'],
   maxWorkers: 1,
 }
