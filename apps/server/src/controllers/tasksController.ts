@@ -85,6 +85,43 @@ tasksRouter.get('/', async (req: UserRequest, res) => {
   }
 })
 
+tasksRouter.get('/epoch', async (req: UserRequest, res) => {
+  try {
+    const tasksFromDb = await prisma.task.findMany({
+      where: {
+        plant: {
+          email: req.user.email,
+        },
+      },
+    })
+    const tasks: ITask[] = tasksFromDb.map((task) => {
+      let status
+      let date
+      if (task.daysTillDeadline == 0) {
+        status = 'current'
+        date = `${Math.round(new Date().getTime() / 1000)}`
+      } else if (task.daysTillDeadline > 0) {
+        status = 'future'
+        date = `${Math.round(new Date().getTime() / 1000) + task.daysTillDeadline * 86400}`
+      } else {
+        status = 'past'
+        date = `${Math.round(new Date().getTime() / 1000) + task.daysTillDeadline * 86400}`
+      }
+      return {
+        id: task.id,
+        plantId: task.plantId,
+        type: task.type as 'water' | 'fertilize' | 'repot',
+        status,
+        date,
+      }
+    })
+
+    return res.status(200).send(tasks)
+  } catch (error) {
+    return res.status(500).json({ message: 'Server error', status: 'error' })
+  }
+})
+
 tasksRouter.delete('/:id', async (req: UserRequest, res) => {
   const { id } = req.params
   if (isNaN(Number(id))) return res.status(400).json({ message: 'Invalid task id', status: 'error' })
