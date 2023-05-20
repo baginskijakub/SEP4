@@ -1,0 +1,17 @@
+.taskWrapper{
+    width: calc(100% - 70px);
+    height: calc(100% - 110px);
+    margin: 30px;
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+  }
+  
+  @media only screen and (max-width: 1150px) {
+    .taskWrapper{
+      width: auto;
+      height: auto;
+      flex-direction: column;
+    }
+    
+  }
