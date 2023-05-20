@@ -6,10 +6,8 @@
   padding: 12px;
   gap: 20px;
   width: calc(100% - 26px);
-  background: var(--background-b-med);
-  border: 1px solid var(--background-b-dark);
+  background: var(--background-b-dark);
   border-radius: 13px;
-  color: var(--text-1);
   transition: all 0.1s ease-in-out;
 }
 
@@ -21,11 +19,11 @@
   padding: 12px;
   gap: 20px;
   width: calc(100% - 26px);
-  background: var(--background-b-med);
+  background: var(--background-b-dark);
   border-radius: 13px;
   color: var(--text-1);
   transition: all 0.1s ease-in-out;
-  border: 2px solid var(--text-2);
+  border: 3px solid var(--text-3);
 }
 
 .plantWrapper:hover{
@@ -46,20 +44,21 @@
   border-radius: 12px;
 }
 
-.plantInner{
+.plantInner {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 0;
-  gap: 4px;
+  gap: 4px; 
 }
 
 .plantInner h3{
-  color: var(--text-3);
+  color: var(--text-1);
+  max-width: 72%;
 }
 
 .plantInner p{
-  color: var(--text-3);
+  color: var(--text-1);
 }
 
 .plantControls{

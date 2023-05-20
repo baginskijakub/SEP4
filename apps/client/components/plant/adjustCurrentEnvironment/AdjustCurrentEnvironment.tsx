@@ -54,6 +54,7 @@ export const AdjustCurrentEnvironment:React.FC<Props> = ({currentEnvironment, id
             defaultValue={currentEnvironment.temperature}
             unit={'°C'}
             onChange={(value) => updateLocalEnvironment('temperature', value)}
+            step={0.25}
           />
         </div>
         <div className={styles.inner}>
@@ -65,6 +66,7 @@ export const AdjustCurrentEnvironment:React.FC<Props> = ({currentEnvironment, id
             defaultValue={currentEnvironment.humidity}
             unit={'%'}
             onChange={(value) => updateLocalEnvironment('humidity', value)}
+            step={0.25}
           />
         </div>
         <div className={styles.inner}>
@@ -76,6 +78,7 @@ export const AdjustCurrentEnvironment:React.FC<Props> = ({currentEnvironment, id
             defaultValue={currentEnvironment.co2}
             unit={'ppm'}
             onChange={(value) => updateLocalEnvironment('co2', value)}
+            step={0.01}
           />
         </div>
         <div className={styles.buttonContainer}>

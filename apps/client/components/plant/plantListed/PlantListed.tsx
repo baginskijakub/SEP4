@@ -35,7 +35,7 @@ export const PlantListed:React.FC<Props> = ({name, latinName, url, id, onClick, 
             <MdDeleteOutline size={20}/>
         </ActionButton>
       </div>
-      {displayEditModal && <CreatePlant onClose={() => setDisplayEditModal(false)} mode={'edit'} fetchAgain={fetchAgain}/>}
+      {displayEditModal && <CreatePlant onClose={() => setDisplayEditModal(false)} mode={'edit'} plantId={id} fetchAgain={fetchAgain}/>}
       {displayDeleteModal && <RemovePlant onClose={() => setDisplayDeleteModal(false)} plantId={id} fetchAgain={fetchAgain} />}
     </div>
   )

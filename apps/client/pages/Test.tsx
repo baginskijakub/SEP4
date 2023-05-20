@@ -1,6 +1,10 @@
 import React from 'react'
+
 import { TaskList } from '../components/task/taskList/TaskList'
 import { ITask } from '@sep4/types'
+
+import { PlantsWatering } from "../components/task/plantsWatering/PlantsWatering";
+
 
 export const Test:React.FC = () => {
 
@@ -32,6 +36,7 @@ export const Test:React.FC = () => {
   return (
     <div>
       <TaskList tasks={tasks}/>
+      <PlantsWatering />
     </div>
   )
 }

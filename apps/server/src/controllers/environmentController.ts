@@ -14,7 +14,8 @@ environmentRouter.use(authorizeUser)
 environmentRouter.patch('/', async (req: UserRequest, res) => {
   const { plantId } = req.params
   const desiredEnvironment = req.body as unknown
-  if (!plantId || isNaN(Number(plantId))) return res.status(400).json({ message: 'Missing plant id', status: 'error' })
+  if (isNaN(Number(plantId)) || !(await prisma.plant.findUnique({ where: { id: Number(plantId) } })))
+    return res.status(400).json({ message: 'Invalid plant id', status: 'error' })
   if (!desiredEnvironment || !isValidDesiredEnv(desiredEnvironment))
     return res.status(400).json({ message: 'Invalid desired environment', status: 'error' })
 

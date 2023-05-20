@@ -2,9 +2,9 @@ import { IPlant, IPlantCurrentEnvironment } from "@sep4/types";
 import axios from 'axios'
 
 axios.defaults.withCredentials = true
-
+import { SERVER_URL } from "../config";
 const getPlantEnvironmentHistory = (plantId: number, type: string) => {
-  return axios.get(`http://localhost:3333/api/v1/plants/${plantId}/environment/${type}`).then((response) => {
+  return axios.get(`${SERVER_URL}/plants/${plantId}/environment/${type}`).then((response) => {
     if (response.status === 200) {
       return response.data
     } else {
@@ -14,7 +14,7 @@ const getPlantEnvironmentHistory = (plantId: number, type: string) => {
 }
 
 const getPlantById = (plantId: number) => {
-  return axios.get(`http://localhost:3333/api/v1/plants/${plantId}`).then((response) => {
+  return axios.get(`${SERVER_URL}/plants/${plantId}`).then((response) => {
     if (response.status === 200) {
       console.log(response.data)
       return response.data
@@ -25,7 +25,7 @@ const getPlantById = (plantId: number) => {
 }
 
 const addPlant = (plant: IPlant) => {
-  return axios.post(`http://localhost:3333/api/v1/plants`, plant).then((response) => {
+  return axios.post(`${SERVER_URL}/plants`, plant).then((response) => {
     if (response.status === 201) {
       return response.data
     } else {
@@ -35,7 +35,7 @@ const addPlant = (plant: IPlant) => {
 }
 
 const updatePlant = (plant: IPlant) => {
-  return axios.patch(`http://localhost:3333/api/v1/plants/${plant.id}`, plant).then((response) => {
+  return axios.patch(`${SERVER_URL}/plants/${plant.id}`, plant).then((response) => {
     if (response.status === 200) {
       return response.data
     } else {
@@ -45,7 +45,7 @@ const updatePlant = (plant: IPlant) => {
 }
 
 const deletePlant = (plantId: number) => {
-  return axios.delete(`http://localhost:3333/api/v1/plants/${plantId}`).then((response) => {
+  return axios.delete(`${SERVER_URL}/plants/${plantId}`).then((response) => {
     if (response.status === 200) {
       return response.data
     } else {
@@ -55,7 +55,7 @@ const deletePlant = (plantId: number) => {
 }
 
 const getAllPlants = () => {
-  return axios.get(`http://localhost:3333/api/v1/plants/`).then((response) => {
+  return axios.get(`${SERVER_URL}/plants/`).then((response) => {
     if (response.status === 200) {
       return response.data
     } else {
@@ -65,7 +65,7 @@ const getAllPlants = () => {
 }
 
 const adjustEnvironment = (id: number, environment: IPlantCurrentEnvironment) => {
-  return axios.patch(`http://localhost:3333/api/v1/plants/${id}/environment`, environment).then((response) => {
+  return axios.patch(`${SERVER_URL}/plants/${id}/environment`, environment).then((response) => {
     if (response.status === 200) {
       return response.data
     } else {
@@ -74,4 +74,14 @@ const adjustEnvironment = (id: number, environment: IPlantCurrentEnvironment) =>
   })
 }
 
-export { getPlantEnvironmentHistory, getPlantById, addPlant, updatePlant, deletePlant, getAllPlants, adjustEnvironment }
+const adjustWatering = (id: number, watering: number) => {
+  return axios.patch(`${SERVER_URL}/plants/${id}/watering`, watering).then((response) => {
+    if (response.status === 200) {
+      return response.data
+    } else {
+      throw new Error('Error sending data')
+    }
+  })
+}
+
+export { getPlantEnvironmentHistory, getPlantById, addPlant, updatePlant, deletePlant, getAllPlants, adjustEnvironment, adjustWatering }
