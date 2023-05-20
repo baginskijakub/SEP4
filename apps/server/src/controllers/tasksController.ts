@@ -142,14 +142,30 @@ tasksRouter.delete('/:id', async (req: UserRequest, res) => {
       date: `to be completed today`,
     }
     if (taskFromDb.type === 'water') {
-      await prisma.task.update({
+      await prisma.task.delete({
         where: {
           id: Number(id),
         },
-        data: {
-          daysTillDeadline: taskFromDb.originalDeadline,
+      })
+      const nextWateringTask = await prisma.task.findFirst({
+        where: {
+          plantId: taskFromDb.plantId,
+          type: 'water',
+        },
+        orderBy: {
+          daysTillDeadline: 'asc',
         },
       })
+      if (nextWateringTask) {
+        await prisma.task.create({
+          data: {
+            plantId: taskFromDb.plantId,
+            type: 'water',
+            daysTillDeadline: nextWateringTask.daysTillDeadline * 4,
+            originalDeadline: nextWateringTask.originalDeadline,
+          },
+        })
+      }
     } else {
       await prisma.task.delete({
         where: {
