@@ -52,4 +52,14 @@ const getTaskById = (taskId: number) => {
   })
 }
 
-export { getCurrentTasks, completeTask, createTask, getTaskById }
+const getAllTasks: () => Promise<ITask[]> = () => {
+  return axios.get(`http://localhost:3333/api/v1/tasks/`).then((response) => {
+    if (response.status === 200) {
+      return response.data
+    } else {
+      throw new Error('Error fetching data')
+    }
+  })
+}
+
+export { getCurrentTasks, completeTask, createTask, getTaskById, getAllTasks }

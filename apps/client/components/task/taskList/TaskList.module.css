@@ -1,29 +1,15 @@
 .taskWrapper{
-    box-sizing: border-box;
-
-    /* Auto layout */
-    
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     padding: 20px;
     gap: 12px;
-    
-    /* background/b-med */
-    
     background: var(--background-b-med);
-    /* text/3 */
-    
+    color: var(--text-3);
     border: 1px solid var(--text-3);
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     border-radius: 12px;
-    
-    /* Inside auto layout */
-    
-    flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 0;
+    height: calc(100% - 40px);
 }
 
 .taskContainer{
@@ -31,33 +17,4 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
-}
-
-.addTaskButton{
-    box-sizing: border-box;
-
-    /* Auto layout */
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 12px;
-    gap: 20px;
-
-    /* theme/1 */
-
-    background: var(--theme-1);
-    /* text/3 */
-
-    border: 1px solid var(--text-3);
-    box-shadow: 0px 2px 8px rgba(21, 21, 21, 0.25);
-    border-radius: 13px;
-
-    /* Inside auto layout */
-
-    flex: none;
-    order: 4;
-    align-self: stretch;
-    flex-grow: 0;
 }
