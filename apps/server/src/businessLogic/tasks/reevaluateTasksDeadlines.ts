@@ -1,13 +1,14 @@
-import prisma from '../../helperFunctions/setupPrisma'
+import { PrismaClient } from '@prisma/client'
 
 export async function reevaluateTasksDeadlines() {
   try {
+    const prisma = new PrismaClient()
     const tasks = await prisma.task.findMany()
 
     await Promise.allSettled(
       tasks.map(async (task) => {
         task.daysTillDeadline = task.daysTillDeadline - 1
-        await prisma.task.update({
+        prisma.task.update({
           where: {
             id: task.id,
           },
