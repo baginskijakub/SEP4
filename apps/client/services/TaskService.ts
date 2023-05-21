@@ -5,15 +5,6 @@ import { SERVER_URL } from "../config";
 
 
 const getCurrentTasks = ():Promise<ITask[]> => {
-  // return new Promise<ITask[]>((resolve, reject) => {
-  //   resolve( [{
-  //     id: 1,
-  //     type: "water",
-  //     date: "2021-05-05",
-  //     plantId: 12,
-  //     status: "current",
-  //   }])
-  // })
   return axios.get(`${SERVER_URL}/tasks/`).then((response) => {
     if (response.status === 200) {
       return response.data
@@ -33,4 +24,14 @@ const completeTask = (taskId: number):Promise<ITask> => {
   })
 }
 
-export { getCurrentTasks, completeTask }
+const getAllTasksWithEpoch = ():Promise<ITask[]> => {
+  return axios.get(`${SERVER_URL}/v1/tasks/epoch`).then((response) => {
+    if (response.status === 200) {
+      return response.data
+    } else {
+      throw new Error('Error fetching data')
+    }
+  })
+}
+
+export { getCurrentTasks, completeTask, getAllTasksWithEpoch }

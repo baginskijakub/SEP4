@@ -57,7 +57,7 @@
     align-items: flex-start;
     padding: 16px;
     gap: 16px;
-
+    color: var(--text-3);
     background: var(--background-b-light);
 
     border: 1px solid var(--background-b-light);
@@ -74,6 +74,7 @@
     align-items: flex-start;
     padding: 8px;
     gap: 16px;
+    color: var(--text-3);
 
     background: var(--background-b-light);
 
@@ -88,11 +89,13 @@
     align-items: flex-start;
     padding: 16px 12px;
     gap: 24px;
-
     background: var(--background-b-dark);
-
-    border: 1px solid var(--theme-2);
+    border: 1px solid var(--theme-3);
     border-radius: 8px;
+}
+
+.formWrapperOuter h5 {
+    color: var(--text-3);
 }
 
 .formWrapper {
@@ -109,6 +112,9 @@
     align-items: flex-start;
     padding: 0;
     gap: 40px;
+}
+.formRows input {
+    background-color: var(--background-b-light);
 }
 
 .actionBtnContainer {
@@ -134,4 +140,5 @@
    display: flex;
    flex-direction: column;
    gap: 12px;
+   color: var(--text-3);
  }

@@ -15,4 +15,7 @@
 
 .cancelButtonContainer:hover{
   background: var(--text-3);
+    border: 1px solid var(--background-b-dark);
+    border-radius: 70px;
+    color: var(--text-1);
 }
