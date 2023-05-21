@@ -26,6 +26,8 @@ environmentRouter.patch('/', async (req: UserRequest, res) => {
 
   try {
     sendDownlinkMessage(payload, Number(plantId))
+    await prisma.$disconnect()
+
     return res.status(200).json({ payload, status: 'success' })
   } catch (error) {
     return res.status(500).json({ message: 'Server error', status: 'error' })
@@ -67,10 +69,11 @@ environmentRouter.get('/:type', async (req: UserRequest, res) => {
       type: type,
       data: graphPoints,
     }
+    await prisma.$disconnect()
 
-    res.status(200).json(formattedGraphData)
+    return res.status(200).json(formattedGraphData)
   } catch (error) {
-    res.status(401).json({ message: 'Unauthorized', status: 'error' })
+    return res.status(401).json({ message: 'Unauthorized', status: 'error' })
     return
   }
 })

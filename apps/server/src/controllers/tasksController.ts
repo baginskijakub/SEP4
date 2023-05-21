@@ -43,8 +43,10 @@ tasksRouter.post('/', async (req: UserRequest, res) => {
       id: task.id,
       date: `${task.daysTillDeadline} day${task.daysTillDeadline > 1 ? 's' : ''} until deadline`,
     })
+    await prisma.$disconnect()
+    return
   } catch (error) {
-    res.status(502).json({ message: 'Failed to create task', status: 'error' })
+    return res.status(502).json({ message: 'Failed to create task', status: 'error' })
   }
 })
 
@@ -78,6 +80,7 @@ tasksRouter.get('/', async (req: UserRequest, res) => {
         date,
       }
     })
+    await prisma.$disconnect()
 
     return res.status(200).send(tasks)
   } catch (error) {
@@ -115,6 +118,7 @@ tasksRouter.get('/epoch', async (req: UserRequest, res) => {
         date,
       }
     })
+    await prisma.$disconnect()
 
     return res.status(200).send(tasks)
   } catch (error) {
@@ -173,6 +177,8 @@ tasksRouter.delete('/:id', async (req: UserRequest, res) => {
         },
       })
     }
+    await prisma.$disconnect()
+
     return res.status(200).send(task)
   } catch (error) {
     return res.status(500).json({ message: 'Server error', status: 'error' })
@@ -203,6 +209,7 @@ tasksRouter.get('/current', async (req: UserRequest, res) => {
         date: `to be completed today`,
       }
     })
+    await prisma.$disconnect()
 
     return res.status(200).json(tasks)
   } catch (error) {
