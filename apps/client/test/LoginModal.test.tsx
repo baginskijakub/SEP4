@@ -2,8 +2,21 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { LoginModal } from '../components/login/LoginModal';
 import '@testing-library/jest-dom'
 import UserContextProvider from "../context/UserContext";
+import { server } from "./mocks/server.js";
+import { login } from "../services/LoginService";
 
 describe("<ManageAccount />", () => {
+    beforeAll(() => {
+      server.listen()
+    })
+
+  // Reset any request handlers that we may add during the tests,
+  // so they don't affect other tests.
+    afterEach(() => server.resetHandlers())
+
+  // Clean up after the tests are finished.
+    afterAll(() => server.close())
+
     test("renders LoginModal component when login", () => {
         render(
           <UserContextProvider><LoginModal onClose={null}/></UserContextProvider>)
@@ -73,5 +86,11 @@ describe("<ManageAccount />", () => {
         await fireEvent.click(screen.getAllByText(/Register/i)[1])
 
         expect(await screen.findByText("Please fill in all the fields")).toBeInTheDocument()
+    })
+
+    test("testing stuff", async () => {
+      const res = await login('fakeUser1', 'fakePassword1')
+      console.log(res.username)
+      expect(res.username).toBe('essa')
     })
 })
