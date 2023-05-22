@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - frontend/sprint8/chore/vercel-deploy
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -26,7 +27,7 @@ jobs:
           docker push docker.io/baginskijakub/client_image:${{ github.sha }}
 
       - name: Deploy to Vercel
-        uses: amondnet/vercel-deploy@v0.4.0
+        uses: vercel/actions@v20
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-project-id: prj_dEkbC0GpW8L1yv337bwzO2uoDAiJ
