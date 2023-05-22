@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - frontend/sprint8/chore/vercel-deploy
 
 jobs:
   deploy:
