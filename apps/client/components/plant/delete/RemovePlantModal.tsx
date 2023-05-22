@@ -42,7 +42,7 @@ export const RemovePlant: React.FC <Props> = ({ onClose, plantId, fetchAgain }) 
           <div className={styles.plantWrapper}>
             <img src={plant.image} alt=""/>
             <div className={styles.plantInner}>
-              <h3>{plant.nickName}</h3>
+              <h3>{plant.name}</h3>
               <p>{plant.latinName}</p>
             </div>
           </div>
