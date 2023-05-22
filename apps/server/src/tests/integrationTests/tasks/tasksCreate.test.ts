@@ -38,7 +38,7 @@ describe('Task POST endpoint', () => {
       password: 'Password123',
     })
 
-    authToken = loginResponse.headers['set-cookie'][0].split(';')[0]
+    authToken = loginResponse.body.token
   })
 
   afterEach(async () => {
@@ -59,7 +59,7 @@ describe('Task POST endpoint', () => {
       date: dateString,
     }
 
-    const taskResponse = await request(app).post('/api/v1/tasks').set('Cookie', authToken).send(task)
+    const taskResponse = await request(app).post('/api/v1/tasks').set('Authorization', `Bearer ${authToken}`).send(task)
 
     expect(taskResponse.status).toBe(201)
     expect(taskResponse.body).toMatchObject({
@@ -82,7 +82,7 @@ describe('Task POST endpoint', () => {
       date: dateString,
     }
 
-    const taskResponse = await request(app).post('/api/v1/tasks').set('Cookie', authToken).send(task)
+    const taskResponse = await request(app).post('/api/v1/tasks').set('Authorization', `Bearer ${authToken}`).send(task)
 
     expect(taskResponse.status).toBe(404)
     expect(taskResponse.body.message).toEqual('Plant does not exist')
@@ -99,7 +99,7 @@ describe('Task POST endpoint', () => {
       date: dateString,
     }
 
-    const taskResponse = await request(app).post('/api/v1/tasks').set('Cookie', authToken).send(task)
+    const taskResponse = await request(app).post('/api/v1/tasks').set('Authorization', `Bearer ${authToken}`).send(task)
 
     expect(taskResponse.status).toBe(400)
     expect(taskResponse.body.message).toEqual('Invalid task data')
@@ -117,7 +117,7 @@ describe('Task POST endpoint', () => {
       date: dateString,
     }
 
-    const taskResponse = await request(app).post('/api/v1/tasks').set('Cookie', authToken).send(task)
+    const taskResponse = await request(app).post('/api/v1/tasks').set('Authorization', `Bearer ${authToken}`).send(task)
 
     expect(taskResponse.status).toBe(400)
     expect(taskResponse.body.message).toEqual('Invalid task data')
@@ -138,7 +138,7 @@ describe('Task POST endpoint', () => {
       date: dateString,
     }
 
-    const taskResponse = await request(app).post('/api/v1/tasks').set('Cookie', authToken).send(task)
+    const taskResponse = await request(app).post('/api/v1/tasks').set('Authorization', `Bearer ${authToken}`).send(task)
 
     expect(taskResponse.status).toBe(502)
     expect(taskResponse.body.message).toEqual('Failed to create task')

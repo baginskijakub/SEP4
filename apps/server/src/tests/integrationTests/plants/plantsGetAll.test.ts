@@ -76,7 +76,7 @@ describe('Plant GET endpoint', () => {
     await prisma.plant.deleteMany()
 
     // Retrieve the plants after the user is logged in
-    const response = await request(app).get('/api/v1/plants').set('Cookie', loginResponse.headers['set-cookie'])
+    const response = await request(app).get('/api/v1/plants').set('Authorization', `Bearer ${loginResponse.body.token}`)
     expect(response.status).toBe(200)
   })
 
@@ -103,7 +103,7 @@ describe('Plant GET endpoint', () => {
     // Delete the user to create a failed fetch plants scenario
     await prisma.user.delete({ where: { email: user.username } })
 
-    const response = await request(app).get('/api/v1/plants').set('Cookie', loginResponse.headers['set-cookie'])
+    const response = await request(app).get('/api/v1/plants').set('Authorization', `Bearer ${loginResponse.body.token}`)
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([])
@@ -121,7 +121,7 @@ describe('Plant GET endpoint', () => {
     expect(loginResponse.status).toBe(200)
     expect(loginResponse.body.message).toBe('User successfully logged in')
     // Retrieve the plants after the user is logged in
-    const response = await request(app).get('/api/v1/plants').set('Cookie', loginResponse.headers['set-cookie'])
+    const response = await request(app).get('/api/v1/plants').set('Authorization', `Bearer ${loginResponse.body.token}`)
 
     expect(response.status).toBe(200)
     expect(response.body.length).toBe(2)

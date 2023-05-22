@@ -72,7 +72,7 @@ describe('Get environment by type endpoint', () => {
       password: 'Password123',
     })
 
-    authToken = loginResponse.headers['set-cookie'][0].split(';')[0]
+    authToken = loginResponse.body.token
   })
 
   afterEach(async () => {
@@ -85,7 +85,7 @@ describe('Get environment by type endpoint', () => {
   test('returns 400 status and error message if type is invalid', async () => {
     const response = await request(app)
       .get(`/api/v1/plants/${plantId}/environment/invalid_type`)
-      .set('Cookie', authToken)
+      .set('Authorization', `Bearer ${authToken}`)
     expect(response.status).toBe(400)
     expect(response.body.message).toBe('Wrong type')
     expect(response.body.status).toBe('error')
@@ -102,7 +102,7 @@ describe('Get environment by type endpoint', () => {
   test('returns 200 status when the request is successful (temperature)', async () => {
     const response = await request(app)
       .get(`/api/v1/plants/${plantId}/environment/temperature`)
-      .set('Cookie', authToken)
+      .set('Authorization', `Bearer ${authToken}`)
     expect(response.status).toBe(200)
     expect(response.body['type']).toBeDefined()
     expect(response.body['data']).toBeDefined()
@@ -118,7 +118,9 @@ describe('Get environment by type endpoint', () => {
 
   //reponse code 200, successfull path - humidity
   test('returns 200 status when the request is successful (humidity)', async () => {
-    const response = await request(app).get(`/api/v1/plants/${plantId}/environment/humidity`).set('Cookie', authToken)
+    const response = await request(app)
+      .get(`/api/v1/plants/${plantId}/environment/humidity`)
+      .set('Authorization', `Bearer ${authToken}`)
     expect(response.status).toBe(200)
     const expectedResponse = { data: [], type: 'humidity' }
     expect(response.body).toEqual(expectedResponse)
@@ -126,7 +128,9 @@ describe('Get environment by type endpoint', () => {
 
   //response cod3 200, succesfull path - co2
   test('returns 200 status when the request is successful (co2)', async () => {
-    const response = await request(app).get(`/api/v1/plants/${plantId}/environment/co2`).set('Cookie', authToken)
+    const response = await request(app)
+      .get(`/api/v1/plants/${plantId}/environment/co2`)
+      .set('Authorization', `Bearer ${authToken}`)
     expect(response.status).toBe(200)
     expect(response.body['type']).toBeDefined()
     expect(response.body['data']).toBeDefined()
