@@ -7,14 +7,12 @@ import { SecondaryButtonSmall } from '../../buttons/secondaryButtonSmall/seconda
 import { PrimaryButtonSmall } from '../../buttons/primaryButtonSmall/primaryButtonSmall'
 import { addPlant, getPlantById, updatePlant } from '../../../services/PlantService'
 import { Slider } from '../../utils/slider/Slider'
-
 interface Props {
   onClose: () => void
   mode: 'edit' | 'create'
   plantId?: number
   fetchAgain?: () => void
 }
-
 export const CreatePlant: React.FC<Props> = ({ onClose, mode, plantId, fetchAgain }) => {
   const [plant, setPlant] = useState<IPlant>({
     name: 'Plant name',
