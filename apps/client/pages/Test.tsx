@@ -6,7 +6,7 @@ import { ITask } from '@sep4/types'
 import { PlantsWatering } from "../components/task/plantsWatering/PlantsWatering";
 
 
-export const Test:React.FC = () => {
+const Test:React.FC = () => {
 
   const tasks: ITask[] = [
     {
@@ -31,11 +31,11 @@ export const Test:React.FC = () => {
       status: "current",
     },
   ]
-    
+
 
   return (
     <div>
-      <TaskList tasks={tasks}/>
+      <TaskList/>
       <PlantsWatering />
     </div>
   )
