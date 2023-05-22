@@ -1,34 +1,25 @@
-import React, { useEffect, useState } from "react";
-import styles from "./styles/Plants.module.css";
-import { TaskOverview } from "../components/task/overview/TaskOverview";
+import React from "react";
+
+import { Task } from "../components/task/task/Task";
 import { ITask } from "@sep4/types";
-import { useUserContext } from "../context/UserContext";
-import { getAllTasksWithEpoch } from "../services/TaskService";
+import { TaskList } from "../components/task/taskList/TaskList";
+import styles from "./styles/Plants.module.css";
 
 export const Tasks:React.FC = () => {
-  const [tasks, setTasks] = React.useState<ITask[]>([])
-  const {user} = useUserContext()
-
-  // useEffect(() => {
-  //   getAllTasksWithEpoch().then((res) => {
-  //     setTasks(res)
-  //   }).catch((e) => {
-  //     console.log(e)
-  //   })
-  // }, [])
-
-  // const fetchData = () => {
-  //   getAllTasksWithEpoch().then((res) => {
-  //     setTasks(res)
-  //   }).catch((e) => {
-  //     console.log(e)
-  //   })
-  // }
+  const task: ITask[] = [{
+    id: 1,
+    type: "water",
+    date: "2021-05-05",
+    plantId: 12,
+    status: "current",
+  }]
 
   return (
-    <div className={styles.taskWrapper}>
-      <h2>TaskList...</h2>
-      {user && <TaskOverview />}
+    <div className={styles.pageWrapper}>
+      <TaskList/>
+      <div className={styles.pageInner}>
+        <Task task={task[0]}/>
+      </div>
     </div>
   );
 };
