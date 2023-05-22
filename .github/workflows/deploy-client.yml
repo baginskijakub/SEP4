@@ -29,4 +29,4 @@ jobs:
           docker push docker.io/baginskijakub/client_image:${{ github.sha }}
 
       - name: Deploy to Vercel
-        run: npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
+        run: npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --yes
