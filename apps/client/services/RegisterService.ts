@@ -1,8 +1,10 @@
 import axios from 'axios'
 axios.defaults.withCredentials = true
+
+import { SERVER_URL } from '../config'
 const register = (username: string, password: string) => {
   return axios
-    .post(`http://localhost:3333/api/v1/users`, {
+    .post(`${SERVER_URL}/users`, {
       username,
       password,
     })

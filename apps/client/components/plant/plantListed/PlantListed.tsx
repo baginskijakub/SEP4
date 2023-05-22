@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from 'react'
 import { ActionButton } from "../../buttons/actionButton/ActionButton";
 import {MdDeleteOutline, MdOutlineEdit} from "react-icons/md";
@@ -20,10 +20,6 @@ export const PlantListed:React.FC<Props> = ({name, latinName, url, id, onClick, 
   const [displayDeleteModal, setDisplayDeleteModal] = useState(false)
   const [displayEditModal, setDisplayEditModal] = useState(false)
 
-  useEffect(()=>{
-    console.log(displayDeleteModal)
-  }, [displayDeleteModal])
-
   return (
     <div className={isSelected ? styles.plantWrapperSelected : styles.plantWrapper } onClick={onClick}>
       <img src={url} alt={name}/>
@@ -39,7 +35,7 @@ export const PlantListed:React.FC<Props> = ({name, latinName, url, id, onClick, 
             <MdDeleteOutline size={20}/>
         </ActionButton>
       </div>
-      {displayEditModal && <CreatePlant onClose={() => setDisplayEditModal(false)} mode={'edit'} fetchAgain={fetchAgain}/>}
+      {displayEditModal && <CreatePlant onClose={() => setDisplayEditModal(false)} mode={'edit'} plantId={id} fetchAgain={fetchAgain}/>}
       {displayDeleteModal && <RemovePlant onClose={() => setDisplayDeleteModal(false)} plantId={id} fetchAgain={fetchAgain} />}
     </div>
   )

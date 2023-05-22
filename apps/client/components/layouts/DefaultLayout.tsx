@@ -1,19 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Navbar } from "../navigation/navbar/Navbar";
 import { Breadcrumbs } from "../navigation/breadcrumbs/Breadcrumbs";
 import styles from "./layouts.module.css";
+import { NavbarMobile } from "../navigation/navbar/NavbarMobile";
+import { Dialog } from "../utils/dialog/Dialog";
 
 interface Props{
   children: React.ReactNode;
 }
+
+
 export const DefaultLayout:React.FC<Props> = ({children}) => {
+  const [isDesktop, setDesktop] = useState(true)
+
+  const updateMedia = () => {
+    if (window.innerWidth > 800) {
+      setDesktop(true)
+    } else {
+      setDesktop(false)
+    }
+  }
+
+  useEffect(() => {
+    updateMedia()
+    window.addEventListener("resize", updateMedia)
+    return () => window.removeEventListener("resize", updateMedia)
+  })
+
+  
+
   return (
     <div className={styles.defaultWrapper}>
-      <Navbar />
+      {isDesktop ? <Navbar /> : <NavbarMobile />}
       <div className={styles.defaultInner}>
-        <Breadcrumbs />
+        {isDesktop && <Breadcrumbs />}
         {children}
       </div>
+      <Dialog />
     </div>
   );
 };

@@ -1,38 +1,40 @@
-import React from "react";
-import styles from "./PlantWrapper.module.css";
-import { PlantHead } from "../plantHead/PlantHead";
-import { PlantCurrentEnvironment } from "../plantCurrentEnvironment/PlantCurrentEnvironment";
-import { PlantIdealEnvironment } from "../plantIdealEnvironment/PlantIdealEnvironment";
-import { PlantPastEnvironment } from "../plantPastEnvironment/PlantPastEnvironment";
-import { IPlant, IPlantCurrentEnvironment, IPlantIdealEnvironment } from "@sep4/types";
+import React, { useEffect, useState } from 'react'
+import styles from './PlantWrapper.module.css'
+import { PlantHead } from '../plantHead/PlantHead'
+import { PlantCurrentEnvironment } from '../plantCurrentEnvironment/PlantCurrentEnvironment'
+import { PlantIdealEnvironment } from '../plantIdealEnvironment/PlantIdealEnvironment'
+import { PlantPastEnvironment } from '../plantPastEnvironment/PlantPastEnvironment'
+import { IPlant } from '@sep4/types'
+import { getPlantById } from '../../../services/PlantService'
 
-interface Props{
-  plant: IPlant
+interface Props {
+  plantId: number
 }
 
-export const PlantWrapper:React.FC<Props> = ({plant}) => {
+export const PlantWrapper: React.FC<Props> = ({ plantId }) => {
+  const [plant, setPlant] = useState<IPlant>()
 
-  const mock: IPlantCurrentEnvironment = {
-    temperature: 20,
-    humidity: 50,
-    co2: 1000
-  }
-
-  const mock2: IPlantIdealEnvironment = {
-    minTemperature: 10,
-    maxTemperature: 30,
-    minHumidity: 0,
-    maxHumidity: 100,
-    minCo2: 0,
-    maxCo2: 10
-  }
+  useEffect(() => {
+    getPlantById(plantId)
+      .then((res) => {
+        console.log('component', res)
+        setPlant(res)
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  }, [plantId])
 
   return (
     <div className={styles.wrapper}>
-        <PlantHead plant={plant}/>
-        <PlantCurrentEnvironment environment={mock}/>
-        <PlantIdealEnvironment environment={mock2}/>
-        <PlantPastEnvironment id={12}/>
+      {plant && (
+        <>
+          <PlantHead plant={plant} />
+          <PlantCurrentEnvironment plant={plant} />
+          <PlantIdealEnvironment environment={plant.idealEnvironment} />
+          <PlantPastEnvironment id={plant.id} />
+        </>
+      )}
     </div>
-  );
-};
+  )
+}

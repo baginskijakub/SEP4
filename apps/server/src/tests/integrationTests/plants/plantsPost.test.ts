@@ -1,6 +1,6 @@
 import request from 'supertest'
-import { app } from '../server'
-import prisma from '../helperFunctions/setupPrisma'
+import { app } from '../../../server'
+import prisma from '../../../helperFunctions/setupPrisma'
 import bcrypt from 'bcrypt'
 
 describe('Plant POST endpoint', () => {
@@ -47,12 +47,52 @@ describe('Plant POST endpoint', () => {
         minTemperature: 10,
         maxTemperature: 20,
       },
+      wateringInterval: 7,
     }
 
     const response = await request(app)
       .post('/api/v1/plants')
-      .set('Cookie', loginResponse.headers['set-cookie'])
+      .set('Authorization', `Bearer ${loginResponse.body.token}`)
       .send(newPlant)
+
+    const tasks = await prisma.task.findMany({
+      where: {
+        plantId: response.body.id,
+      },
+      orderBy: {
+        daysTillDeadline: 'asc',
+      },
+    })
+
+    expect(tasks.length).toBe(4)
+
+    expect(tasks[0]).toMatchObject({
+      plantId: response.body.plant.id,
+      type: 'water',
+      daysTillDeadline: 7,
+      originalDeadline: 7,
+    })
+
+    expect(tasks[1]).toMatchObject({
+      plantId: response.body.plant.id,
+      type: 'water',
+      daysTillDeadline: 14,
+      originalDeadline: 7,
+    })
+
+    expect(tasks[2]).toMatchObject({
+      plantId: response.body.plant.id,
+      type: 'water',
+      daysTillDeadline: 21,
+      originalDeadline: 7,
+    })
+
+    expect(tasks[3]).toMatchObject({
+      plantId: response.body.plant.id,
+      type: 'water',
+      daysTillDeadline: 28,
+      originalDeadline: 7,
+    })
 
     expect(response.status).toBe(201)
     expect(response.body.message).toBe('Plant successfully registered')
@@ -95,7 +135,7 @@ describe('Plant POST endpoint', () => {
 
     const response = await request(app)
       .post('/api/v1/plants')
-      .set('Cookie', loginResponse.headers['set-cookie'])
+      .set('Authorization', `Bearer ${loginResponse.body.token}`)
       .send(newPlant)
 
     expect(response.status).toBe(400)

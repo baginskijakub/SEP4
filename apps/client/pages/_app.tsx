@@ -1,6 +1,7 @@
 import { AppProps } from 'next/app';
 import '../globalstyles/colors.css';
 import '../globalstyles/typography.css';
+import '../globalstyles/transitions.css';
 import { Inter } from '@next/font/google'
 import { DefaultLayout } from "../components/layouts/DefaultLayout";
 import UserContextProvider from "../context/UserContext";

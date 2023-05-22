@@ -9,9 +9,18 @@ import { getAllPlants } from "../services/PlantService";
 export const Plants:React.FC = () => {
   const [plants, setPlants] = useState<IPlant[]>([]);
   const [selectedPlant, setSelectedPlant] = useState<number>()
+  const [isDesktop, setIsDesktop] = useState(true)
   const {user} = useUserContext()
+  
+  React.useEffect(() => {
+      window.innerWidth>1150 ? setIsDesktop(true) : setIsDesktop(false)
+      window.addEventListener("resize", () => {
+      window.innerWidth>1150 ? setIsDesktop(true) : setIsDesktop(false)
+           
+    });
+  }, []);
 
-  useEffect(() => {
+  useEffect(() => { 
     getAllPlants().then((res) => {
       setPlants(res)
     }).catch((e) => {
@@ -42,9 +51,9 @@ export const Plants:React.FC = () => {
   return (
     <div className={styles.pageWrapper}>
       {user && <PlantList plants={plants} changeSelectedPlant={changeSelectedPlant} selectedIndex={selectedPlant} fetchAgain={fetchData}/>}
-      {(user && (selectedPlant || selectedPlant === 0)) && <PlantWrapper plant={plants[selectedPlant]}/>}
+      {(user && (selectedPlant || selectedPlant === 0)) && <PlantWrapper plantId={plants[selectedPlant].id}/>}
     </div>
-  );
-};
-
+  );}
+ 
+ 
 export default Plants;

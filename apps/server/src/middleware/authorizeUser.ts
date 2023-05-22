@@ -6,7 +6,7 @@ export interface UserRequest extends Request {
 }
 
 export default function authorizeUser(req: UserRequest, res: Response, next: NextFunction) {
-  const token = req.cookies.token
+  const token = req.headers.authorization?.split(' ')[1]
   if (!token) {
     res.status(401).json({ message: 'Unauthorized', status: 'error' })
     return
@@ -18,6 +18,7 @@ export default function authorizeUser(req: UserRequest, res: Response, next: Nex
       return
     }
     req.user = decodedToken
+
     return next()
   } catch (error) {
     return res.status(401).json({ message: 'Unable to authorize ', status: 'error' })

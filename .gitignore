@@ -1,6 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 # ignore .env files
 .env*
+/apps/server/src/tests/coverage
 # compiled output
 dist
 tmp

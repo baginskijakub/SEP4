@@ -1,12 +1,20 @@
 .addButtonContainer {
-    display: inline-flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 12px 20px;
-    gap: 10px;
-    background: var(--theme-1);
-    border-radius: 70px;
-    outline: none;
-  border: none;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 20px;
+  gap: 10px;
+  background: var(--action-error-300);
+  border: 1px solid var(--action-error-700);
+  outline: none;
+  border-radius: 6px;
+  color: white;
+  transition: all ease-in-out 0.2s;
+}
+
+.addButtonContainer:hover {
+  background: var(--action-error-700);
+  border: 1px solid var(--action-error-700);
+  color: white;
 }

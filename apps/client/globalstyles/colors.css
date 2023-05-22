@@ -1,5 +1,4 @@
 :root{
- 
   --background-g-dark: #92D274;
   --background-g-med: #ACDD92;
   --background-g-light: #C5E8B3;
@@ -7,17 +6,17 @@
   --background-b-med: #BEDAD5;
   --background-b-light: #EBF0EF;
 
-  --text-1: #FFFFFF;
+  --text-1: #EFEFEF;
   --text-2: #5BA937;
   --text-3: #528E83;
 
   --theme-1: #ED6A5A;
   --theme-2: #5BA937;
   --theme-3: #528E83;
- 
+
   /*
   Old colors
-  
+
   --background-linear: linear-gradient(180deg, #21222C 0%, #171820 100%);
 
   --background-900: #1A1B22;

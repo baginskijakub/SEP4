@@ -9,3 +9,19 @@
   flex-direction: column;
   width: calc(100vw - 240px);
 }
+
+@media screen and (max-width: 800px) {
+  .defaultInner{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+  }
+
+  .defaultWrapper{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+}
+
+

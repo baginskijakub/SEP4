@@ -1,6 +1,6 @@
 import request from 'supertest'
-import { app } from '../server'
-import prisma from '../helperFunctions/setupPrisma'
+import { app } from '../../../server'
+import prisma from '../../../helperFunctions/setupPrisma'
 import bcrypt from 'bcrypt'
 
 describe('User GET endpoint', () => {
@@ -57,7 +57,7 @@ describe('User GET endpoint', () => {
     expect(response.statusCode).toBe(200)
     expect(response.body.message).toBe('User successfully logged in')
     expect(response.body.status).toBe('success')
-    expect(response.header['set-cookie'][0]).toMatch(/token=.+/)
+    expect(response.body.token).toBeDefined()
   })
 
   test('returns 502 if database error occurs', async () => {
