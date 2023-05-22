@@ -34,4 +34,26 @@ const getAllTasksWithEpoch = ():Promise<ITask[]> => {
   })
 }
 
-export { getCurrentTasks, completeTask, getAllTasksWithEpoch }
+
+const createTask = (task: ITask) => {
+  return axios.post(`http://localhost:3333/api/v1/tasks`, task).then((response) => {
+    if (response.status === 201) {
+      return response.data
+    } else {
+      throw new Error('Error fetching data')
+    }
+  })
+}
+
+const getAllTasks: () => Promise<ITask[]> = () => {
+  return axios.get(`http://localhost:3333/api/v1/tasks/`).then((response) => {
+    if (response.status === 200) {
+      return response.data
+    } else {
+      throw new Error('Error fetching data')
+    }
+  })
+}
+
+export { getCurrentTasks, completeTask, createTask, getAllTasks }
+

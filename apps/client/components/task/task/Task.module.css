@@ -11,8 +11,8 @@
 }
 
 .current{
-  background-color: var(--background-b-med);
-  border: 1px solid var(--background-b-dark);
+  background-color: var(--background-b-dark);
+  border: 1px solid var(--text-3);
   color: var(--text-3);
 }
 
