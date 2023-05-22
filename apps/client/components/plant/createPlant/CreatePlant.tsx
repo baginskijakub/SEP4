@@ -67,7 +67,6 @@ export const CreatePlant: React.FC<Props> = ({ onClose, mode, plantId, fetchAgai
         .then((res) => {
           setPlant(res)
           console.log(res)
-          plantNickname.current.value = res.nickName
           plantName.current.value = res.name
           plantLatinName.current.value = res.latinName
           plantImage.current.value = res.image
@@ -76,7 +75,21 @@ export const CreatePlant: React.FC<Props> = ({ onClose, mode, plantId, fetchAgai
           console.log(e)
         })
     }
-  })
+  },)
+
+  useEffect(() => {
+    if (plantId || plantId == 0) {
+      getPlantById(plantId)
+        .then((res) => {
+          setPlant(res)
+          console.log(res)
+          plantNickname.current.value = res.nickName
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+    }
+  }, [])
 
   // onSubmit saves plant to the database
   const onSubmit = (mode: 'edit' | 'create') => {
