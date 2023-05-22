@@ -3,7 +3,7 @@ import prisma from '../../../helperFunctions/setupPrisma'
 import bcrypt from 'bcrypt'
 import { app } from '../../../server'
 
-describe('Get all tasks endpoint', () => {
+describe('Get all tasks with epoch endpoint', () => {
   let authToken
 
   beforeEach(async () => {
@@ -81,7 +81,7 @@ describe('Get all tasks endpoint', () => {
 
   test('returns 200 and empty array if the are no tasks in database', async () => {
     await prisma.task.deleteMany()
-    const response = await request(app).get(`/api/v1/tasks`).set('Cookie', authToken)
+    const response = await request(app).get(`/api/v1/tasks/epoch`).set('Cookie', authToken)
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([])
@@ -102,14 +102,14 @@ describe('Get all tasks endpoint', () => {
       password: 'Password123',
     })
     authToken = loginResponse.headers['set-cookie'][0].split(';')[0]
-    const response = await request(app).get(`/api/v1/tasks`).set('Cookie', authToken)
+    const response = await request(app).get(`/api/v1/tasks/epoch`).set('Cookie', authToken)
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([])
   })
 
   test('returns 200 and all the tasks from database with correct data', async () => {
-    const response = await request(app).get(`/api/v1/tasks`).set('Cookie', authToken)
+    const response = await request(app).get(`/api/v1/tasks/epoch`).set('Cookie', authToken)
 
     expect(response.status).toBe(200)
     expect(response.body).toHaveLength(4)
@@ -118,33 +118,33 @@ describe('Get all tasks endpoint', () => {
       plantId: 1,
       type: 'water',
       status: 'current',
-      date: 'to be completed today',
+      date: `${Math.round(new Date().getTime() / 1000)}`,
     })
     expect(response.body[1]).toEqual({
       id: 2,
       plantId: 1,
       type: 'fertilize',
       status: 'future',
-      date: '5 days until deadline',
+      date: `${Math.round(new Date().getTime() / 1000) + 5 * 24 * 60 * 60}`,
     })
     expect(response.body[2]).toEqual({
       id: 3,
       plantId: 1,
       type: 'repot',
       status: 'past',
-      date: '6 days after deadline',
+      date: `${Math.round(new Date().getTime() / 1000) - 6 * 24 * 60 * 60}`,
     })
     expect(response.body[3]).toEqual({
       id: 4,
       plantId: 1,
       type: 'repot',
       status: 'future',
-      date: '1 day until deadline',
+      date: `${Math.round(new Date().getTime() / 1000) + 1 * 24 * 60 * 60}`,
     })
   })
 
   test('returns 401 status and error message when the user is not authenticated', async () => {
-    const response = await request(app).get(`/api/v1/tasks/`)
+    const response = await request(app).get(`/api/v1/tasks/epoch`)
     expect(response.status).toBe(401)
     expect(response.body.message).toBe('Unauthorized')
     expect(response.body.status).toBe('error')

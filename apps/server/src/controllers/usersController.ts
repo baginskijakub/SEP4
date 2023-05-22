@@ -34,6 +34,8 @@ userRouter.get('/', async (req, res) => {
       .cookie('token', token, { httpOnly: true, domain: process.env.CLIENT_URL || 'localhost' })
       .status(200)
       .json({ message: 'User successfully logged in', status: 'success' })
+    await prisma.$disconnect()
+    return
   } catch (error) {
     console.log(error)
     res.status(502).json({ message: 'Database error', status: 'error' })
@@ -59,8 +61,10 @@ userRouter.post('/', async (req, res) => {
       },
     })
     res.status(201).json({ message: 'User successfully registered', status: 'success' })
+    await prisma.$disconnect()
+    return
   } catch (error) {
-    res.status(400).json({ message: 'User already exists!', status: 'error' })
+    return res.status(400).json({ message: 'User already exists!', status: 'error' })
   }
 })
 

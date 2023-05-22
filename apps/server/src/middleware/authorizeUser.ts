@@ -18,6 +18,7 @@ export default function authorizeUser(req: UserRequest, res: Response, next: Nex
       return
     }
     req.user = decodedToken
+
     return next()
   } catch (error) {
     return res.status(401).json({ message: 'Unable to authorize ', status: 'error' })

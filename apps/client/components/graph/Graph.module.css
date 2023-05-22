@@ -1,0 +1,25 @@
+.tooltip{
+  padding: 6px;
+  background-color: #8ABCB3;
+  border: 1px solid #528E83;
+  border-radius: 6px;
+  color: #FFFFFF;
+  box-shadow: 0 2px 9px #7B928E;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+}
+
+.tooltip p{
+  font-size: 16px;
+  color: #FFFFFF;
+}
+
+.tooltipHint{
+  font-size: 12px !important;
+  color: #FFFFFF;
+  opacity: 0.8;
+  text-align: center;
+}

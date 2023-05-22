@@ -44,18 +44,86 @@ plantsRouter.post('/', async (req: UserRequest, res) => {
     })
 
     if (requestPlant.wateringInterval) {
-      await prisma.task.create({
-        data: {
-          plantId: plant.id,
-          type: 'water',
-          daysTillDeadline: requestPlant.wateringInterval,
-          originalDeadline: requestPlant.wateringInterval,
-        },
+      await prisma.task.createMany({
+        data: [
+          {
+            plantId: plant.id,
+            type: 'water',
+            daysTillDeadline: requestPlant.wateringInterval,
+            originalDeadline: requestPlant.wateringInterval,
+          },
+          {
+            plantId: plant.id,
+            type: 'water',
+            daysTillDeadline: requestPlant.wateringInterval * 2,
+            originalDeadline: requestPlant.wateringInterval,
+          },
+          {
+            plantId: plant.id,
+            type: 'water',
+            daysTillDeadline: requestPlant.wateringInterval * 3,
+            originalDeadline: requestPlant.wateringInterval,
+          },
+          {
+            plantId: plant.id,
+            type: 'water',
+            daysTillDeadline: requestPlant.wateringInterval * 4,
+            originalDeadline: requestPlant.wateringInterval,
+          },
+        ],
       })
     }
-    res.status(201).json({ message: 'Plant successfully registered', plant, status: 'success' })
+    await prisma.$disconnect()
+
+    return res.status(201).json({ message: 'Plant successfully registered', plant, status: 'success' })
   } catch (error) {
-    res.status(400).json({ message: 'Failed to register plant', status: 'error' })
+    return res.status(400).json({ message: 'Failed to register plant', status: 'error' })
+  }
+})
+
+plantsRouter.patch('/:plantId/watering', async (req: UserRequest, res) => {
+  const { plantId } = req.params
+  const { watering } = req.body
+  if (!watering || isNaN(watering)) {
+    res.status(400).json({ message: 'Invalid watering interval', status: 'error' })
+    return
+  }
+  if (watering < 0) {
+    res.status(400).json({ message: 'Watering interval must be a positive number', status: 'error' })
+    return
+  }
+  if (isNaN(parseInt(plantId))) {
+    res.status(400).json({ message: 'Invalid plant id', status: 'error' })
+    return
+  }
+  try {
+    const tasks = await prisma.task.findMany({
+      where: { plantId: parseInt(plantId), type: 'water' },
+      orderBy: { daysTillDeadline: 'asc' },
+    })
+    let multiplier = 0
+    let daysLeftTillFirstDeadline
+    for (const task of tasks) {
+      if (multiplier === 0) {
+        daysLeftTillFirstDeadline = task.daysTillDeadline
+        multiplier++
+        continue
+      }
+
+      await prisma.task.update({
+        where: { id: task.id },
+        data: {
+          daysTillDeadline: daysLeftTillFirstDeadline + watering * multiplier,
+          originalDeadline: watering,
+        },
+      })
+      multiplier++
+    }
+    await prisma.$disconnect()
+
+    return res.status(200).send({ message: 'Watering interval updated', status: 'success' })
+  } catch (error) {
+    return res.status(502).send({ message: 'Server error', status: 'error' })
   }
 })
 
@@ -74,10 +142,11 @@ plantsRouter.get('/', async (req: UserRequest, res) => {
         latinName: plant.latinName,
       }
     })
+    await prisma.$disconnect()
 
-    res.status(200).json(plants)
+    return res.status(200).json(plants)
   } catch (error) {
-    res.status(400).json({ message: 'Failed to fetch plants', status: 'error' })
+    return res.status(400).json({ message: 'Failed to fetch plants', status: 'error' })
   }
 })
 
@@ -120,10 +189,11 @@ plantsRouter.get('/:plantId', async (req: UserRequest, res) => {
         temperature: currentEnvironmentFromDb.temperature,
       }
     }
+    await prisma.$disconnect()
 
-    res.status(200).json(plant)
+    return res.status(200).json(plant)
   } catch (error) {
-    res.status(400).json({ message: 'Failed to fetch plant', status: 'error' })
+    return res.status(400).json({ message: 'Failed to fetch plant', status: 'error' })
   }
 })
 
@@ -151,9 +221,11 @@ plantsRouter.patch('/:plantId', async (req, res) => {
         minTemperature: requestPlant?.idealEnvironment.minTemperature,
       },
     })
-    res.status(200).json({ message: 'Plant updated successfully', status: 'success' })
+    await prisma.$disconnect()
+
+    return res.status(200).json({ message: 'Plant updated successfully', status: 'success' })
   } catch (error) {
-    res.status(400).json({ message: 'Failed to update plant', status: 'error' })
+    return res.status(400).json({ message: 'Failed to update plant', status: 'error' })
   }
 })
 
@@ -162,9 +234,11 @@ plantsRouter.delete('/:plantId', async (req: UserRequest, res) => {
   const { plantId } = req.params
   try {
     await prisma.plant.delete({ where: { id: parseInt(plantId) } })
-    res.status(200).json({ message: 'Plant deleted successfully', status: 'success' })
+    await prisma.$disconnect()
+
+    return res.status(200).json({ message: 'Plant deleted successfully', status: 'success' })
   } catch (error) {
-    res.status(400).json({ message: 'Failed to delete plant', status: 'error' })
+    return res.status(400).json({ message: 'Failed to delete plant', status: 'error' })
   }
 })
 
