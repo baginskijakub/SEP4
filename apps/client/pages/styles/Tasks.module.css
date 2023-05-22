@@ -1,4 +1,4 @@
-.taskWrapper{
+.pageWrapper{
     width: calc(100% - 70px);
     height: calc(100% - 110px);
     margin: 30px;
@@ -6,12 +6,24 @@
     flex-direction: row;
     gap: 40px;
   }
+
+  .pageInner{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
   
   @media only screen and (max-width: 1150px) {
-    .taskWrapper{
+    .pageWrapper{
       width: auto;
       height: auto;
       flex-direction: column;
     }
-    
+
+    .pageInner {
+      width: auto;
+      height: auto;
+      gap: 40px;
+    }
   }

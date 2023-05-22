@@ -20,7 +20,7 @@ export const PlantsWatering:React.FC = () => {
     <div className={styles.wrapper}>
       <h3>Plants watering</h3>
       <div className={styles.container}>
-        {plants.map((plant) => {
+        {plants?.map((plant) => {
           return <AdjustWatering plant={plant} key={plant.id}/>
         })}
       </div>

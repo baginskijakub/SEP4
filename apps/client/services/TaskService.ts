@@ -55,5 +55,5 @@ const getAllTasks: () => Promise<ITask[]> = () => {
   })
 }
 
-export { getCurrentTasks, completeTask, createTask, getAllTasks }
+export { getCurrentTasks, completeTask, createTask, getAllTasks, getAllTasksWithEpoch };
 

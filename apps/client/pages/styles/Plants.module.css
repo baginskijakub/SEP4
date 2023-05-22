@@ -9,13 +9,6 @@
   gap: 40px;
 }
 
-
-.pageInner{
-  width: 60%;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-
 @media only screen and (max-width: 1150px) {
   .pageWrapper{
     width: auto;

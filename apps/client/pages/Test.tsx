@@ -1,8 +1,6 @@
 import React from 'react'
-
 import { TaskList } from '../components/task/taskList/TaskList'
 import { ITask } from '@sep4/types'
-
 import { PlantsWatering } from "../components/task/plantsWatering/PlantsWatering";
 
 

@@ -86,3 +86,15 @@
 .toggleChevron:hover{
   opacity: 0.3;
 }
+
+@media only screen and (max-width: 1150px) {
+  .wrapper{
+    width: auto;
+    height: auto;
+  }
+
+  .adjustWrapper{
+    width: auto;
+    height: auto;
+  }
+}
