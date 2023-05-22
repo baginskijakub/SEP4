@@ -1,11 +1,13 @@
 import axios from 'axios'
-import { ITask } from "@sep4/types";
+import { ITask } from '@sep4/types'
 axios.defaults.withCredentials = true
-import { SERVER_URL } from "../config";
 
+import { SERVER_URL } from '../config'
 
-const getCurrentTasks = ():Promise<ITask[]> => {
-  return axios.get(`${SERVER_URL}/tasks/`).then((response) => {
+const getCurrentTasks = (): Promise<ITask[]> => {
+  let token
+  if (typeof window !== 'undefined') token = `Bearer ${localStorage.getItem('token')}`
+  return axios.get(`${SERVER_URL}/tasks/`, { headers: { Authorization: token } }).then((response) => {
     if (response.status === 200) {
       return response.data
     } else {
@@ -14,8 +16,10 @@ const getCurrentTasks = ():Promise<ITask[]> => {
   })
 }
 
-const completeTask = (taskId: number):Promise<ITask> => {
-  return axios.delete(`${SERVER_URL}/v1/tasks/${taskId}`).then((response) => {
+const completeTask = (taskId: number): Promise<ITask> => {
+  let token
+  if (typeof window !== 'undefined') token = `Bearer ${localStorage.getItem('token')}`
+  return axios.delete(`${SERVER_URL}/v1/tasks/${taskId}`, { headers: { Authorization: token } }).then((response) => {
     if (response.status === 200) {
       return response.data
     } else {
@@ -24,8 +28,10 @@ const completeTask = (taskId: number):Promise<ITask> => {
   })
 }
 
-const getAllTasksWithEpoch = ():Promise<ITask[]> => {
-  return axios.get(`${SERVER_URL}/v1/tasks/epoch`).then((response) => {
+const getAllTasksWithEpoch = (): Promise<ITask[]> => {
+  let token
+  if (typeof window !== 'undefined') token = `Bearer ${localStorage.getItem('token')}`
+  return axios.get(`${SERVER_URL}/v1/tasks/epoch`, { headers: { Authorization: token } }).then((response) => {
     if (response.status === 200) {
       return response.data
     } else {
@@ -33,20 +39,25 @@ const getAllTasksWithEpoch = ():Promise<ITask[]> => {
     }
   })
 }
-
 
 const createTask = (task: ITask) => {
-  return axios.post(`http://localhost:3333/api/v1/tasks`, task).then((response) => {
-    if (response.status === 201) {
-      return response.data
-    } else {
-      throw new Error('Error fetching data')
-    }
-  })
+  let token
+  if (typeof window !== 'undefined') token = `Bearer ${localStorage.getItem('token')}`
+  return axios
+    .post(`http://localhost:3333/api/v1/tasks`, task, { headers: { Authorization: token } })
+    .then((response) => {
+      if (response.status === 201) {
+        return response.data
+      } else {
+        throw new Error('Error fetching data')
+      }
+    })
 }
 
 const getAllTasks: () => Promise<ITask[]> = () => {
-  return axios.get(`http://localhost:3333/api/v1/tasks/`).then((response) => {
+  let token
+  if (typeof window !== 'undefined') token = `Bearer ${localStorage.getItem('token')}`
+  return axios.get(`http://localhost:3333/api/v1/tasks/`, { headers: { Authorization: token } }).then((response) => {
     if (response.status === 200) {
       return response.data
     } else {
@@ -56,4 +67,3 @@ const getAllTasks: () => Promise<ITask[]> = () => {
 }
 
 export { getCurrentTasks, completeTask, createTask, getAllTasks, getAllTasksWithEpoch }
-

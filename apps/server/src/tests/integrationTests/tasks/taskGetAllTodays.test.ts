@@ -63,7 +63,7 @@ describe('Get all todays tasks endpoint', () => {
       password: 'Password123',
     })
 
-    authToken = loginResponse.headers['set-cookie'][0].split(';')[0]
+    authToken = loginResponse.body.token
   })
 
   afterEach(async () => {
@@ -73,7 +73,7 @@ describe('Get all todays tasks endpoint', () => {
   })
 
   test('returns a successful response with status code 200 if tasks are successfully retrieved', async () => {
-    const response = await request(app).get('/api/v1/tasks/current').set('Cookie', authToken)
+    const response = await request(app).get('/api/v1/tasks/current').set('Authorization', `Bearer ${authToken}`)
 
     expect(response.status).toBe(200)
     expect(response.body[0]).toMatchObject({
@@ -103,7 +103,7 @@ describe('Get all todays tasks endpoint', () => {
   test('resturns 200 status and error message when failed to retrieve tasks (no tasks found)', async () => {
     await prisma.task.deleteMany()
 
-    const response = await request(app).get('/api/v1/tasks/current').set('Cookie', authToken)
+    const response = await request(app).get('/api/v1/tasks/current').set('Authorization', `Bearer ${authToken}`)
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([])
@@ -112,7 +112,7 @@ describe('Get all todays tasks endpoint', () => {
   test('returns 200 status and error message when failed to retrieve tasks (no plants found)', async () => {
     await prisma.plant.deleteMany()
 
-    const response = await request(app).get('/api/v1/tasks/current').set('Cookie', authToken)
+    const response = await request(app).get('/api/v1/tasks/current').set('Authorization', `Bearer ${authToken}`)
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([])

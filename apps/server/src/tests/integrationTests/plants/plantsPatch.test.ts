@@ -41,7 +41,7 @@ describe('Plant PATCH endpoint', () => {
       password: 'Password123',
     })
 
-    authToken = loginResponse.headers['set-cookie'][0].split(';')[0]
+    authToken = loginResponse.body.token
   })
 
   afterEach(async () => {
@@ -65,7 +65,10 @@ describe('Plant PATCH endpoint', () => {
       },
     }
 
-    const response = await request(app).patch(`/api/v1/plants/${plantId}`).set('Cookie', authToken).send(updatedPlant)
+    const response = await request(app)
+      .patch(`/api/v1/plants/${plantId}`)
+      .set('Authorization', `Bearer ${authToken}`)
+      .send(updatedPlant)
 
     expect(response.status).toBe(200)
     expect(response.body.message).toBe('Plant updated successfully')
@@ -106,7 +109,10 @@ describe('Plant PATCH endpoint', () => {
       },
     }
 
-    const response = await request(app).patch('/api/v1/plants/999').set('Cookie', authToken).send(updatedPlant)
+    const response = await request(app)
+      .patch('/api/v1/plants/999')
+      .set('Authorization', `Bearer ${authToken}`)
+      .send(updatedPlant)
 
     expect(response.status).toBe(400)
     expect(response.body.message).toBe('Failed to update plant')
@@ -121,7 +127,10 @@ describe('Plant PATCH endpoint', () => {
       latinName: 'Updated plantus testus',
     }
 
-    const response = await request(app).patch('/api/v1/plants/1').set('Cookie', authToken).send(updatedPlant)
+    const response = await request(app)
+      .patch('/api/v1/plants/1')
+      .set('Authorization', `Bearer ${authToken}`)
+      .send(updatedPlant)
 
     expect(response.status).toBe(400)
     expect(response.body.message).toBe('Missing parameters to register a plant')

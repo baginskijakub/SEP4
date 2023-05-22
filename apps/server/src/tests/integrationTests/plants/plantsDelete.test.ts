@@ -29,7 +29,7 @@ describe('Plant DELETE endpoint', () => {
 
     // Login the user and get the auth token
     const loginResponse = await request(app).get('/api/v1/users').query(user)
-    authToken = loginResponse.headers['set-cookie'][0].split(';')[0]
+    authToken = loginResponse.body.token
   })
 
   test('returns a successful response with status code 200 if plant is successfully deleted', async () => {
@@ -49,7 +49,7 @@ describe('Plant DELETE endpoint', () => {
       },
     })
 
-    const response = await request(app).delete(`/api/v1/plants/${plant.id}`).set('Cookie', authToken)
+    const response = await request(app).delete(`/api/v1/plants/${plant.id}`).set('Authorization', `Bearer ${authToken}`)
 
     expect(response.status).toBe(200)
     expect(response.body.message).toBe('Plant deleted successfully')
@@ -81,7 +81,7 @@ describe('Plant DELETE endpoint', () => {
   })
 
   test('returns 400 status and error message when failed to delete plant (invalid plant id)', async () => {
-    const response = await request(app).delete('/api/v1/plants/invalid_id').set('Cookie', authToken)
+    const response = await request(app).delete('/api/v1/plants/invalid_id').set('Authorization', `Bearer ${authToken}`)
 
     expect(response.status).toBe(400)
     expect(response.body.message).toBe('Failed to delete plant')
