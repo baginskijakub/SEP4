@@ -12,3 +12,9 @@
   color: white;
   transition: all ease-in-out 0.2s;
 }
+
+.addButtonContainer:hover {
+  background: var(--action-error-700);
+  border: 1px solid var(--action-error-700);
+  color: white;
+}
