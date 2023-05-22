@@ -214,7 +214,7 @@ export const CreatePlant: React.FC<Props> = ({ onClose, mode, plantId, fetchAgai
           </div>
         </div>
         <div className={styles.wateringIntervalContainer}>
-          <h5>Watering interva: {plant.wateringInterval} days</h5>
+          <h5>Watering interval: {plant.wateringInterval} days</h5>
           <Slider
             maxValue={14}
             minValue={0}
