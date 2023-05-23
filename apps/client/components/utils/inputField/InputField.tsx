@@ -12,8 +12,8 @@ export const InputField: React.FC<Props> = ({onChange, label, type, placeholder}
   return (
     <div className={styles.wrapper}>
       <label className='body-small'>{label}</label>
-      <input className={styles.input} type={type} onChange={onChange} placeholder={placeholder}/>
-      
+      <input className={styles.input} type={type} onChange={onChange} placeholder={placeholder} aria-label={label}/>
+
     </div>
   )
 }

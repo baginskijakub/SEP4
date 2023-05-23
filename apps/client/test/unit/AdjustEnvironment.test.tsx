@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { PlantCurrentEnvironment } from '../components/plant/plantCurrentEnvironment/PlantCurrentEnvironment'
+import { PlantCurrentEnvironment } from '../../components/plant/plantCurrentEnvironment/PlantCurrentEnvironment'
 import '@testing-library/jest-dom'
 import { IPlant } from "@sep4/types";
-import { AdjustCurrentEnvironment } from "../components/plant/adjustCurrentEnvironment/AdjustCurrentEnvironment";
+import { AdjustCurrentEnvironment } from "../../components/plant/adjustCurrentEnvironment/AdjustCurrentEnvironment";
 import 'setimmediate'
 
 const testPlant: IPlant = {

@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { PlantCurrentEnvironment } from '../components/plant/plantCurrentEnvironment/PlantCurrentEnvironment'
+import { PlantCurrentEnvironment } from '../../components/plant/plantCurrentEnvironment/PlantCurrentEnvironment'
 import '@testing-library/jest-dom'
 import 'setimmediate'
 
