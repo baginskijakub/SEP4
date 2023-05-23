@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IPlant } from "@sep4/types";
-import { MdChevronRight } from "react-icons/all";
+import { MdChevronRight } from "react-icons/md";
 import styles from "./PlantsWatering.module.css";
 import { adjustWatering } from "../../../services/PlantService";
 

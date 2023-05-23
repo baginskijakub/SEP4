@@ -25,7 +25,7 @@ const completeTask = (taskId: number):Promise<ITask> => {
 }
 
 const getAllTasksWithEpoch = ():Promise<ITask[]> => {
-  return axios.get(`${SERVER_URL}/v1/tasks/epoch`).then((response) => {
+  return axios.get(`${SERVER_URL}/tasks/epoch`).then((response) => {
     if (response.status === 200) {
       return response.data
     } else {
@@ -36,7 +36,7 @@ const getAllTasksWithEpoch = ():Promise<ITask[]> => {
 
 
 const createTask = (task: ITask) => {
-  return axios.post(`http://localhost:3333/api/v1/tasks`, task).then((response) => {
+  return axios.post(`${SERVER_URL}/tasks`, task).then((response) => {
     if (response.status === 201) {
       return response.data
     } else {
@@ -46,7 +46,7 @@ const createTask = (task: ITask) => {
 }
 
 const getAllTasks: () => Promise<ITask[]> = () => {
-  return axios.get(`http://localhost:3333/api/v1/tasks/`).then((response) => {
+  return axios.get(`${SERVER_URL}/tasks/`).then((response) => {
     if (response.status === 200) {
       return response.data
     } else {
