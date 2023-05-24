@@ -60,7 +60,7 @@ describe('Plant GET endpoint', () => {
 
   test('returns an error response with status code 400 if failed to fetch plants', async () => {
     const user = {
-      username: 'test_user',
+      email: 'test_user',
       password: 'Password123',
     }
 
@@ -89,7 +89,7 @@ describe('Plant GET endpoint', () => {
 
   test('returns an error response with status code 400 if failed to fetch plants', async () => {
     const user = {
-      username: 'test_user',
+      email: 'test_user',
       password: 'Password123',
     }
     // Login the user first
@@ -101,7 +101,7 @@ describe('Plant GET endpoint', () => {
     expect(loginResponse.body.status).toBe('success')
 
     // Delete the user to create a failed fetch plants scenario
-    await prisma.user.delete({ where: { email: user.username } })
+    await prisma.user.delete({ where: { email: user.email } })
 
     const response = await request(app).get('/api/v1/plants').set('Authorization', `Bearer ${loginResponse.body.token}`)
 
@@ -111,7 +111,7 @@ describe('Plant GET endpoint', () => {
 
   test('returns a successful response with status code 200 and plants array if user is authorized and has plants', async () => {
     const user = {
-      username: 'test_user',
+      email: 'test_user',
       password: 'Password123',
     }
     // Login the user first
