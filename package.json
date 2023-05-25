@@ -2,6 +2,7 @@
   "name": "sep4",
   "version": "0.0.0",
   "license": "MIT",
+  "nxCloud": false,
   "scripts": {
     "server:test:db:push": "dotenv -e .env.test -- npx prisma db push --schema=./apps/server/prisma/schema.prisma",
     "server:test:db:generate": "dotenv -e .env.test -- npx prisma generate --schema=./apps/server/prisma/schema.prisma",

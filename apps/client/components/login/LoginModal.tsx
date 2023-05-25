@@ -1,4 +1,4 @@
-import React, { useRef} from 'react'
+import React, { useRef } from 'react'
 import styles from './LoginModal.module.css'
 import { MdOutlineMail, MdLock, MdVisibility, MdVisibilityOff, MdOutlineClose } from 'react-icons/md'
 import { useState } from 'react'
@@ -27,15 +27,16 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
   // function for login
   const onLogin = () => {
     login(emailElement.current.value, passwordElement.current.value)
-      .then(() => {
+      .then((data) => {
         setUser({
           email: emailElement.current.value,
           name: emailElement.current.value.split('@')[0],
         })
+        localStorage.setItem('token', data.token)
         onClose()
       })
       .catch(() => {
-        if(passwordElement.current.value.length<6){
+        if (passwordElement.current.value.length < 6) {
           setErrorLabel('The password must be at least 6 characters')
         } else {
           setErrorLabel('Something went wrong')
@@ -54,7 +55,7 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
         onClose()
       })
       .catch(() => {
-        if(passwordElement.current.value.length<6){
+        if (passwordElement.current.value.length < 6) {
           setErrorLabel('The password must be at least 6 characters')
         } else {
           setErrorLabel('Something went wrong')
@@ -75,8 +76,7 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
     if (isLogin) {
       onLogin()
     } else {
-      if(passwordElement.current.value.length<6)
-      {
+      if (passwordElement.current.value.length < 6) {
         setErrorLabel('The password must be at least 6 characters')
         return
       }

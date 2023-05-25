@@ -1,6 +1,6 @@
 import axios from 'axios'
 axios.defaults.withCredentials = true
-import { SERVER_URL } from "../config";
+import { SERVER_URL } from '../config'
 
 const login = (username: string, password: string) => {
   return axios.get(`${SERVER_URL}/users?username=${username}&password=${password}`).then((response) => {

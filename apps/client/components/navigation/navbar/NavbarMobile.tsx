@@ -4,10 +4,12 @@ import { MdDensityMedium, MdClear } from 'react-icons/md'
 import { NavLinks } from '../navLinks/NavLinks';
 import { UserButton } from '../userButton/UserButton';
 import { LoginModal } from '../../login/LoginModal'
+import { useUserContext } from "../../../context/UserContext";
 
 export const NavbarMobile: React.FC = () => {
     const [showFullNav, setShowFullNav] = useState(false)
     const [displayLoginModal, setDisplayLoginModal] = useState(false)
+    const {user} = useUserContext()
 
     return (
         <div className={styles.navbarWrapper}>
@@ -22,7 +24,7 @@ export const NavbarMobile: React.FC = () => {
                 <>
                     <NavLinks closeNav={() => setShowFullNav(false)} />
                     <UserButton onClick={() => setDisplayLoginModal(!displayLoginModal)} />
-                    {displayLoginModal && <LoginModal onClose={() => setDisplayLoginModal(false)} />}
+                    {(displayLoginModal || user === null) && <LoginModal onClose={() => setDisplayLoginModal(false)} />}
                 </>
             )}
         </div>

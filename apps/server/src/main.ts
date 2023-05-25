@@ -8,7 +8,7 @@ import cron from 'node-cron'
 import { reevaluateTasksDeadlines } from './businessLogic/tasks/reevaluateTasksDeadlines'
 import { sendUpdateOnConnection } from './businessLogic/sockets/sendUpdateOnConnections'
 
-export const lorawanSocket = new WebSocket(process.env.LORAWAN_SOCKET_URL)
+export let lorawanSocket = new WebSocket(process.env.LORAWAN_SOCKET_URL)
 
 const server = http.createServer(app)
 
@@ -25,6 +25,8 @@ lorawanSocket.on('message', (data) => {
 
 lorawanSocket.on('close', async () => {
   console.log('Lorawan socket closed')
+  lorawanSocket = new WebSocket(process.env.LORAWAN_SOCKET_URL)
+  console.log('Lorawan socket reconnecting')
 })
 
 lorawanSocket.on('error', (error) => {

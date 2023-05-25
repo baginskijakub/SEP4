@@ -1,20 +1,27 @@
-import { IPlant, IPlantCurrentEnvironment } from "@sep4/types";
+import { IPlant, IPlantCurrentEnvironment } from '@sep4/types'
 import axios from 'axios'
 
 axios.defaults.withCredentials = true
-import { SERVER_URL } from "../config";
+
+import { SERVER_URL } from '../config'
 const getPlantEnvironmentHistory = (plantId: number, type: string) => {
-  return axios.get(`${SERVER_URL}/plants/${plantId}/environment/${type}`).then((response) => {
-    if (response.status === 200) {
-      return response.data
-    } else {
-      throw new Error('Error fetching data')
-    }
-  })
+  let token
+  if (typeof window !== 'undefined') token = `Bearer ${localStorage.getItem('token')}`
+  return axios
+    .get(`${SERVER_URL}/plants/${plantId}/environment/${type}`, { headers: { Authorization: token } })
+    .then((response) => {
+      if (response.status === 200) {
+        return response.data
+      } else {
+        throw new Error('Error fetching data')
+      }
+    })
 }
 
 const getPlantById = (plantId: number) => {
-  return axios.get(`${SERVER_URL}/plants/${plantId}`).then((response) => {
+  let token
+  if (typeof window !== 'undefined') token = `Bearer ${localStorage.getItem('token')}`
+  return axios.get(`${SERVER_URL}/plants/${plantId}`, { headers: { Authorization: token } }).then((response) => {
     if (response.status === 200) {
       console.log(response.data)
       return response.data
@@ -25,7 +32,9 @@ const getPlantById = (plantId: number) => {
 }
 
 const addPlant = (plant: IPlant) => {
-  return axios.post(`${SERVER_URL}/plants`, plant).then((response) => {
+  let token
+  if (typeof window !== 'undefined') token = `Bearer ${localStorage.getItem('token')}`
+  return axios.post(`${SERVER_URL}/plants`, plant, { headers: { Authorization: token } }).then((response) => {
     if (response.status === 201) {
       return response.data
     } else {
@@ -35,17 +44,23 @@ const addPlant = (plant: IPlant) => {
 }
 
 const updatePlant = (plant: IPlant) => {
-  return axios.patch(`${SERVER_URL}/plants/${plant.id}`, plant).then((response) => {
-    if (response.status === 200) {
-      return response.data
-    } else {
-      throw new Error('Error fetching data')
-    }
-  })
+  let token
+  if (typeof window !== 'undefined') token = `Bearer ${localStorage.getItem('token')}`
+  return axios
+    .patch(`${SERVER_URL}/plants/${plant.id}`, plant, { headers: { Authorization: token } })
+    .then((response) => {
+      if (response.status === 200) {
+        return response.data
+      } else {
+        throw new Error('Error fetching data')
+      }
+    })
 }
 
 const deletePlant = (plantId: number) => {
-  return axios.delete(`${SERVER_URL}/plants/${plantId}`).then((response) => {
+  let token
+  if (typeof window !== 'undefined') token = `Bearer ${localStorage.getItem('token')}`
+  return axios.delete(`${SERVER_URL}/plants/${plantId}`, { headers: { Authorization: token } }).then((response) => {
     if (response.status === 200) {
       return response.data
     } else {
@@ -55,7 +70,9 @@ const deletePlant = (plantId: number) => {
 }
 
 const getAllPlants = () => {
-  return axios.get(`${SERVER_URL}/plants/`).then((response) => {
+  let token
+  if (typeof window !== 'undefined') token = `Bearer ${localStorage.getItem('token')}`
+  return axios.get(`${SERVER_URL}/plants/`, { headers: { Authorization: token } }).then((response) => {
     if (response.status === 200) {
       return response.data
     } else {
@@ -65,23 +82,40 @@ const getAllPlants = () => {
 }
 
 const adjustEnvironment = (id: number, environment: IPlantCurrentEnvironment) => {
-  return axios.patch(`${SERVER_URL}/plants/${id}/environment`, environment).then((response) => {
-    if (response.status === 200) {
-      return response.data
-    } else {
-      throw new Error('Error sending data')
-    }
-  })
+  let token
+  if (typeof window !== 'undefined') token = `Bearer ${localStorage.getItem('token')}`
+  return axios
+    .patch(`${SERVER_URL}/plants/${id}/environment`, environment, { headers: { Authorization: token } })
+    .then((response) => {
+      if (response.status === 200) {
+        return response.data
+      } else {
+        throw new Error('Error sending data')
+      }
+    })
 }
 
 const adjustWatering = (id: number, watering: number) => {
-  return axios.patch(`${SERVER_URL}/plants/${id}/watering`, watering).then((response) => {
-    if (response.status === 200) {
-      return response.data
-    } else {
-      throw new Error('Error sending data')
-    }
-  })
+  let token
+  if (typeof window !== 'undefined') token = `Bearer ${localStorage.getItem('token')}`
+  return axios
+    .patch(`${SERVER_URL}/plants/${id}/watering`, watering, { headers: { Authorization: token } })
+    .then((response) => {
+      if (response.status === 200) {
+        return response.data
+      } else {
+        throw new Error('Error sending data')
+      }
+    })
 }
 
-export { getPlantEnvironmentHistory, getPlantById, addPlant, updatePlant, deletePlant, getAllPlants, adjustEnvironment, adjustWatering }
+export {
+  getPlantEnvironmentHistory,
+  getPlantById,
+  addPlant,
+  updatePlant,
+  deletePlant,
+  getAllPlants,
+  adjustEnvironment,
+  adjustWatering,
+}
