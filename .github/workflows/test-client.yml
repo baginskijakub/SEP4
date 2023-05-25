@@ -1,6 +1,9 @@
 name: CI Pipeline client (SEP4YG2)
 
 on:
+  push:
+    branches:
+      - frontend/sprint8/chore/pipeline-experiments
   workflow_dispatch:
   pull_request:
     paths:
@@ -31,3 +34,4 @@ jobs:
         run: sleep 10s
       - name: Run Tests
         run: npm run client:test
+
