@@ -8,15 +8,13 @@ import { Transition } from "@headlessui/react";
 
 export const Dialog:React.FC = () => {
   const [tasks, setTasks] = useState<ITask[]>([])
-
   const {user} = useUserContext()
 
   useEffect(() => {
     if(user !== null) {
       getCurrentTasks().then((res) => {
-        console.log(user)
+        console.log(res)
         setTasks(res)
-        console.log(user)
       })
 
     }
@@ -33,6 +31,7 @@ export const Dialog:React.FC = () => {
           leave="transition-opacity ease-linear duration-500"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
+          className={styles.wrapper}
         >
           {tasks.map((task, index) => <Task task={task} controlls={true} key={index} />)}
         </Transition.Child>

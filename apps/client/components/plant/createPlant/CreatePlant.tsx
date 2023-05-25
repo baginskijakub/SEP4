@@ -87,7 +87,7 @@ export const CreatePlant: React.FC<Props> = ({ onClose, mode, plantId, fetchAgai
           console.log(e)
         })
     }
-  }, [])
+  }, [plantId])
 
   // onSubmit saves plant to the database
   const onSubmit = (mode: 'edit' | 'create') => {
