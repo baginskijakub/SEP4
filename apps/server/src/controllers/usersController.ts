@@ -57,7 +57,8 @@ userRouter.post('/', async (req, res) => {
         password: hashedPassword,
       },
     })
-    res.status(201).json({ message: 'User successfully registered', status: 'success' })
+    const token = jwt.sign({ email }, process.env.WEB_TOKEN_SECRET)
+    res.status(201).json({ message: 'User successfully registered', status: 'success', token })
     await prisma.$disconnect()
     return
   } catch (error) {

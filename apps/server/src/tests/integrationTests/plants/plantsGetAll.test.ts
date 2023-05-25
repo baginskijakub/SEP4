@@ -16,6 +16,7 @@ describe('Plant GET endpoint', () => {
     await prisma.plant.createMany({
       data: [
         {
+          id: 1,
           name: 'Test plant 1',
           nickName: 'Cool nickname',
           image: 'plant1.jpg',
@@ -29,6 +30,7 @@ describe('Plant GET endpoint', () => {
           maxTemperature: 20,
         },
         {
+          id: 2,
           name: 'Test plant 2',
           nickName: 'Cool nickname 2',
           image: 'plant2.jpg',
@@ -43,11 +45,65 @@ describe('Plant GET endpoint', () => {
         },
       ],
     })
+
+    await prisma.task.createMany({
+      data: [
+        {
+          plantId: 1,
+          type: 'water',
+          daysTillDeadline: 1,
+          originalDeadline: 1,
+        },
+        {
+          plantId: 1,
+          type: 'water',
+          daysTillDeadline: 2,
+          originalDeadline: 1,
+        },
+        {
+          plantId: 1,
+          type: 'water',
+          daysTillDeadline: 3,
+          originalDeadline: 1,
+        },
+        {
+          plantId: 1,
+          type: 'water',
+          daysTillDeadline: 4,
+          originalDeadline: 1,
+        },
+        {
+          plantId: 2,
+          type: 'water',
+          daysTillDeadline: 1,
+          originalDeadline: 7,
+        },
+        {
+          plantId: 2,
+          type: 'water',
+          daysTillDeadline: 8,
+          originalDeadline: 7,
+        },
+        {
+          plantId: 2,
+          type: 'water',
+          daysTillDeadline: 15,
+          originalDeadline: 7,
+        },
+        {
+          plantId: 2,
+          type: 'water',
+          daysTillDeadline: 22,
+          originalDeadline: 7,
+        },
+      ],
+    })
   })
 
   afterEach(async () => {
     await prisma.plant.deleteMany()
     await prisma.user.deleteMany()
+    await prisma.task.deleteMany()
   })
 
   test('returns an error response with status code 401 if user is not authorized', async () => {
@@ -130,12 +186,14 @@ describe('Plant GET endpoint', () => {
       nickName: 'Cool nickname',
       image: 'plant1.jpg',
       latinName: 'Plantus testus 1',
+      wateringInterval: 1,
     })
     expect(response.body[1]).toMatchObject({
       name: 'Test plant 2',
       nickName: 'Cool nickname 2',
       image: 'plant2.jpg',
       latinName: 'Plantus testus 2',
+      wateringInterval: 7,
     })
   })
 })
