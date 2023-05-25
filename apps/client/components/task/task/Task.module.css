@@ -4,8 +4,6 @@
   align-items: flex-start;
   padding: 12px;
   gap: 12px;
-  width: 400px;
-  height: 80px;
   border-radius: 12px;
   position: relative;
 }

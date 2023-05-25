@@ -10,7 +10,6 @@ export const PlantsWatering:React.FC = () => {
 
   useEffect(() => {
     getAllPlants().then((res) => {
-      console.log(res);
       setPlants(res);
     }).catch((err) => {
       console.log(err);
@@ -22,7 +21,7 @@ export const PlantsWatering:React.FC = () => {
       <h3>Plants watering</h3>
       <div className={styles.container}>
         {plants?.map((plant) => (
-          <><h4>sdfsdf</h4><AdjustWatering plant={plant} key={plant.id} /></>
+          <AdjustWatering plant={plant} key={plant.id} />
         ))}
       </div>
     </div>

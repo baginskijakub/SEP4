@@ -7,7 +7,7 @@ import { SERVER_URL } from '../config';
 const getCurrentTasks = (): Promise<ITask[]> => {
   let token
   if (typeof window !== 'undefined') token = `Bearer ${localStorage.getItem('token')}`
-  return axios.get(`${SERVER_URL}/tasks/`, { headers: { Authorization: token } }).then((response) => {
+  return axios.get(`${SERVER_URL}/tasks/current`, { headers: { Authorization: token } }).then((response) => {
     if (response.status === 200) {
       return response.data
     } else {
