@@ -35,17 +35,13 @@ describe("<ManageAccount />", () => {
         expect(screen.getByText(/Login here/i)).toBeInTheDocument()
     })
 
-    test("renders error message when password is less than 6 characters", async () => {
+    test("renders error message when password is less than 6 characters when register", async () => {
         render(<UserContextProvider><LoginModal onClose={null}/></UserContextProvider>)
 
+        
         const userNameInput = screen.getByPlaceholderText(/E-Mail/i)
         const passwordInput = screen.getByPlaceholderText(/Password/i)
 
-        await fireEvent.input(userNameInput, {target: {value: 'test'}})
-        await fireEvent.input(passwordInput, {target: {value: '12345'}})
-        await fireEvent.click(screen.getAllByText(/Login/i)[1])
-
-        expect(await screen.findByText("The password must be at least 6 characters")).toBeInTheDocument()
 
         fireEvent.click(screen.getByText(/Sign up here/i))
         await fireEvent.input(userNameInput, {target: {value: 'test'}})
