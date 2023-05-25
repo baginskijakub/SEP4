@@ -77,7 +77,7 @@ describe('Complete task endpoint', () => {
       password: 'Password123',
     })
 
-    authToken = loginResponse.headers['set-cookie'][0].split(';')[0]
+    authToken = loginResponse.body.token
   })
 
   afterEach(async () => {
@@ -87,7 +87,7 @@ describe('Complete task endpoint', () => {
   })
 
   test('returns 400 status and error message when task id is not a number', async () => {
-    const response = await request(app).delete('/api/v1/tasks/invalidId').set('Cookie', authToken)
+    const response = await request(app).delete('/api/v1/tasks/invalidId').set('Authorization', `Bearer ${authToken}`)
 
     expect(response.status).toBe(400)
     expect(response.body.message).toBe('Invalid task id')
@@ -95,7 +95,7 @@ describe('Complete task endpoint', () => {
   })
 
   test('returns 404 error if task with passed id does not exist', async () => {
-    const response = await request(app).delete('/api/v1/tasks/6').set('Cookie', authToken)
+    const response = await request(app).delete('/api/v1/tasks/6').set('Authorization', `Bearer ${authToken}`)
 
     expect(response.status).toBe(404)
     expect(response.body.message).toBe('Task with passed id not found')
@@ -103,7 +103,7 @@ describe('Complete task endpoint', () => {
   })
 
   test('returns 200 and refreshes days till deadline if type of task is water', async () => {
-    const response = await request(app).delete(`/api/v1/tasks/1`).set('Cookie', authToken)
+    const response = await request(app).delete(`/api/v1/tasks/1`).set('Authorization', `Bearer ${authToken}`)
 
     const tasks = await prisma.task.findMany({
       where: { plantId: 1, type: 'water' },
@@ -124,7 +124,7 @@ describe('Complete task endpoint', () => {
   })
 
   test('returns 200 and deletes task from if type of task is not water', async () => {
-    const response = await request(app).delete(`/api/v1/tasks/2`).set('Cookie', authToken)
+    const response = await request(app).delete(`/api/v1/tasks/2`).set('Authorization', `Bearer ${authToken}`)
 
     const tasks = await prisma.task.findMany()
 

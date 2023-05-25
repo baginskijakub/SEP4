@@ -30,10 +30,7 @@ userRouter.get('/', async (req, res) => {
       return
     }
     const token = jwt.sign({ email: user.email }, process.env.WEB_TOKEN_SECRET)
-    res
-      .cookie('token', token, { httpOnly: true, domain: process.env.CLIENT_URL || 'localhost' })
-      .status(200)
-      .json({ message: 'User successfully logged in', status: 'success' })
+    res.status(200).json({ message: 'User successfully logged in', status: 'success', token })
     await prisma.$disconnect()
     return
   } catch (error) {

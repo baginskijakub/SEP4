@@ -46,7 +46,7 @@ describe('Patch environment', () => {
       password: 'Password123',
     })
 
-    authToken = loginResponse.headers['set-cookie'][0].split(';')[0]
+    authToken = loginResponse.body.token
   })
 
   afterEach(async () => {
@@ -57,7 +57,7 @@ describe('Patch environment', () => {
   test('returns 400 status and error message when plant with passed id does not exists', async () => {
     const response = await request(app)
       .patch('/api/v1/plants/999/environment')
-      .set('Cookie', authToken)
+      .set('Authorization', `Bearer ${authToken}`)
       .send({ humidity: 50, temperature: 25, co2: 800 })
 
     expect(response.status).toBe(400)
@@ -69,7 +69,7 @@ describe('Patch environment', () => {
   test('returns 400 error if plantId is missing', async () => {
     const response = await request(app)
       .patch('/api/v1/plants/invalidId/environment')
-      .set('Cookie', authToken)
+      .set('Authorization', `Bearer ${authToken}`)
       .send({ humidity: 50, temperature: 25, co2: 800 })
 
     expect(response.status).toBe(400)
@@ -81,7 +81,7 @@ describe('Patch environment', () => {
   test('returns a 400 error if value inside of desired environment is invalid', async () => {
     const response = await request(app)
       .patch(`/api/v1/plants/${plantId}/environment`)
-      .set('Cookie', authToken)
+      .set('Authorization', `Bearer ${authToken}`)
       .send({ humidity: 'invalid', temperature: 25, co2: 800 })
 
     expect(response.status).toBe(400)
@@ -92,7 +92,7 @@ describe('Patch environment', () => {
   test('returns a 400 error if desired environment is invalid', async () => {
     const response = await request(app)
       .patch(`/api/v1/plants/${plantId}/environment`)
-      .set('Cookie', authToken)
+      .set('Authorization', `Bearer ${authToken}`)
       .send({ humidity: 34.2, temperature: 25 })
 
     expect(response.status).toBe(400)
@@ -104,7 +104,7 @@ describe('Patch environment', () => {
   test('sends a downlink message and returns a success response - 200', async () => {
     const response = await request(app)
       .patch(`/api/v1/plants/${plantId}/environment`)
-      .set('Cookie', authToken)
+      .set('Authorization', `Bearer ${authToken}`)
       .send({ humidity: 50, temperature: 25, co2: 800 })
 
     expect(response.status).toBe(200)

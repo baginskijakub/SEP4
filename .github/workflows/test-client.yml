@@ -2,6 +2,8 @@ name: CI Pipeline client (SEP4YG2)
 
 on:
   workflow_dispatch:
+  branches:
+    - frontend/sprint8/chore/tests-msw-setup
   pull_request:
     paths:
       - "apps/client**"

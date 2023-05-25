@@ -18,7 +18,7 @@ export const Task: React.FC<Props> = ({ task , controlls}) => {
     getPlantById(task.plantId).then((res) => {
       setPlant(res)
     })
-  }, [])
+  }, [task.plantId])
   const onComplete = () => {
     completeTask(task.id).then(() => {
       console.log('completed')
@@ -29,7 +29,7 @@ export const Task: React.FC<Props> = ({ task , controlls}) => {
 
   return (
     <>
-      {plant !== undefined ? (
+      {plant !== undefined && (
         <div className={styles.wrapper + " " + styles[task.status]}>
           <img src={plant.image} alt={plant.name} />
           <div className={styles.container}>
@@ -50,8 +50,6 @@ export const Task: React.FC<Props> = ({ task , controlls}) => {
             </ActionButton>
           </div>}
         </div>
-      ) : (
-        <div className={styles.wrapper}>Loading</div>
       )}
     </>
   )

@@ -74,13 +74,13 @@ describe('Plant update watering tasks endpoint', () => {
 
     // Login the user and get the auth token
     const loginResponse = await request(app).get('/api/v1/users').query(user)
-    authToken = loginResponse.headers['set-cookie'][0].split(';')[0]
+    authToken = loginResponse.body.token
   })
 
   test('returns a successful response with status code 200 if watering tasks were successfully updated', async () => {
     const response = await request(app)
       .patch(`/api/v1/plants/1/watering`)
-      .set('Cookie', authToken)
+      .set('Authorization', `Bearer ${authToken}`)
       .send({ watering: 9 })
 
     const tasks = await prisma.task.findMany({
@@ -117,7 +117,7 @@ describe('Plant update watering tasks endpoint', () => {
   test('returns 400 status and error message when failed to update watering tasks (invalid plant id)', async () => {
     const response = await request(app)
       .patch('/api/v1/plants/invalid_id/watering')
-      .set('Cookie', authToken)
+      .set('Authorization', `Bearer ${authToken}`)
       .send({ watering: 9 })
 
     expect(response.status).toBe(400)
@@ -128,7 +128,7 @@ describe('Plant update watering tasks endpoint', () => {
   test('returns 400 status and error message when failed to update watering tasks (invalid watering interval)', async () => {
     const response = await request(app)
       .patch('/api/v1/plants/1/watering')
-      .set('Cookie', authToken)
+      .set('Authorization', `Bearer ${authToken}`)
       .send({ watering: 'invalid' })
 
     expect(response.status).toBe(400)
@@ -137,7 +137,7 @@ describe('Plant update watering tasks endpoint', () => {
   })
 
   test('returns 400 status and error message when failed to update watering tasks (missing watering interval)', async () => {
-    const response = await request(app).patch('/api/v1/plants/1/watering').set('Cookie', authToken)
+    const response = await request(app).patch('/api/v1/plants/1/watering').set('Authorization', `Bearer ${authToken}`)
 
     expect(response.status).toBe(400)
     expect(response.body.message).toBe('Invalid watering interval')
@@ -147,7 +147,7 @@ describe('Plant update watering tasks endpoint', () => {
   test('returns 400 status and error message when failed to update watering tasks (negative watering interval)', async () => {
     const response = await request(app)
       .patch('/api/v1/plants/1/watering')
-      .set('Cookie', authToken)
+      .set('Authorization', `Bearer ${authToken}`)
       .send({ watering: -1 })
 
     expect(response.status).toBe(400)

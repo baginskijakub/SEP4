@@ -70,7 +70,7 @@ describe('Get all tasks endpoint', () => {
       password: 'Password123',
     })
 
-    authToken = loginResponse.headers['set-cookie'][0].split(';')[0]
+    authToken = loginResponse.body.token
   })
 
   afterEach(async () => {
@@ -81,7 +81,7 @@ describe('Get all tasks endpoint', () => {
 
   test('returns 200 and empty array if the are no tasks in database', async () => {
     await prisma.task.deleteMany()
-    const response = await request(app).get(`/api/v1/tasks`).set('Cookie', authToken)
+    const response = await request(app).get(`/api/v1/tasks`).set('Authorization', `Bearer ${authToken}`)
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([])
@@ -101,15 +101,15 @@ describe('Get all tasks endpoint', () => {
       username: 'test_user2',
       password: 'Password123',
     })
-    authToken = loginResponse.headers['set-cookie'][0].split(';')[0]
-    const response = await request(app).get(`/api/v1/tasks`).set('Cookie', authToken)
+    authToken = loginResponse.body.token
+    const response = await request(app).get(`/api/v1/tasks`).set('Authorization', `Bearer ${authToken}`)
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual([])
   })
 
   test('returns 200 and all the tasks from database with correct data', async () => {
-    const response = await request(app).get(`/api/v1/tasks`).set('Cookie', authToken)
+    const response = await request(app).get(`/api/v1/tasks`).set('Authorization', `Bearer ${authToken}`)
 
     expect(response.status).toBe(200)
     expect(response.body).toHaveLength(4)

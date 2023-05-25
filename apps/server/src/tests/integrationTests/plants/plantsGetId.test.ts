@@ -68,7 +68,9 @@ describe('Plant GET by id endpoint', () => {
     expect(loginResponse.body.status).toBe('success')
 
     // Retrieve the plants after the user is logged in
-    const response = await request(app).get('/api/v1/plants/1').set('Cookie', loginResponse.headers['set-cookie'])
+    const response = await request(app)
+      .get('/api/v1/plants/1')
+      .set('Authorization', `Bearer ${loginResponse.body.token}`)
 
     expect(response.status).toBe(200)
     expect(response.body).toMatchObject({
@@ -114,7 +116,9 @@ describe('Plant GET by id endpoint', () => {
     await prisma.plant.deleteMany()
 
     // Retrieve the plants after the user is logged in
-    const response = await request(app).get('/api/v1/plants/1').set('Cookie', loginResponse.headers['set-cookie'])
+    const response = await request(app)
+      .get('/api/v1/plants/1')
+      .set('Authorization', `Bearer ${loginResponse.body.token}`)
 
     expect(response.status).toBe(404)
     expect(response.body.message).toBe('Plant was not found')
@@ -135,7 +139,9 @@ describe('Plant GET by id endpoint', () => {
     expect(loginResponse.body.status).toBe('success')
 
     // Retrieve the plant after the user is logged in
-    const response = await request(app).get('/api/v1/plants/999').set('Cookie', loginResponse.headers['set-cookie'])
+    const response = await request(app)
+      .get('/api/v1/plants/999')
+      .set('Authorization', `Bearer ${loginResponse.body.token}`)
 
     expect(response.status).toBe(404)
     expect(response.body.message).toBe('Plant was not found')

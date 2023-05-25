@@ -52,12 +52,12 @@ describe('Plant POST endpoint', () => {
 
     const response = await request(app)
       .post('/api/v1/plants')
-      .set('Cookie', loginResponse.headers['set-cookie'])
+      .set('Authorization', `Bearer ${loginResponse.body.token}`)
       .send(newPlant)
 
     const tasks = await prisma.task.findMany({
       where: {
-        plantId: response.body.plant.id,
+        plantId: response.body.id,
       },
       orderBy: {
         daysTillDeadline: 'asc',
@@ -135,7 +135,7 @@ describe('Plant POST endpoint', () => {
 
     const response = await request(app)
       .post('/api/v1/plants')
-      .set('Cookie', loginResponse.headers['set-cookie'])
+      .set('Authorization', `Bearer ${loginResponse.body.token}`)
       .send(newPlant)
 
     expect(response.status).toBe(400)
