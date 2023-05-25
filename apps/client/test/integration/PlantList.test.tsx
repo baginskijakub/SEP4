@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import { PlantList } from '../../components/plant/PlantList/PlantList'
+import { PlantList } from '../../components/plant/plantList/PlantList'
 import { IPlant } from '@sep4/types'
 import { server } from "../mocks/server.js";
 
