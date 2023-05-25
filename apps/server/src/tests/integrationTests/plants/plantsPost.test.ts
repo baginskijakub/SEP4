@@ -21,7 +21,7 @@ describe('Plant POST endpoint', () => {
 
   test('returns a successful response with status code 201 if plant is successfully registered', async () => {
     const user = {
-      username: 'test_user',
+      email: 'test_user',
       password: 'Password123',
     }
 
@@ -108,13 +108,13 @@ describe('Plant POST endpoint', () => {
       maxHumidity: 20,
       minTemperature: 10,
       maxTemperature: 20,
-      email: user.username,
+      email: user.email,
     })
   })
 
   test('returns 400 status and error message when missing parameters', async () => {
     const user = {
-      username: 'test_user',
+      email: 'test_user',
       password: 'Password123',
     }
 

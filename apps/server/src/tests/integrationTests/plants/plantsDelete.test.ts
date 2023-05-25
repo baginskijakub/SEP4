@@ -23,7 +23,7 @@ describe('Plant DELETE endpoint', () => {
 
   beforeEach(async () => {
     const user = {
-      username: 'test_user',
+      email: 'test_user',
       password: 'Password123',
     }
 

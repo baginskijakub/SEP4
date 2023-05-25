@@ -18,7 +18,7 @@ describe('User GET endpoint', () => {
     await prisma.user.deleteMany()
   })
 
-  test('returns 400 if username or password is not provided', async () => {
+  test('returns 400 if email or password is not provided', async () => {
     const response = await request(app).get('/api/v1/users')
 
     expect(response.statusCode).toBe(400)
@@ -28,7 +28,7 @@ describe('User GET endpoint', () => {
 
   test('returns 400 if user does not exist', async () => {
     const response = await request(app).get('/api/v1/users').query({
-      username: 'nonexistent_user',
+      email: 'nonexistent_user',
       password: 'password123',
     })
 
@@ -39,7 +39,7 @@ describe('User GET endpoint', () => {
 
   test('returns 400 if password is incorrect', async () => {
     const response = await request(app).get('/api/v1/users').query({
-      username: 'existing_user',
+      email: 'existing_user',
       password: 'wrong_password',
     })
 
@@ -50,7 +50,7 @@ describe('User GET endpoint', () => {
 
   test('returns 200 with a token if user exists and password is correct', async () => {
     const response = await request(app).get('/api/v1/users').query({
-      username: 'existing_user',
+      email: 'existing_user',
       password: 'Password123',
     })
 
@@ -66,7 +66,7 @@ describe('User GET endpoint', () => {
     })
 
     const response = await request(app).get('/api/v1/users').query({
-      username: 'existing_user',
+      email: 'existing_user',
       password: 'Password123',
     })
 

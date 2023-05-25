@@ -8,16 +8,16 @@ const userRouter = express.Router()
 
 userRouter.get('/', async (req, res) => {
   const { query } = req
-  const username = query.username as string
+  const email = query.email as string
   const password = query.password as string
-  if (!username || !password) {
+  if (!email || !password) {
     res.status(400).json({ message: 'Username and password are required!', status: 'error' })
     return
   }
   try {
     const user = await prisma.user.findUnique({
       where: {
-        email: username,
+        email: email,
       },
     })
     if (!user) {
@@ -40,8 +40,8 @@ userRouter.get('/', async (req, res) => {
 })
 
 userRouter.post('/', async (req, res) => {
-  const { username, password } = req.body
-  if (!username || !password) {
+  const { email, password } = req.body
+  if (!email || !password) {
     res.status(400).json({ message: 'Email and password are required!', status: 'error' })
     return
   }
@@ -53,7 +53,7 @@ userRouter.post('/', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10)
     await prisma.user.create({
       data: {
-        email: username,
+        email: email,
         password: hashedPassword,
       },
     })
