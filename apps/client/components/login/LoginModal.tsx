@@ -26,14 +26,22 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
 
   // function for login
   const onLogin = (email: string, password: string) => {
-    login(email, password).then((data) => {
-      setUser({
-        email: email,
-        name: email.split('@')[0],
+    login(email, password)
+      .then((data) => {
+        setUser({
+          email: email,
+          name: email.split('@')[0],
+        })
+        localStorage.setItem('token', data.token)
+        onClose()
       })
-      localStorage.setItem('token', data.token)
-      onClose()
-    })
+      .catch(() => {
+        if (password.length < 6) {
+          setErrorLabel('The password must be at least 6 characters')
+        } else {
+          setErrorLabel('Something went wrong')
+        }
+      })
   }
 
   // function for register
@@ -47,7 +55,7 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
         onClose()
       })
       .catch(() => {
-        if (passwordElement.current.value.length < 6) {
+        if (password.length < 6) {
           setErrorLabel('The password must be at least 6 characters')
         } else {
           setErrorLabel('Something went wrong')
