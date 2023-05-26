@@ -138,8 +138,6 @@ plantsRouter.get('/', async (req: UserRequest, res) => {
       orderBy: { daysTillDeadline: 'desc' },
     })
 
-    console.log(wateringTasks)
-
     const plants: IPlant[] = plantsFromDb.map((plant) => {
       return {
         id: plant.id,
