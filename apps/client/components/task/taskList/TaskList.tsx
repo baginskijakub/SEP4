@@ -15,11 +15,13 @@ export const TaskList: React.FC = () => {
     getAllTasks()
       .then((res) => {
         setTasks(res)
+        console.log(res)
       })
       .catch((err) => {
         console.log(err)
       })
-  })
+    console.log('test')
+  }, [])
 
   return (
     <div className={styles.taskWrapper}>
