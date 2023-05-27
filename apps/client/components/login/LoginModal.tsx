@@ -43,11 +43,13 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
   // function for register
   const onRegister = () => {
     register(emailElement.current.value, passwordElement.current.value)
-      .then(() => {
+      .then((data) => {
         setUser({
           email: emailElement.current.value,
           name: emailElement.current.value.split('@')[0],
         })
+        localStorage.setItem('token', data.token)
+
         onClose()
       })
       .catch((error) => {
