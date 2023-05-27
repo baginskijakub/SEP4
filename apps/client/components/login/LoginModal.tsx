@@ -35,30 +35,28 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
         localStorage.setItem('token', data.token)
         onClose()
       })
-      .catch(() => {
-        if (password.length < 6) {
-          setErrorLabel('The password must be at least 6 characters')
-        } else {
-          setErrorLabel('Something went wrong')
-        }
+      .catch((error) => {
+          setErrorLabel(error.message)
       })
   }
 
   // function for register
   const onRegister = (email: string, password: string) => {
     register(email, password)
-      .then(() => {
+      .then((data) => {
         setUser({
           email: email,
           name: password.split('@')[0],
         })
+        localStorage.setItem('token', data.token)
+
         onClose()
       })
-      .catch(() => {
-        if (password.length < 6) {
+      .catch((error) => {
+        if (passwordElement.current.value.length < 6) {
           setErrorLabel('The password must be at least 6 characters')
         } else {
-          setErrorLabel('Something went wrong')
+          setErrorLabel(error.message)
         }
       })
   }

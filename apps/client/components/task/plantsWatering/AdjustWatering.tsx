@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { IPlant } from "@sep4/types";
 import { MdChevronRight } from "react-icons/md";
 import styles from "./PlantsWatering.module.css";
@@ -9,15 +9,16 @@ interface Props{
 }
 export const AdjustWatering:React.FC<Props> = ({plant}) => {
 
-  const [interval, setInterval] = useState(plant.wateringInterval);
+  const [interval, setInterval] = useState<number>(plant.wateringInterval);
 
-  useEffect(() => {
-    adjustWatering(plant.id, interval).then(() => {
+  const onAdjust = (value: number) => {
+    adjustWatering(plant.id, value).then(() => {
       console.log("Watering interval adjusted");
     }).catch((err) => {
       console.log(err);
     })
-  }, [interval, plant.id]);
+    setInterval(value)
+  }
 
   return (
     <div className={styles.adjustWrapper}>
@@ -28,9 +29,9 @@ export const AdjustWatering:React.FC<Props> = ({plant}) => {
       <div className={styles.adjustRight}>
         <h4>Watered every</h4>
         <div className={styles.toggle}>
-          <MdChevronRight size={32} style = {{transform: 'rotate(-90deg)' }} className={styles.toggleChevron} onClick={() => setInterval(interval+1)}/>
+          <MdChevronRight size={32} style = {{transform: 'rotate(-90deg)' }} className={styles.toggleChevron} onClick={() => onAdjust(interval+1)}/>
           <h4 className={styles.toggleButton}>{interval}</h4>
-          <MdChevronRight size={32} style = {{transform: 'rotate(90deg)' }} className={styles.toggleChevron} onClick={() => setInterval(interval-1)}/>
+          <MdChevronRight size={32} style = {{transform: 'rotate(90deg)' }} className={styles.toggleChevron} onClick={() => onAdjust(interval-1)}/>
         </div>
         <h4>days</h4>
       </div>

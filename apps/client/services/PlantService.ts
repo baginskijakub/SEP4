@@ -23,7 +23,6 @@ const getPlantById = (plantId: number) => {
   if (typeof window !== 'undefined') token = `Bearer ${localStorage.getItem('token')}`
   return axios.get(`${SERVER_URL}/plants/${plantId}`, { headers: { Authorization: token } }).then((response) => {
     if (response.status === 200) {
-      console.log(response.data)
       return response.data
     } else {
       throw new Error('Error fetching data')

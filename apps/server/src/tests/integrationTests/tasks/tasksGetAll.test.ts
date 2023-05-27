@@ -66,7 +66,7 @@ describe('Get all tasks endpoint', () => {
     })
 
     const loginResponse = await request(app).get('/api/v1/users').query({
-      username: 'test_user',
+      email: 'test_user',
       password: 'Password123',
     })
 
@@ -98,7 +98,7 @@ describe('Get all tasks endpoint', () => {
     })
 
     const loginResponse = await request(app).get('/api/v1/users').query({
-      username: 'test_user2',
+      email: 'test_user2',
       password: 'Password123',
     })
     authToken = loginResponse.body.token

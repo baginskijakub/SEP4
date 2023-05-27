@@ -133,6 +133,11 @@ plantsRouter.get('/', async (req: UserRequest, res) => {
     const decodedToken = req.user
     const plantsFromDb = await prisma.plant.findMany({ where: { email: decodedToken.email as string } })
 
+    const wateringTasks = await prisma.task.findMany({
+      where: { plantId: { in: plantsFromDb.map((plant) => plant.id) }, type: 'water' },
+      orderBy: { daysTillDeadline: 'desc' },
+    })
+
     const plants: IPlant[] = plantsFromDb.map((plant) => {
       return {
         id: plant.id,
@@ -140,6 +145,7 @@ plantsRouter.get('/', async (req: UserRequest, res) => {
         nickName: plant.nickName,
         image: plant.image,
         latinName: plant.latinName,
+        wateringInterval: wateringTasks.find((task) => task.plantId === plant.id)?.originalDeadline,
       }
     })
     await prisma.$disconnect()

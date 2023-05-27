@@ -73,7 +73,7 @@ describe('Complete task endpoint', () => {
     })
 
     const loginResponse = await request(app).get('/api/v1/users').query({
-      username: 'test_user',
+      email: 'test_user',
       password: 'Password123',
     })
 

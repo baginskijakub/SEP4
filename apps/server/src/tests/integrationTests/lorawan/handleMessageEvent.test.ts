@@ -1,6 +1,6 @@
 import prisma from '../../../helperFunctions/setupPrisma'
 import bcrypt from 'bcrypt'
-import { handleMessageEvent } from 'apps/server/src/businessLogic/lorawan/handleMessageEvent'
+import { handleMessageEvent } from '../../../businessLogic/lorawan/handleMessageEvent'
 
 describe('Handle lorawan message function', () => {
   beforeAll(async () => {

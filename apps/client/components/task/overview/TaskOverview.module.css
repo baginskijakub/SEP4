@@ -68,3 +68,10 @@
 .chevron:hover{
   opacity: 0.8;
 }
+
+@media only screen and (max-width: 1150px) {
+  .wrapper{
+    width: auto;
+    height: auto;
+  }
+}

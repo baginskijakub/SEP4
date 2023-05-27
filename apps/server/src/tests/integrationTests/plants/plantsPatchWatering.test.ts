@@ -14,7 +14,7 @@ describe('Plant update watering tasks endpoint', () => {
 
   beforeEach(async () => {
     const user = {
-      username: 'test_user',
+      email: 'test_user',
       password: 'Password123',
     }
 

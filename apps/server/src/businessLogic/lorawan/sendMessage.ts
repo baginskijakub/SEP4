@@ -5,7 +5,7 @@ export function sendDownlinkMessage(data: string, port: number) {
     JSON.stringify({
       cmd: 'tx',
       EUI: process.env.EUI,
-      port: port,
+      port: 1,
       confirmed: false,
       data,
     }),
