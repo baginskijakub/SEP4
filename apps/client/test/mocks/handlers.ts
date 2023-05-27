@@ -44,4 +44,19 @@ export const handlers = [
       }),
     )
   }),
+
+  //get plants mock
+  rest.get(`${SERVER_URL}/plants`, (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json([
+        {
+          id: 1,
+          name: 'fakePlant1',
+          latinName: 'fakeLatinName1',
+          nickName: 'fakeNickName1',
+        },
+      ]),
+    )
+  }),
 ]
