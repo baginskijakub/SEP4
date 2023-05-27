@@ -1,37 +1,41 @@
-import WebSocket from 'ws'
 import { app } from './server'
-import { handleMessageEvent } from './businessLogic/lorawan/handleMessageEvent'
 import { Server } from 'socket.io'
 import { cache } from './helperFunctions/singletonCache'
 import http from 'http'
 import cron from 'node-cron'
+import { WebSocket } from 'ws'
 import { reevaluateTasksDeadlines } from './businessLogic/tasks/reevaluateTasksDeadlines'
 import { sendUpdateOnConnection } from './businessLogic/sockets/sendUpdateOnConnections'
+import { handleMessageEvent } from './businessLogic/lorawan/handleMessageEvent'
 
-export let lorawanSocket = new WebSocket(process.env.LORAWAN_SOCKET_URL)
+export let lorawanSocket: WebSocket
 
-const server = http.createServer(app)
-
-lorawanSocket.on('open', () => {
-  console.log('Lorawan socket connected')
-})
-
-lorawanSocket.on('message', (data) => {
-  const message = JSON.parse(data.toString())
-  console.log('Lorawan socket message received', message)
-  handleMessageEvent(message)
-  io.emit('lorawan_message', message)
-})
-
-lorawanSocket.on('close', async () => {
-  console.log('Lorawan socket closed')
+function createWebSocket() {
   lorawanSocket = new WebSocket(process.env.LORAWAN_SOCKET_URL)
-  console.log('Lorawan socket reconnecting')
-})
 
-lorawanSocket.on('error', (error) => {
-  console.log('Lorawan socket error', error)
-})
+  lorawanSocket.on('open', () => {
+    console.log('Lorawan socket connected')
+  })
+
+  lorawanSocket.on('message', (data) => {
+    const message = JSON.parse(data.toString())
+    console.log('Lorawan socket message received', message)
+    handleMessageEvent(message)
+  })
+
+  lorawanSocket.on('close', () => {
+    console.log('Lorawan socket closed')
+    setTimeout(createWebSocket, 1000)
+    console.log('Lorawan socket reconnecting')
+  })
+
+  lorawanSocket.on('error', (error) => {
+    console.log('Lorawan socket error', error)
+  })
+}
+
+createWebSocket()
+const server = http.createServer(app)
 
 const port = process.env.PORT || 0
 const host = '0.0.0.0'

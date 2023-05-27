@@ -7,8 +7,8 @@ export async function reevaluateTasksDeadlines() {
 
     await Promise.allSettled(
       tasks.map(async (task) => {
-        task.daysTillDeadline = task.daysTillDeadline - 1
-        prisma.task.update({
+        task.daysTillDeadline--
+        await prisma.task.update({
           where: {
             id: task.id,
           },
