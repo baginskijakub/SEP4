@@ -35,12 +35,8 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
         localStorage.setItem('token', data.token)
         onClose()
       })
-      .catch(() => {
-        if (passwordElement.current.value.length < 6) {
-          setErrorLabel('The password must be at least 6 characters')
-        } else {
-          setErrorLabel('Something went wrong')
-        }
+      .catch((error) => {
+          setErrorLabel(error.message)
       })
   }
 
@@ -56,11 +52,11 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
 
         onClose()
       })
-      .catch(() => {
-        if (passwordElement.current.value.length < 8) {
-          setErrorLabel('The password must be at least 8 characters')
+      .catch((error) => {
+        if (passwordElement.current.value.length < 6) {
+          setErrorLabel('The password must be at least 6 characters')
         } else {
-          setErrorLabel('Something went wrong')
+          setErrorLabel(error.message)
         }
       })
   }
