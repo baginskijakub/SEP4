@@ -14,6 +14,16 @@
   gap: 40px;
 }
 
+.landing{
+  display: flex;
+  height: calc(100% - 110px);
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-direction: column;
+  color: #528E83;
+}
+
 @media only screen and (max-width: 1150px) {
   .pageWrapper {
     width: auto;
