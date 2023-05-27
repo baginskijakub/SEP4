@@ -4,10 +4,7 @@ import { SERVER_URL } from '../../config'
 export const handlers = [
   // login mock
   rest.get(`${SERVER_URL}/users`, (req, res, ctx) => {
-    if (
-      req.url.searchParams.get('email') === 'fakeUser1' &&
-      req.url.searchParams.get('password') === 'fakePassword1'
-    ) {
+    if (req.url.searchParams.get('email') === 'fakeUser1' && req.url.searchParams.get('password') === 'fakePassword1') {
       return res(
         ctx.status(200),
         ctx.json({
@@ -17,6 +14,13 @@ export const handlers = [
         }),
       )
     }
+  }),
+
+  rest.get(`${SERVER_URL}/tasks/`, (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json([]),
+    )
   }),
 
   // register mock
