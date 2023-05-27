@@ -5,7 +5,7 @@ export const handlers = [
   // login mock
   rest.get(`${SERVER_URL}/users`, (req, res, ctx) => {
     if (
-      req.url.searchParams.get('username') === 'fakeUser1' &&
+      req.url.searchParams.get('email') === 'fakeUser1' &&
       req.url.searchParams.get('password') === 'fakePassword1'
     ) {
       return res(
