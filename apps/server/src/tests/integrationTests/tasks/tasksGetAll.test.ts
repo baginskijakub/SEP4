@@ -113,28 +113,28 @@ describe('Get all tasks endpoint', () => {
 
     expect(response.status).toBe(200)
     expect(response.body).toHaveLength(4)
-    expect(response.body[0]).toEqual({
+    expect(response.body[1]).toEqual({
       id: 1,
       plantId: 1,
       type: 'water',
       status: 'current',
       date: 'to be completed today',
     })
-    expect(response.body[1]).toEqual({
+    expect(response.body[3]).toEqual({
       id: 2,
       plantId: 1,
       type: 'fertilize',
       status: 'future',
       date: '5 days until deadline',
     })
-    expect(response.body[2]).toEqual({
+    expect(response.body[0]).toEqual({
       id: 3,
       plantId: 1,
       type: 'repot',
       status: 'past',
       date: '6 days after deadline',
     })
-    expect(response.body[3]).toEqual({
+    expect(response.body[2]).toEqual({
       id: 4,
       plantId: 1,
       type: 'repot',
