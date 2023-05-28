@@ -13,10 +13,11 @@ import dayjs from 'dayjs'
 
 interface Props {
     onClose: () => void
+  fetchAgain: () => void
 }
 
 
-export const TaskModal: React.FC<Props> = ({onClose}) => {
+export const TaskModal: React.FC<Props> = ({onClose, fetchAgain}) => {
 
     const [selectedPlant, setSelectedPlant] = useState<IPlant>();
     const [selectedPlantId, setSelectedPlantId] = useState<number>()
@@ -44,6 +45,7 @@ export const TaskModal: React.FC<Props> = ({onClose}) => {
         .then(()=>{
             setTask(task);
             onClose();
+            fetchAgain();
         }).catch((e)=>{
             console.log(e)
         })
