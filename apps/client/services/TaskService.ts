@@ -19,7 +19,7 @@ const getCurrentTasks = (): Promise<ITask[]> => {
 const completeTask = (taskId: number): Promise<ITask> => {
   let token
   if (typeof window !== 'undefined') token = `Bearer ${localStorage.getItem('token')}`
-  return axios.delete(`${SERVER_URL}/v1/tasks/${taskId}`, { headers: { Authorization: token } }).then((response) => {
+  return axios.delete(`${SERVER_URL}/tasks/${taskId}`, { headers: { Authorization: token } }).then((response) => {
     if (response.status === 200) {
       return response.data
     } else {

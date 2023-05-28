@@ -1,4 +1,4 @@
-import * as PlantService from '../../client/services/PlantService'
+import * as PlantService from '../../../client/services/PlantService'
 
 jest.mock('../../client/services/PlantService')
 

@@ -24,10 +24,13 @@ export const TaskOverview: React.FC = () => {
       days.push({
         day: day.format('ddd'),
         dayNumber: day.date(),
-        hasTask: tasks.some((task) => dayjs(task.date).date() === day.date()),
+        hasTask: tasks.some((task) => {
+          return dayjs.unix(parseInt(task.date)).isSame(day, 'day')
+        }),
       })
     }
     setDays(days)
+    console.log(days)
   }, [daysOffset])
 
   return (

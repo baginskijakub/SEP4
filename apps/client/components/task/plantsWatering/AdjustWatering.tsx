@@ -13,11 +13,10 @@ export const AdjustWatering:React.FC<Props> = ({plant}) => {
 
   const onAdjust = (value: number) => {
     adjustWatering(plant.id, value).then(() => {
-      console.log("Watering interval adjusted");
+      setInterval(value);
     }).catch((err) => {
       console.log(err);
     })
-    setInterval(value)
   }
 
   return (

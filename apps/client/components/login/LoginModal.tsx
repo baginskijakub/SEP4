@@ -25,12 +25,12 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
   const { setUser } = useUserContext()
 
   // function for login
-  const onLogin = () => {
-    login(emailElement.current.value, passwordElement.current.value)
+  const onLogin = (email: string, password: string) => {
+    login(email, password)
       .then((data) => {
         setUser({
-          email: emailElement.current.value,
-          name: emailElement.current.value.split('@')[0],
+          email: email,
+          name: email.split('@')[0],
         })
         localStorage.setItem('token', data.token)
         onClose()
@@ -41,12 +41,12 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
   }
 
   // function for register
-  const onRegister = () => {
-    register(emailElement.current.value, passwordElement.current.value)
+  const onRegister = (email: string, password: string) => {
+    register(email, password)
       .then((data) => {
         setUser({
-          email: emailElement.current.value,
-          name: emailElement.current.value.split('@')[0],
+          email: email,
+          name: password.split('@')[0],
         })
         localStorage.setItem('token', data.token)
 
@@ -72,13 +72,13 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
       return
     }
     if (isLogin) {
-      onLogin()
+      onLogin(emailElement.current.value, passwordElement.current.value)
     } else {
       if (passwordElement.current.value.length < 6) {
         setErrorLabel('The password must be at least 6 characters')
         return
       }
-      onRegister()
+      onRegister(emailElement.current.value, passwordElement.current.value)
     }
   }
 

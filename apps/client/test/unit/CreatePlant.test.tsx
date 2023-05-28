@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { CreatePlant } from '../components/plant/createPlant/CreatePlant';
+import { CreatePlant } from '../../components/plant/createPlant/CreatePlant';
 import '@testing-library/jest-dom'
 
 describe("<CreatePlant />", () => {

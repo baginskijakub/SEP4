@@ -98,7 +98,7 @@ const adjustWatering = (id: number, watering: number) => {
   let token
   if (typeof window !== 'undefined') token = `Bearer ${localStorage.getItem('token')}`
   return axios
-    .patch(`${SERVER_URL}/plants/${id}/watering`, watering, { headers: { Authorization: token } })
+    .patch(`${SERVER_URL}/plants/${id}/watering`, {watering}, { headers: { Authorization: token } })
     .then((response) => {
       if (response.status === 200) {
         return response.data

@@ -1,9 +1,10 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { LoginModal } from '../components/login/LoginModal';
+import { LoginModal } from '../../components/login/LoginModal';
 import '@testing-library/jest-dom'
-import UserContextProvider from "../context/UserContext";
+import UserContextProvider from "../../context/UserContext";
 
 describe("<ManageAccount />", () => {
+
     test("renders LoginModal component when login", () => {
         render(
           <UserContextProvider><LoginModal onClose={null}/></UserContextProvider>)

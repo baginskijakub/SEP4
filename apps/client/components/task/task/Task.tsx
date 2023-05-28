@@ -21,7 +21,7 @@ export const Task: React.FC<Props> = ({ task , controlls}) => {
   }, [task.plantId])
   const onComplete = () => {
     completeTask(task.id).then(() => {
-      console.log('completed')
+      setDisplay(false)
     })
   }
 

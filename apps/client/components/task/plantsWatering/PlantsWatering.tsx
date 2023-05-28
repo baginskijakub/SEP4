@@ -14,7 +14,7 @@ export const PlantsWatering:React.FC = () => {
     }).catch((err) => {
       console.log(err);
     })
-  });
+  }, []);
 
   return (
     <div className={styles.wrapper}>

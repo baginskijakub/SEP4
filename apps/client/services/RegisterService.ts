@@ -1,8 +1,6 @@
 import axios from 'axios'
 axios.defaults.withCredentials = true
-
 import { SERVER_URL } from '../config'
-import { error, log } from 'console'
 const register = (email: string, password: string) => {
   return axios
     .post(`${SERVER_URL}/users`, {
@@ -16,7 +14,7 @@ const register = (email: string, password: string) => {
       } else {
         throw new Error(response.data.message)
       }
-    })    
+    })
 }
 
 export { register }
