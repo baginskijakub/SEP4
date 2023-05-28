@@ -66,7 +66,7 @@ describe('Get all tasks with epoch endpoint', () => {
     })
 
     const loginResponse = await request(app).get('/api/v1/users').query({
-      username: 'test_user',
+      email: 'test_user',
       password: 'Password123',
     })
 
@@ -98,7 +98,7 @@ describe('Get all tasks with epoch endpoint', () => {
     })
 
     const loginResponse = await request(app).get('/api/v1/users').query({
-      username: 'test_user2',
+      email: 'test_user2',
       password: 'Password123',
     })
     authToken = loginResponse.body.token
@@ -113,28 +113,28 @@ describe('Get all tasks with epoch endpoint', () => {
 
     expect(response.status).toBe(200)
     expect(response.body).toHaveLength(4)
-    expect(response.body[0]).toEqual({
+    expect(response.body[1]).toEqual({
       id: 1,
       plantId: 1,
       type: 'water',
       status: 'current',
       date: `${Math.round(new Date().getTime() / 1000)}`,
     })
-    expect(response.body[1]).toEqual({
+    expect(response.body[3]).toEqual({
       id: 2,
       plantId: 1,
       type: 'fertilize',
       status: 'future',
       date: `${Math.round(new Date().getTime() / 1000) + 5 * 24 * 60 * 60}`,
     })
-    expect(response.body[2]).toEqual({
+    expect(response.body[0]).toEqual({
       id: 3,
       plantId: 1,
       type: 'repot',
       status: 'past',
       date: `${Math.round(new Date().getTime() / 1000) - 6 * 24 * 60 * 60}`,
     })
-    expect(response.body[3]).toEqual({
+    expect(response.body[2]).toEqual({
       id: 4,
       plantId: 1,
       type: 'repot',

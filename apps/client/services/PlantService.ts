@@ -23,7 +23,6 @@ const getPlantById = (plantId: number) => {
   if (typeof window !== 'undefined') token = `Bearer ${localStorage.getItem('token')}`
   return axios.get(`${SERVER_URL}/plants/${plantId}`, { headers: { Authorization: token } }).then((response) => {
     if (response.status === 200) {
-      console.log(response.data)
       return response.data
     } else {
       throw new Error('Error fetching data')
@@ -99,7 +98,7 @@ const adjustWatering = (id: number, watering: number) => {
   let token
   if (typeof window !== 'undefined') token = `Bearer ${localStorage.getItem('token')}`
   return axios
-    .patch(`${SERVER_URL}/plants/${id}/watering`, watering, { headers: { Authorization: token } })
+    .patch(`${SERVER_URL}/plants/${id}/watering`, {watering}, { headers: { Authorization: token } })
     .then((response) => {
       if (response.status === 200) {
         return response.data

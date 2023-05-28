@@ -10,7 +10,6 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     border-radius: 12px;
     height: calc(100% - 40px);
-    min-height: 400px;
     width: 30%;
 }
 
@@ -20,3 +19,10 @@
     flex-direction: column;
     gap: 12px;
 }
+
+@media only screen and (max-width: 1150px) {
+    .taskWrapper{
+      width: auto;
+      height: auto;
+    }
+  }

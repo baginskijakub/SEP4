@@ -1,27 +1,23 @@
 import React from "react";
-
-import { Task } from "../components/task/task/Task";
-import { ITask } from "@sep4/types";
 import { TaskList } from "../components/task/taskList/TaskList";
-import styles from "./styles/Plants.module.css";
+import styles from "./styles/Tasks.module.css";
+import { useUserContext } from "../context/UserContext";
+import { TaskOverview } from "../components/task/overview/TaskOverview";
+import { PlantsWatering } from "../components/task/plantsWatering/PlantsWatering";
 
 export const Tasks:React.FC = () => {
-  const task: ITask[] = [{
-    id: 1,
-    type: "water",
-    date: "2021-05-05",
-    plantId: 12,
-    status: "current",
-  }]
+  const {user} = useUserContext()
 
   return (
     <div className={styles.pageWrapper}>
-      <TaskList/>
+      {user && <TaskList/>}
       <div className={styles.pageInner}>
-        <Task task={task[0]}/>
+        {user && <TaskOverview/>}
+        {user && <PlantsWatering/>}
       </div>
     </div>
   );
 };
 
 export default Tasks;
+

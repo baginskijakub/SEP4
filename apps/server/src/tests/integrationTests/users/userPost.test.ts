@@ -9,7 +9,7 @@ describe('User registration', () => {
 
   test('POST /api/v1/users should return 201 and success message for valid input', async () => {
     const validUserData = {
-      username: 'testuser',
+      email: 'testuser',
       password: 'ValidPassword123!',
     }
 
@@ -32,7 +32,7 @@ describe('User registration', () => {
 
   test('POST /api/v1/users should return 400 and error message for invalid password', async () => {
     const invalidUserData = {
-      username: 'testuser',
+      email: 'testuser',
       password: 'invalid',
     }
 
@@ -45,7 +45,7 @@ describe('User registration', () => {
 
   test('POST /api/v1/users should return 400 and error message for existing user', async () => {
     const existingUserData = {
-      username: 'testuser',
+      email: 'testuser',
       password: 'ValidPassword123',
     }
 
@@ -63,7 +63,7 @@ describe('User registration', () => {
     })
 
     const response = await request(app).post('/api/v1/users').send({
-      username: 'existing_user',
+      email: 'existing_user',
       password: 'Password123',
     })
 

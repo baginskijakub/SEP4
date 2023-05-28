@@ -12,6 +12,10 @@ export const TaskList: React.FC = () => {
   const [tasks, setTasks] = useState<ITask[]>([])
 
   useEffect(() => {
+      fetchTasks()
+  }, [])
+
+  const fetchTasks = () => {
     getAllTasks()
       .then((res) => {
         setTasks(res)
@@ -19,7 +23,7 @@ export const TaskList: React.FC = () => {
       .catch((err) => {
         console.log(err)
       })
-  })
+  }
 
   return (
     <div className={styles.taskWrapper}>
@@ -30,7 +34,7 @@ export const TaskList: React.FC = () => {
         })}
         <PrimaryButtonBig onClick={() => setDisplayTaskModal(true)}>Add task</PrimaryButtonBig>
       </div>
-      {displayTaskModal && <TaskModal onClose={() => setDisplayTaskModal(false)} />}
+      {displayTaskModal && <TaskModal onClose={() => setDisplayTaskModal(false)} fetchAgain={fetchTasks} />}
     </div>
   )
 }

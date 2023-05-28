@@ -35,17 +35,22 @@ tasksRouter.post('/', async (req: UserRequest, res) => {
     }
 
     const task = await prisma.task.create({
-      data: taskToSave,
+      data: {
+        plantId: taskToSave.plantId,
+        type: taskToSave.type,
+        daysTillDeadline: taskToSave.daysTillDeadline,
+        originalDeadline: taskToSave.originalDeadline,
+      },
     })
-
+    await prisma.$disconnect()
     res.status(201).json({
       ...taskToConvert,
       id: task.id,
       date: `${task.daysTillDeadline} day${task.daysTillDeadline > 1 ? 's' : ''} until deadline`,
     })
-    await prisma.$disconnect()
     return
   } catch (error) {
+    console.log(error)
     return res.status(502).json({ message: 'Failed to create task', status: 'error' })
   }
 })
@@ -57,6 +62,9 @@ tasksRouter.get('/', async (req: UserRequest, res) => {
         plant: {
           email: req.user.email,
         },
+      },
+      orderBy: {
+        daysTillDeadline: 'asc',
       },
     })
     const tasks: ITask[] = tasksFromDb.map((task) => {
@@ -95,6 +103,9 @@ tasksRouter.get('/epoch', async (req: UserRequest, res) => {
         plant: {
           email: req.user.email,
         },
+      },
+      orderBy: {
+        daysTillDeadline: 'asc',
       },
     })
     const tasks: ITask[] = tasksFromDb.map((task) => {

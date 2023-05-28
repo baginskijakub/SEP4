@@ -10,19 +10,19 @@ export const PlantsWatering:React.FC = () => {
 
   useEffect(() => {
     getAllPlants().then((res) => {
-      setPlants(res.data);
+      setPlants(res);
     }).catch((err) => {
       console.log(err);
     })
-  });
+  }, []);
 
   return (
     <div className={styles.wrapper}>
       <h3>Plants watering</h3>
       <div className={styles.container}>
-        {plants.map((plant) => {
-          return <AdjustWatering plant={plant} key={plant.id}/>
-        })}
+        {plants?.map((plant) => (
+          <AdjustWatering plant={plant} key={plant.id} />
+        ))}
       </div>
     </div>
   );

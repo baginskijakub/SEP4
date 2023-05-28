@@ -66,7 +66,7 @@ describe('Get all tasks endpoint', () => {
     })
 
     const loginResponse = await request(app).get('/api/v1/users').query({
-      username: 'test_user',
+      email: 'test_user',
       password: 'Password123',
     })
 
@@ -98,7 +98,7 @@ describe('Get all tasks endpoint', () => {
     })
 
     const loginResponse = await request(app).get('/api/v1/users').query({
-      username: 'test_user2',
+      email: 'test_user2',
       password: 'Password123',
     })
     authToken = loginResponse.body.token
@@ -113,28 +113,28 @@ describe('Get all tasks endpoint', () => {
 
     expect(response.status).toBe(200)
     expect(response.body).toHaveLength(4)
-    expect(response.body[0]).toEqual({
+    expect(response.body[1]).toEqual({
       id: 1,
       plantId: 1,
       type: 'water',
       status: 'current',
       date: 'to be completed today',
     })
-    expect(response.body[1]).toEqual({
+    expect(response.body[3]).toEqual({
       id: 2,
       plantId: 1,
       type: 'fertilize',
       status: 'future',
       date: '5 days until deadline',
     })
-    expect(response.body[2]).toEqual({
+    expect(response.body[0]).toEqual({
       id: 3,
       plantId: 1,
       type: 'repot',
       status: 'past',
       date: '6 days after deadline',
     })
-    expect(response.body[3]).toEqual({
+    expect(response.body[2]).toEqual({
       id: 4,
       plantId: 1,
       type: 'repot',

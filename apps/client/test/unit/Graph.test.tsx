@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, waitFor } from '@testing-library/react';
-import { Graph } from '../components/graph/Graph';
+import { Graph } from '../../components/graph/Graph';
 import { IGraphData } from '@sep4/types'
-import * as PlantService from '../services/PlantService';
+import * as PlantService from '../../services/PlantService';
 import '@testing-library/jest-dom/extend-expect';
 
 jest.mock('../../client/services/PlantService')
@@ -26,18 +26,18 @@ window.ResizeObserver = jest.fn().mockImplementation(() => ({
               { date: '2022-01-03', value: 30 },
             ]
           }
-          
+
           jest.spyOn(PlantService, 'getPlantEnvironmentHistory').mockResolvedValue(sampleData as IGraphData);
           //Act
           const { container } = render(<Graph id={1} type="temperature" />);
           await waitFor(() => expect(container.querySelector('.recharts-responsive-container')).toBeInTheDocument());
-    
+
           // Assert
           expect(PlantService.getPlantEnvironmentHistory).toHaveBeenCalledTimes(1);
 
-          
+
         });
-    
+
       });
 
 

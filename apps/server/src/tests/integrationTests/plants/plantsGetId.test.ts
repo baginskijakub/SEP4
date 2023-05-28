@@ -55,7 +55,7 @@ describe('Plant GET by id endpoint', () => {
 
   test('returns a successful response with status code 200 and specific plant with extended schema if user is authorized and has plant with passed id', async () => {
     const user = {
-      username: 'test_user',
+      email: 'test_user',
       password: 'Password123',
     }
 
@@ -100,7 +100,7 @@ describe('Plant GET by id endpoint', () => {
 
   test('returns an error response with status code 400 if failed to fetch plant', async () => {
     const user = {
-      username: 'test_user',
+      email: 'test_user',
       password: 'Password123',
     }
 
@@ -127,7 +127,7 @@ describe('Plant GET by id endpoint', () => {
 
   test('returns an error response with status code 404 if user is authorized but plant does not exist', async () => {
     const user = {
-      username: 'test_user',
+      email: 'test_user',
       password: 'Password123',
     }
     // Login the user first

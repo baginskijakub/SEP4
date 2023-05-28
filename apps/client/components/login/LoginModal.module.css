@@ -85,6 +85,7 @@
   }
 
   .signUpBtn {
+    cursor: pointer;
     color: var(--theme-1);
   }
 
