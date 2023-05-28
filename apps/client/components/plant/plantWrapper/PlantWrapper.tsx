@@ -6,6 +6,7 @@ import { PlantIdealEnvironment } from '../plantIdealEnvironment/PlantIdealEnviro
 import { PlantPastEnvironment } from '../plantPastEnvironment/PlantPastEnvironment'
 import { IPlant } from '@sep4/types'
 import { getPlantById } from '../../../services/PlantService'
+import { Loader } from "../../utils/loader/Loader";
 
 interface Props {
   plantId: number
@@ -27,14 +28,14 @@ export const PlantWrapper: React.FC<Props> = ({ plantId }) => {
 
   return (
     <div className={styles.wrapper}>
-      {plant && (
+      {plant ? (
         <>
           <PlantHead plant={plant} />
           <PlantCurrentEnvironment plant={plant} />
           <PlantIdealEnvironment environment={plant.idealEnvironment} />
           <PlantPastEnvironment id={plant.id} />
         </>
-      )}
+      ) : <Loader/>}
     </div>
   )
 }
