@@ -4,6 +4,7 @@ import { IPlant, IPlantCurrentEnvironment } from '@sep4/types'
 import { io } from 'socket.io-client'
 import { SecondaryButtonSmall } from '../../buttons/secondaryButtonSmall/secondaryButtonSmall'
 import { AdjustCurrentEnvironment } from '../adjustCurrentEnvironment/AdjustCurrentEnvironment'
+import { SERVER_URL } from '../../../config'
 
 interface Props {
   plant: IPlant
@@ -12,10 +13,15 @@ interface Props {
 export const PlantCurrentEnvironment: React.FC<Props> = ({ plant }) => {
   const [environment, setEnvironment] = useState<IPlantCurrentEnvironment>({ ...plant.currentEnvironment })
   const [displayModal, setDisplayModal] = useState<boolean>(false)
+  const serverUrl = SERVER_URL
+
+  if(serverUrl){
+    SERVER_URL.replace('/api/v1', '')
+  }
 
   useEffect(() => {
     // we might need 'api' added to the url
-    const socket = io('http://localhost:3333')
+    const socket = io(serverUrl)
     socket.emit('connectInit', plant.id)
     socket.on(`update-${plant.id}`, (data) => {
       setEnvironment(data)
