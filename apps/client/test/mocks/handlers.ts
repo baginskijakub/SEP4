@@ -14,6 +14,14 @@ export const handlers = [
         }),
       )
     }
+    else {
+      return res(
+        ctx.status(401),
+        ctx.json({
+          message: 'Invalid credentials',
+        }),
+      )
+    }
   }),
 
   rest.get(`${SERVER_URL}/tasks/`, (req, res, ctx) => {
