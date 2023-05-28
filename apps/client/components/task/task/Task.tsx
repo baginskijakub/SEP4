@@ -5,6 +5,7 @@ import { ActionButton } from '../../buttons/actionButton/ActionButton'
 import { MdClose } from 'react-icons/md'
 import styles from './Task.module.css'
 import { completeTask } from "../../../services/TaskService";
+import { Loader } from "../../utils/loader/Loader";
 
 interface Props {
   task: ITask
@@ -29,7 +30,7 @@ export const Task: React.FC<Props> = ({ task , controlls}) => {
 
   return (
     <>
-      {plant !== undefined && (
+      {plant !== undefined ? (
         <div className={styles.wrapper + " " + styles[task.status]}>
           <img src={plant.image} alt={plant.name} />
           <div className={styles.container}>
@@ -50,7 +51,7 @@ export const Task: React.FC<Props> = ({ task , controlls}) => {
             </ActionButton>
           </div>}
         </div>
-      )}
+      ) : <Loader/>}
     </>
   )
 }
