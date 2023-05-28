@@ -63,6 +63,9 @@ tasksRouter.get('/', async (req: UserRequest, res) => {
           email: req.user.email,
         },
       },
+      orderBy: {
+        daysTillDeadline: 'asc',
+      },
     })
     const tasks: ITask[] = tasksFromDb.map((task) => {
       let status
@@ -100,6 +103,9 @@ tasksRouter.get('/epoch', async (req: UserRequest, res) => {
         plant: {
           email: req.user.email,
         },
+      },
+      orderBy: {
+        daysTillDeadline: 'asc',
       },
     })
     const tasks: ITask[] = tasksFromDb.map((task) => {
