@@ -6,9 +6,8 @@ const register = (email: string, password: string) => {
     .post(`${SERVER_URL}/users`, {
       email,
       password,
-    }).catch((error) => {
-      throw new Error(error.message)
-    }).then((response) => {
+    })
+    .then((response) => {
       if (response.status === 201) {
         return response.data
       } else {

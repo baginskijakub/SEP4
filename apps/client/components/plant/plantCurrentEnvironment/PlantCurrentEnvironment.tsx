@@ -26,7 +26,7 @@ export const PlantCurrentEnvironment: React.FC<Props> = ({ plant }) => {
     socket.on(`update-${plant.id}`, (data) => {
       setEnvironment(data)
     })
-  }, [])
+  }, [plant.id])
 
   return (
     <div className={styles.wrapper}>

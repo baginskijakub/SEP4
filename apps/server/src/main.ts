@@ -60,7 +60,9 @@ io.on('connect', (socket) => {
       if (listeners) {
         listeners.push(socket.id)
         cache.set(plantId, listeners)
-      } else cache.set(plantId, [socket.id])
+      } else {
+        cache.set(plantId, [socket.id])
+      }
     }
   })
   socket.on('disconnect', () => {

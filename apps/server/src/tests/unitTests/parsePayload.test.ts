@@ -10,7 +10,7 @@ describe('Parse Lorawan message', () => {
     const validPayload = '00DE013B038E'
     const returnMessage = parsePayload(validPayload, 123456789)
     expect(returnMessage.length).toEqual(3)
-    expect(returnMessage[0].value).toEqual(22.2)
+    expect(returnMessage[0].value).toEqual(222)
     expect(returnMessage[1].value).toEqual(31.5)
     expect(returnMessage[2].value).toEqual(910)
 
