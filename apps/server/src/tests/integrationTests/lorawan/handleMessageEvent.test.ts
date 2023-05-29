@@ -54,8 +54,8 @@ describe('Handle lorawan message function', () => {
     const graphData = await prisma.graphData.findMany({ orderBy: { value: 'asc' } })
     expect(graphData.length).toEqual(3)
 
-    expect(graphData[0].value).toEqual(22.2)
-    expect(graphData[1].value).toEqual(31.5)
+    expect(graphData[0].value).toEqual(31.5)
+    expect(graphData[1].value).toEqual(222)
     expect(graphData[2].value).toEqual(910)
     expect(graphData[0].dateEpoch).toEqual(Math.round(123456789 / 1000))
   })
@@ -84,8 +84,8 @@ describe('Handle lorawan message function', () => {
     const graphData = await prisma.graphData.findMany({ orderBy: { value: 'asc' } })
     expect(graphData.length).toEqual(3)
 
-    expect(graphData[0].value).toEqual(22.2)
-    expect(graphData[1].value).toEqual(31.5)
+    expect(graphData[0].value).toEqual(31.5)
+    expect(graphData[1].value).toEqual(222)
     expect(graphData[2].value).toEqual(910)
     expect(graphData[0].dateEpoch).toEqual(Math.round(123456789 / 1000))
   })
@@ -157,8 +157,8 @@ describe('Handle lorawan message function', () => {
     const graphData = await prisma.graphData.findMany({ orderBy: { value: 'asc' } })
     expect(graphData.length).toEqual(3)
 
-    expect(graphData[0].value).toEqual(22.2)
-    expect(graphData[1].value).toEqual(31.5)
+    expect(graphData[0].value).toEqual(31.5)
+    expect(graphData[1].value).toEqual(222)
     expect(graphData[2].value).toEqual(910)
     expect(graphData[0].dateEpoch).toEqual(Math.round(123456789 / 1000))
   })

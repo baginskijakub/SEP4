@@ -20,6 +20,7 @@ const sendDataViaSocket = async (inputData: unknown, eventName: string) => {
         try {
           // Emit the currentEnvironment object as an event to the client
           socketInstance.emit(`${eventName}-${dataToSend[0].plantId}`, currentEnvironment)
+          console.log("Data was sent to client's socket")
         } catch (error) {
           console.error('Data was not send:', error)
         }

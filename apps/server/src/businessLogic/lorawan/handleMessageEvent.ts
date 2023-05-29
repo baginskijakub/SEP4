@@ -93,7 +93,7 @@ export function parsePayload(payload: string, timestamp: number) {
     acc[position] += curr
     return acc
   }, [])
-  const humidity = parseInt(data[0], 16) / 10
+  const humidity = parseInt(data[0], 16)
   const temperature = parseInt(data[1], 16) / 10
   const co2 = parseInt(data[2], 16)
 
