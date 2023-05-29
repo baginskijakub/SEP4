@@ -14,6 +14,9 @@ const register = (email: string, password: string) => {
         throw new Error(response.data.message)
       }
     })
+    .catch((error) => {
+      throw new Error(error.response.data.message)
+    })
 }
 
 export { register }
