@@ -13,10 +13,10 @@ interface Props {
 export const PlantCurrentEnvironment: React.FC<Props> = ({ plant }) => {
   const [environment, setEnvironment] = useState<IPlantCurrentEnvironment>({ ...plant.currentEnvironment })
   const [displayModal, setDisplayModal] = useState<boolean>(false)
-  const serverUrl = SERVER_URL
+  let serverUrl = SERVER_URL
 
   if(serverUrl){
-    SERVER_URL.replace('/api/v1', '')
+    serverUrl = SERVER_URL.replace('/api/v1', '')
   }
 
   useEffect(() => {
