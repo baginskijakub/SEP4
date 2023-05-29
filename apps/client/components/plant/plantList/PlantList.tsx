@@ -4,6 +4,7 @@ import styles from './PlantList.module.css'
 import { IPlant } from '@sep4/types'
 import { CreatePlant } from '../createPlant/CreatePlant'
 import { MdKeyboardArrowUp } from 'react-icons/md'
+import { Loader } from "../../utils/loader/Loader";
 
 interface Props {
   plants: IPlant[]
@@ -32,7 +33,7 @@ export const PlantList: React.FC<Props> = ({ plants, changeSelectedPlant, select
       </div>
       {(isOpen || window.innerWidth > 1150) && (
         <div className={styles.container}>
-          {plants.map((plant, index) => {
+          {plants.length > 0 ? plants.map((plant, index) => {
             return (
               <PlantListed
                 onClick={() => {
@@ -47,7 +48,7 @@ export const PlantList: React.FC<Props> = ({ plants, changeSelectedPlant, select
                 fetchAgain={fetchAgain}
               />
             )
-          })}
+          }) : <Loader/>}
           <div className={styles.addPlantButton} onClick={() => setDisplayCreateModal(true)}>
             Add plant
           </div>

@@ -5,6 +5,7 @@ import { MdChevronLeft, MdChevronRight } from 'react-icons/md'
 import dayjs from 'dayjs'
 import { ITask } from '@sep4/types'
 import { getAllTasksWithEpoch } from '../../../services/TaskService'
+import { Loader } from "../../utils/loader/Loader";
 
 export const TaskOverview: React.FC = () => {
   const [days, setDays] = useState<Day[]>()
@@ -31,7 +32,7 @@ export const TaskOverview: React.FC = () => {
     }
     setDays(days)
     console.log(days)
-  }, [daysOffset])
+  }, [daysOffset, tasks])
 
   return (
     <div className={styles.wrapper}>
@@ -43,9 +44,9 @@ export const TaskOverview: React.FC = () => {
           className={styles.chevron}
           onClick={() => setDaysOffset(daysOffset - 1)}
         />
-        {days?.map((day, index) => (
+        {days?.length > 0 ? days?.map((day, index) => (
           <Node key={index} {...day} />
-        ))}
+        )) : <Loader/>}
         <MdChevronRight
           size={40}
           color={'#528E83'}
