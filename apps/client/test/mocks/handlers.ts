@@ -13,8 +13,21 @@ export const handlers = [
           email: 'fakeUser1',
         }),
       )
-    }
-    else {
+    } else if (req.url.searchParams.get('email') === '' || req.url.searchParams.get('password') === '') {
+      return res(
+        ctx.status(401),
+        ctx.json({
+          message: 'Please fill in all the fields',
+        }),
+      )
+    } else if (req.url.searchParams.get('password').length < 8) {
+      return res(
+        ctx.status(401),
+        ctx.json({
+          message: 'The password must be at least 8 characters',
+        }),
+      )
+    } else {
       return res(
         ctx.status(401),
         ctx.json({
@@ -25,10 +38,7 @@ export const handlers = [
   }),
 
   rest.get(`${SERVER_URL}/tasks/`, (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json([]),
-    )
+    return res(ctx.status(200), ctx.json([]))
   }),
 
   // register mock
