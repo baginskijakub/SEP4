@@ -15,7 +15,7 @@ export const PlantCurrentEnvironment: React.FC<Props> = ({ plant }) => {
   const [displayModal, setDisplayModal] = useState<boolean>(false)
   const serverUrl = SERVER_URL
 
-  if(serverUrl){
+  if (serverUrl) {
     SERVER_URL.replace('/api/v1', '')
   }
 
@@ -47,7 +47,7 @@ export const PlantCurrentEnvironment: React.FC<Props> = ({ plant }) => {
           <p className={styles.highlight + ' body-small'}>{environment.humidity}</p>
         </div>
         <div className={styles.node}>
-          <p className={'body-small'}>Environment</p>
+          <p className={'body-small'}>Co2</p>
           <p className={styles.highlight + ' body-small'}>{environment.co2}</p>
         </div>
       </div>

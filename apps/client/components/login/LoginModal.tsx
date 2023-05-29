@@ -36,7 +36,7 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
         onClose()
       })
       .catch((error) => {
-          setErrorLabel(error.message)
+        setErrorLabel(error.message)
       })
   }
 
@@ -53,11 +53,7 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
         onClose()
       })
       .catch((error) => {
-        if (passwordElement.current.value.length < 6) {
-          setErrorLabel('The password must be at least 6 characters')
-        } else {
-          setErrorLabel(error.message)
-        }
+        setErrorLabel(error.message)
       })
   }
 
@@ -74,10 +70,6 @@ export const LoginModal: React.FC<Props> = ({ onClose }) => {
     if (isLogin) {
       onLogin(emailElement.current.value, passwordElement.current.value)
     } else {
-      if (passwordElement.current.value.length < 6) {
-        setErrorLabel('The password must be at least 6 characters')
-        return
-      }
       onRegister(emailElement.current.value, passwordElement.current.value)
     }
   }
